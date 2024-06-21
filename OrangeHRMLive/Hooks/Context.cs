@@ -14,15 +14,11 @@ namespace OrangeHRMLive.Hooks
 
             Action setupAction = browserName.ToLower() switch
             {
-                "edge" => () => { new WebDriverManager.DriverManager().SetUpDriver(new EdgeConfig()); driver = new EdgeDriver(); }
-                ,
-                "chrome" => () => { new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig()); driver = new ChromeDriver(); }
-                ,
-                "firefox" => () => { new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig()); driver = new FirefoxDriver(); }
-                ,
+                "edge" => () => { new WebDriverManager.DriverManager().SetUpDriver(new EdgeConfig()); driver = new EdgeDriver(); },
+                "chrome" => () => { new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig()); driver = new ChromeDriver(); },
+                "firefox" => () => { new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig()); driver = new FirefoxDriver(); },
                 _ => () => { new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig()); driver = new ChromeDriver(); }
             };
-
             setupAction();
         }
     }
