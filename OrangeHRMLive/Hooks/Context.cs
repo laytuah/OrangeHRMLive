@@ -17,7 +17,7 @@ namespace OrangeHRMLive.Hooks
                 "edge" => () => { new WebDriverManager.DriverManager().SetUpDriver(new EdgeConfig()); driver = new EdgeDriver(); },
                 "chrome" => () => { new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig()); driver = new ChromeDriver(); },
                 "firefox" => () => { new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig()); driver = new FirefoxDriver(); },
-                _ => () => { new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig()); driver = new ChromeDriver(); }
+                _ => throw new Exception("Unknown browser selected")
             };
             setupAction();
         }
