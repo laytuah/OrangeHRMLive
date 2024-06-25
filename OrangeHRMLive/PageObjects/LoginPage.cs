@@ -8,11 +8,11 @@ namespace OrangeHRMLive.PageObjects
         {
             driver = _driver;
         }
-
+        protected IWebElement UsernameField => driver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Username')]"));
         public void Login()
         {
-            var username = driver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Username')]"));
-            string a = username.Text;
+            //var username = driver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Username')]"));
+            string a = UsernameField.Text;
         }
     }
 }
