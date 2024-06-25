@@ -1,6 +1,4 @@
-using OrangeHRMLive.Hooks;
-using OrangeHRMLive.Pages;
-using System;
+using OrangeHRMLive.PageObjects;
 using TechTalk.SpecFlow;
 
 namespace OrangeHRMLive.StepDefinitions
@@ -8,29 +6,29 @@ namespace OrangeHRMLive.StepDefinitions
     [Binding]
     public class HRMLoginStepDefinitions
     {
-        Context context; LandingPage landingPage;
-        public HRMLoginStepDefinitions(Context _context, LandingPage _landingPage)
+        LoginPage loginPage;
+        BasePage basePage;
+        public HRMLoginStepDefinitions(LoginPage _loginPage, BasePage _basePage)
         {
-                context = _context; landingPage = _landingPage;
+            loginPage = _loginPage;
+            basePage = _basePage;
         }
 
         [StepDefinition(@"that user navigates to HRMLive page")]
         public void GivenThatUserNavigatesToHRMLivePage()
         {
-            context.StartBrowser("chrome");
-            landingPage.LoadSUT();
+            basePage.LoadAUT();
         }
 
         [StepDefinition(@"the user supplies the provided login details")]
         public void WhenTheUserSuppliesTheProvidedLoginDetails()
         {
-            throw new PendingStepException();
+            loginPage.Login();
         }
 
         [StepDefinition(@"the user must land on the homepage")]
         public void ThenTheUserMustLandOnTheHomepage()
         {
-            throw new PendingStepException();
         }
     }
 }

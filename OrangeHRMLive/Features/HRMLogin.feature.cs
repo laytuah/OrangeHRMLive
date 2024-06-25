@@ -75,11 +75,9 @@ namespace OrangeHRMLive.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("User can login with details provided on page for login")]
-        [NUnit.Framework.CategoryAttribute("tag1")]
         public void UserCanLoginWithDetailsProvidedOnPageForLogin()
         {
-            string[] tagsOfScenario = new string[] {
-                    "tag1"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User can login with details provided on page for login", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 3
