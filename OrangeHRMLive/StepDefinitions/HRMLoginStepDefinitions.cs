@@ -33,7 +33,7 @@ namespace OrangeHRMLive.StepDefinitions
         public void ThenTheUserMustLandOnTheHomepage()
         {
             homepage.GetHomePageConfirmation().Should().BeTrue();
-            homepage.GetUserFullName().Should().Contain("Abdelrahman Mubarak");
+            homepage.GetUserFullName().Should().Contain("manda user");
         }
     }
 }
