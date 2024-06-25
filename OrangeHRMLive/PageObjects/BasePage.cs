@@ -14,5 +14,11 @@ namespace OrangeHRMLive.PageObjects
         {
             driver.Navigate().GoToUrl("https://opensource-demo.orangehrmlive.com/");
         }
+
+        public void ScrollToElement(IWebElement locator) 
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            js.ExecuteScript("arguments[0].scrollIntoView(true);", locator);
+        }
     }
 }

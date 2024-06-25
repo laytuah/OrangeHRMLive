@@ -10,16 +10,17 @@ namespace OrangeHRMLive.PageObjects
         }
 
         protected IWebElement PieChart1 => driver.FindElement(By.XPath("(//div[@class='oxd-pie-chart'])[1]"));
-        protected IWebElement PieChart2 => driver.FindElement(By.XPath("(//div[@class='oxd-pie-chart'])[2]"));
+        protected IWebElement UserFullName_label => driver.FindElement(By.XPath("//p[@class='oxd-userdropdown-name']"));
+        
 
-        public bool GetHomePageConfirmation1()
+        public bool GetHomePageConfirmation()
         {
             return PieChart1.Displayed;
         }
 
-        public bool GetHomePageConfirmation2()
+        public string GetUserFullName()
         {
-            return PieChart2.Displayed;
+            return UserFullName_label.Text.Trim();
         }
     }
 }

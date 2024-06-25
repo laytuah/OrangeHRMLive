@@ -32,8 +32,8 @@ namespace OrangeHRMLive.StepDefinitions
         [StepDefinition(@"the user must land on the homepage")]
         public void ThenTheUserMustLandOnTheHomepage()
         {
-            homepage.GetHomePageConfirmation1().Should().BeTrue();
-            homepage.GetHomePageConfirmation2().Should().BeTrue();
+            homepage.GetHomePageConfirmation().Should().BeTrue();
+            homepage.GetUserFullName().Should().Contain("Abdelrahman Mubarak");
         }
     }
 }
