@@ -1,3 +1,4 @@
+using FluentAssertions;
 using OrangeHRMLive.PageObjects;
 using TechTalk.SpecFlow;
 
@@ -8,10 +9,12 @@ namespace OrangeHRMLive.StepDefinitions
     {
         LoginPage loginPage;
         BasePage basePage;
-        public HRMLoginStepDefinitions(LoginPage _loginPage, BasePage _basePage)
+        HomePage homepage;
+        public HRMLoginStepDefinitions(LoginPage _loginPage, BasePage _basePage, HomePage _homepage)
         {
             loginPage = _loginPage;
             basePage = _basePage;
+            homepage = _homepage;
         }
 
         [StepDefinition(@"that user navigates to HRMLive page")]
@@ -29,6 +32,8 @@ namespace OrangeHRMLive.StepDefinitions
         [StepDefinition(@"the user must land on the homepage")]
         public void ThenTheUserMustLandOnTheHomepage()
         {
+            homepage.GetHomePageConfirmation1().Should().BeTrue();
+            homepage.GetHomePageConfirmation2().Should().BeTrue();
         }
     }
 }
