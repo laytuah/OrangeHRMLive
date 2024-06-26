@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using TechTalk.SpecFlow;
-using AventStack.ExtentReports.Reporter;
+﻿using TechTalk.SpecFlow;
 
 namespace OrangeHRMLive.Configuration
 {
@@ -25,10 +23,10 @@ namespace OrangeHRMLive.Configuration
             webDriverSupport.CloseAUT();
         }
 
-        //[OneTimeSetUp]
-        //public void Setup()
-        //{
-        //    var htmlReporter = new ExtentHtmlReporter();
-        //}
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            var htmlReporter = new ExtentHtmlReporter();
+        }
     }
 }
