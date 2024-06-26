@@ -11,7 +11,9 @@ namespace OrangeHRMLive.PageObjects
 
         protected IWebElement PieChart1 => driver.FindElement(By.XPath("(//div[@class='oxd-pie-chart'])[1]"));
         protected IWebElement UserFullName_label => driver.FindElement(By.XPath("//p[@class='oxd-userdropdown-name']"));
+        protected IWebElement SidePanel => driver.FindElement(By.XPath("//div[@class='oxd-sidepanel-body']"));
         
+
 
         public bool GetHomePageConfirmation()
         {
@@ -21,6 +23,11 @@ namespace OrangeHRMLive.PageObjects
         public string GetUserFullName()
         {
             return UserFullName_label.Text.Trim();
+        }
+
+        public bool IsSidePanelDisplayed()
+        {
+            return SidePanel.Displayed;
         }
     }
 }
