@@ -1,4 +1,5 @@
 ﻿using TechTalk.SpecFlow;
+using AventStack.ExtentReports.Reporter;
 
 namespace OrangeHRMLive.Configuration
 {
@@ -26,7 +27,9 @@ namespace OrangeHRMLive.Configuration
         [OneTimeSetUp]
         public void Setup()
         {
-            var htmlReporter = new ExtentHtmlReporter();
+            string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            string reportPath = projectDirectory + "//report.html";
+            var htmlReporter = new ExtentHtmlReporter(reportPath);
         }
     }
 }
