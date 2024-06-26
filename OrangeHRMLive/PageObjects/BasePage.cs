@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OrangeHRMLive.Configuration;
 
 namespace OrangeHRMLive.PageObjects
 {
@@ -9,10 +10,9 @@ namespace OrangeHRMLive.PageObjects
         {
             driver = _driver;
         }
-
         public void LoadAUT()
         {
-            driver.Navigate().GoToUrl("https://opensource-demo.orangehrmlive.com/");
+            driver.Navigate().GoToUrl(ConfigurationManager.Url);
         }
 
         public void ScrollToElement(IWebElement locator) 

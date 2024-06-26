@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using TechTalk.SpecFlow;
+using AventStack.ExtentReports.Reporter;
 
 namespace OrangeHRMLive.Configuration
 {
@@ -7,21 +8,15 @@ namespace OrangeHRMLive.Configuration
     internal class Hooks
     {
         private readonly WebDriverSupport webDriverSupport;
-        public IConfiguration Configuration { get; }
         public Hooks(WebDriverSupport _webDriverSupport)
         {
             webDriverSupport = _webDriverSupport;
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            Configuration = builder.Build();
         }
 
         [BeforeScenario]
         public void StartBrowser()
         {
-            string browsername = Configuration["Browser"];
-            webDriverSupport.InitializeBrowser(browsername);
+            webDriverSupport.InitializeBrowser(ConfigurationManager.BrowserName);
         }
 
         [AfterScenario]
@@ -29,5 +24,11 @@ namespace OrangeHRMLive.Configuration
         {
             webDriverSupport.CloseAUT();
         }
+
+        //[OneTimeSetUp]
+        //public void Setup()
+        //{
+        //    var htmlReporter = new ExtentHtmlReporter();
+        //}
     }
 }
