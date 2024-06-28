@@ -1,17 +1,15 @@
-﻿using AventStack.ExtentReports;
-using BoDi;
+﻿using BoDi;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
-using WebDriverManager.DriverConfigs.Impl;
 
 namespace OrangeHRMLive.Configuration
 {
     public class WebDriverSupport
     {
         private readonly IObjectContainer objectContainer;
-        private static IWebDriver driver;
+        private IWebDriver driver;
         public WebDriverSupport(IObjectContainer _objectContainer)
         {
             objectContainer = _objectContainer;
@@ -19,14 +17,13 @@ namespace OrangeHRMLive.Configuration
 
         public void InitializeBrowser(string browserName)
         {
-
             Action setupAction = browserName.ToLower() switch
             {
-                "edge" => () => { new WebDriverManager.DriverManager().SetUpDriver(new EdgeConfig()); driver = new EdgeDriver(); }
+                "edge" => () => {driver = new EdgeDriver();}
                 ,
-                "chrome" => () => { new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig()); driver = new ChromeDriver(); }
+                "chrome" => () => {driver = new ChromeDriver();}
                 ,
-                "firefox" => () => { new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig()); driver = new FirefoxDriver(); }
+                "firefox" => () => {driver = new FirefoxDriver();}
                 ,
                 _ => throw new Exception("Unknown browser selected")
             };
@@ -39,13 +36,6 @@ namespace OrangeHRMLive.Configuration
         public void CloseAUT()
         {
             driver.Quit();
-        }
-
-        public static MediaEntityModelProvider CaptureScreenShot(string screenShotName)
-        {
-            ITakesScreenshot takeScreenhot = (ITakesScreenshot)driver;
-            string screenshot = takeScreenhot.GetScreenshot().AsBase64EncodedString;
-            return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, screenShotName).Build();
         }
     }
 }
