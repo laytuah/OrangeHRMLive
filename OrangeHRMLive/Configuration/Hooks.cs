@@ -1,7 +1,6 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using NUnit.Framework.Interfaces;
-using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
 namespace OrangeHRMLive.Configuration
@@ -12,7 +11,6 @@ namespace OrangeHRMLive.Configuration
         private readonly WebDriverSupport webDriverSupport;
         private static ExtentReports extent;
         private static ExtentTest test;
-        private static IWebDriver driver;
         public Hooks(WebDriverSupport _webDriverSupport)
         {
             webDriverSupport = _webDriverSupport;
@@ -62,7 +60,7 @@ namespace OrangeHRMLive.Configuration
             string failedTestScreenshotName = "Screenshot_" + time.ToString("h_mm_ss") + ".png";
             if (status == TestStatus.Failed)
             {
-                test.Fail("Test Failed", CaptureScreenShot(failedTestScreenshotName));
+                test.Fail("Test Failed", WebDriverSupport.CaptureScreenShot(failedTestScreenshotName));
                 test.Log(Status.Fail, "test failed with logtrace" + stackTrace);
             }
             else if (status == TestStatus.Passed)
@@ -71,13 +69,6 @@ namespace OrangeHRMLive.Configuration
             }
 
             extent.Flush();
-        }
-
-        public static MediaEntityModelProvider CaptureScreenShot(string screenShotName)
-        {
-            ITakesScreenshot takeScreenhot = (ITakesScreenshot)driver;
-            string screenshot = takeScreenhot.GetScreenshot().AsBase64EncodedString;
-            return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, screenShotName).Build();
         }
     }
 }

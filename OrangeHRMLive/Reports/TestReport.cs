@@ -5,7 +5,6 @@
 
 //namespace OrangeHRMLive.Reports
 //{
-//    //[TestFixture]
 //    internal class TestReport
 //    {
 //        private readonly WebDriverSupport webDriverSupport;
@@ -17,7 +16,6 @@
 //            webDriverSupport = _webDriverSupport;
 //        }
 
-//        //[OneTimeSetUp]
 //        public static void ReportSetup()
 //        {
 //            string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
@@ -28,13 +26,11 @@
 //            extent.AddSystemInfo("Environment", "Staging");
 //        }
 
-//        //[SetUp]
 //        public void SetUp()
 //        {
 //            test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
 //        }
 
-//        //[TearDown]
 //        public void AfterTest()
 //        {
 //            var status = TestContext.CurrentContext.Result.Outcome.Status;

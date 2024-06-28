@@ -11,7 +11,7 @@ namespace OrangeHRMLive.Configuration
     public class WebDriverSupport
     {
         private readonly IObjectContainer objectContainer;
-        private IWebDriver driver;
+        private static IWebDriver driver;
         public WebDriverSupport(IObjectContainer _objectContainer)
         {
             objectContainer = _objectContainer;
@@ -39,6 +39,13 @@ namespace OrangeHRMLive.Configuration
         public void CloseAUT()
         {
             driver.Quit();
+        }
+
+        public static MediaEntityModelProvider CaptureScreenShot(string screenShotName)
+        {
+            ITakesScreenshot takeScreenhot = (ITakesScreenshot)driver;
+            string screenshot = takeScreenhot.GetScreenshot().AsBase64EncodedString;
+            return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, screenShotName).Build();
         }
     }
 }
