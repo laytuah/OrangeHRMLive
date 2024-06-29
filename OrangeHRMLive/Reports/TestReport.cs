@@ -41,10 +41,6 @@ namespace OrangeHRMLive.Reports
                 test.Fail("Test Failed", CaptureScreenShot(failedTestScreenshotName, driver));
                 test.Log(Status.Fail, "test failed with logtrace" + stackTrace);
             }
-            else if (status == TestStatus.Passed)
-            {
-
-            }
         }
 
         public void AfterTestRun()
