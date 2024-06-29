@@ -13,7 +13,7 @@ namespace OrangeHRMLive.Reports
         public void ReportSetup()
         {
             string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-            string reportPath = projectDirectory + "\\report.html";
+            string reportPath = projectDirectory + "//report.html";
             var htmlReporter = new ExtentHtmlReporter(reportPath);
             extent = new ExtentReports();
             extent.AttachReporter(htmlReporter);
