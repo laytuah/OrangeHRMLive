@@ -19,11 +19,11 @@ namespace OrangeHRMLive.Configuration
         {
             Action setupAction = browserName.ToLower() switch
             {
-                "edge" => () => {driver = new EdgeDriver();}
+                "edge" => () => { driver = new EdgeDriver(); }
                 ,
-                "chrome" => () => {driver = new ChromeDriver();}
+                "chrome" => () => { driver = new ChromeDriver(); }
                 ,
-                "firefox" => () => {driver = new FirefoxDriver();}
+                "firefox" => () => { driver = new FirefoxDriver(); }
                 ,
                 _ => throw new Exception("Unknown browser selected")
             };

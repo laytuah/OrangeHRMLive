@@ -15,7 +15,7 @@ namespace OrangeHRMLive.PageObjects
             driver.Navigate().GoToUrl(ConfigurationManager.Url);
         }
 
-        public void ScrollToElement(IWebElement locator) 
+        public void ScrollToElement(IWebElement locator)
         {
             IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
             js.ExecuteScript("arguments[0].scrollIntoView(true);", locator);
