@@ -9,7 +9,6 @@ namespace OrangeHRMLive.Configuration
     internal class Hooks
     {
         private readonly WebDriverSupport webDriverSupport;
-        private static ExtentReports extent;
         private static TestReport testReport;
         public Hooks(WebDriverSupport _webDriverSupport, TestReport _testReport)
         {
