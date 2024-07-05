@@ -1,6 +1,5 @@
-﻿using AventStack.ExtentReports;
-using OpenQA.Selenium;
-using OrangeHRMLive.Reports;
+﻿using OpenQA.Selenium;
+using OrangeHRMLive.Utilities;
 using TechTalk.SpecFlow;
 
 namespace OrangeHRMLive.Configuration
@@ -9,54 +8,59 @@ namespace OrangeHRMLive.Configuration
     internal class Hooks
     {
         private readonly WebDriverSupport webDriverSupport;
-        private static TestReport testReport;
-        public Hooks(WebDriverSupport _webDriverSupport, TestReport _testReport)
+        private static ExtentReport extentReport;
+        public Hooks(WebDriverSupport _webDriverSupport, ExtentReport _extentReport)
         {
             webDriverSupport = _webDriverSupport;
-            testReport = _testReport;
+            extentReport = _extentReport;
         }
 
         static Hooks()
         {
-            testReport = new TestReport();
+            extentReport = new ExtentReport();
         }
 
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-            testReport.ReportSetup();
+            extentReport.ExtentReportInitialization();
         }
 
         [BeforeFeature]
-        public static void BeforeFeature()
+        public static void BeforeFeature(FeatureContext featureContext)
         {
-            testReport.BeforeFeature();
+            extentReport.BeforeFeature(featureContext);
         }
 
-        [BeforeStep]
-        public void BeforeStep(ScenarioContext scenarioContext)
-        {
-            testReport.BeforeStep(scenarioContext);
-        }
+        //[BeforeStep]
+        //public void BeforeStep(ScenarioContext scenarioContext)
+        //{
+        //    extentReport.BeforeScenario(scenarioContext);
+        //}
 
         [BeforeScenario]
-        public void StartBrowser()
+        public void BeforeScenario(ScenarioContext scenarioContext)
         {
             webDriverSupport.InitializeBrowser(ConfigurationManager.BrowserName);
+            extentReport.BeforeScenario(scenarioContext);
         }
 
+        [AfterStep]
+        public void AfterStep(ScenarioContext scenarioContext, IWebDriver driver)
+        {
+            extentReport.AfterStep(scenarioContext, driver);
+        }
 
         [AfterScenario]
-        public void CloseBrowser(IWebDriver driver)
+        public void CloseBrowser()
         {
-            testReport.AfterScenario(driver);
             webDriverSupport.CloseAUT();
         }
 
         [AfterTestRun]
         public static void AfterTest()
         {
-            testReport.AfterTestRun();
+            extentReport.ExtentReportTearDown();
         }
     }
 }
