@@ -11,9 +11,9 @@ namespace OrangeHRMLive.PageObjects
 
         #region Locators
         protected IWebElement UsernameText => driver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Username')]"));
-        protected IWebElement UsernameField => driver.FindElement(By.XPath("//input[@name='username' and @placeholder='username']"));
+        protected IWebElement UsernameField => driver.FindElement(By.XPath("//input[@name='username' and @placeholder='Username']"));
         protected IWebElement PasswordText => driver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Password')]"));
-        protected IWebElement PasswordField => driver.FindElement(By.XPath("//input[@name='password' and @placeholder='password']"));
+        protected IWebElement PasswordField => driver.FindElement(By.XPath("//input[@name='password' and @placeholder='Password']"));
         protected IWebElement LoginButton => driver.FindElement(By.XPath("//button[contains(@class,'login-button')]"));
 
         #endregion

@@ -46,16 +46,18 @@ namespace OrangeHRMLive.Utilities
             Console.WriteLine("Running after step...");
             string stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType.ToString();
             string stepName = scenarioContext.StepContext.StepInfo.Text;
+            string? failureMesage = scenarioContext.TestError?.Message;
+            string? stackTrace = scenarioContext.TestError?.StackTrace;
             if (scenarioContext.TestError == null)
             {
                 if (stepType == "Given")
-                    scenario.CreateNode<Given>(stepName);
+                    scenario.CreateNode<Given>(stepName).Pass("Step Passed");
                 else if (stepType == "When")
-                    scenario.CreateNode<When>(stepName);
+                    scenario.CreateNode<When>(stepName).Pass("Step Passed");
                 else if (stepType == "Then")
-                    scenario.CreateNode<Then>(stepName);
+                    scenario.CreateNode<Then>(stepName).Pass("Step Passed");
                 else if (stepType == "And")
-                    scenario.CreateNode<And>(stepName);
+                    scenario.CreateNode<And>(stepName).Pass("Step Passed");
             }
             else if (scenarioContext.TestError != null)
             {
@@ -66,27 +68,13 @@ namespace OrangeHRMLive.Utilities
                     scenario.CreateNode<When>(stepName).Fail(scenarioContext.TestError.Message, 
                         MediaEntityBuilder.CreateScreenCaptureFromPath(TakeScreenShot(driver, scenarioContext)).Build());
                 else if (stepType == "Then")
-                    scenario.CreateNode<Then>(stepName).Fail(scenarioContext.TestError.Message,
+                    scenario.CreateNode<Then>(stepName).Fail($"Message:{failureMesage}StackTrace:{stackTrace}",
                         MediaEntityBuilder.CreateScreenCaptureFromPath(TakeScreenShot(driver, scenarioContext)).Build());
-                    
                 else if (stepType == "And")
                     scenario.CreateNode<And>(stepName).Fail(scenarioContext.TestError.Message, 
                         MediaEntityBuilder.CreateScreenCaptureFromPath(TakeScreenShot(driver, scenarioContext)).Build());
             }
         }
-
-        //public void PrintTestLog(ScenarioContext scenarioContext)
-        //{
-        //    Console.WriteLine("Running after scenario...");
-        //    if (scenarioContext.TestError != null)
-        //    {
-        //        scenario.Fail("Scenario failed with the following error: " + scenarioContext.TestError.Message);
-        //    }
-        //    else
-        //    {
-        //        scenario.Pass("Scenario executed successfully.");
-        //    }
-        //}
 
         public void ExtentReportTearDown()
         {
