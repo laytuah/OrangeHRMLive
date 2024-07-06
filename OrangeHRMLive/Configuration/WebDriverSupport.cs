@@ -17,14 +17,30 @@ namespace OrangeHRMLive.Configuration
 
         public void InitializeBrowser(string browserName)
         {
+            bool headless = ConfigurationManager.Headless;
             Action setupAction = browserName.ToLower() switch
             {
-                "edge" => () => { driver = new EdgeDriver(); }
-                ,
-                "chrome" => () => { driver = new ChromeDriver(); }
-                ,
-                "firefox" => () => { driver = new FirefoxDriver(); }
-                ,
+                "edge" => () => {
+                                    var options = new EdgeOptions();
+                                    if (headless) options.AddArgument("headless");
+                                    driver = new EdgeDriver(options);
+                                },
+                "chrome" => () => {
+                                    var options = new ChromeOptions();
+                                    if (headless) options.AddArgument("headless");
+                                    driver = new ChromeDriver(options);
+                                  },
+                "firefox" => () => {
+                                    var options = new FirefoxOptions();
+                                    if (headless) options.AddArgument("-headless");
+                                    driver = new FirefoxDriver(options);
+                                   },
+                "mobile" => () => { 
+                                    var options = new ChromeOptions();
+                                    options.EnableMobileEmulation(ConfigurationManager.MobileDeviceName);
+                                    if (headless) options.AddArgument("headless");
+                                    driver = new ChromeDriver(options);
+                                  },
                 _ => throw new Exception("Unknown browser selected")
             };
             setupAction();
