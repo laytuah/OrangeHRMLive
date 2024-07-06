@@ -4,7 +4,7 @@ namespace OrangeHRMLive.Configuration
 {
     public static class ConfigurationManager
     {
-        private static readonly IConfiguration Configuration;
+        private static IConfiguration Configuration;
 
         static ConfigurationManager()
         {
