@@ -46,7 +46,7 @@ namespace OrangeHRMLive.Configuration
         }
 
         [AfterScenario]
-        public void CloseBrowser(ScenarioContext scenarioContext)
+        public void CloseBrowser()
         {
             webDriverSupport.CloseAUT();
         }

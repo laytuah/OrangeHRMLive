@@ -16,5 +16,6 @@ namespace OrangeHRMLive.Configuration
 
         public static string BrowserName => Configuration["Browser"];
         public static string Url => Configuration["SiteUrl"];
+        public static string TesterName => Configuration["TesterName"];
     }
 }

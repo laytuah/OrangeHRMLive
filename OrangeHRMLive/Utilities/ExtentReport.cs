@@ -3,6 +3,7 @@ using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
 using OpenQA.Selenium;
+using OrangeHRMLive.Configuration;
 using TechTalk.SpecFlow;
 
 namespace OrangeHRMLive.Utilities
@@ -14,19 +15,20 @@ namespace OrangeHRMLive.Utilities
         static ExtentTest scenario;
 
         public static string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        public static string resultPath = projectDirectory.Replace("bin\\Debug\\net8.0", "TestResults");
+        public static string reportPath = projectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Reports");
+        public static string screenshotPath = projectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Screenshots");
 
         public void ExtentReportInitialization()
         {
-            var htmlReporter = new ExtentHtmlReporter(resultPath); 
+            var htmlReporter = new ExtentHtmlReporter(reportPath); 
             htmlReporter.Config.ReportName = "Automation Status report";
-            htmlReporter.Config.DocumentTitle = "Automation Status";
             htmlReporter.Config.Theme = Theme.Dark;
 
             extent = new ExtentReports();
             extent.AttachReporter(htmlReporter);
-            extent.AddSystemInfo("Environment", "Staging");
-            extent.AddSystemInfo("Test Engineer", "Abdlateef");
+            extent.AddSystemInfo("Environment", ConfigurationManager.Url);
+            extent.AddSystemInfo("Browser", ConfigurationManager.BrowserName);
+            extent.AddSystemInfo("Test Engineer", ConfigurationManager.TesterName); 
         }
 
         public void BeforeFeature(FeatureContext featureContext)
@@ -79,7 +81,7 @@ namespace OrangeHRMLive.Utilities
         {
             ITakesScreenshot takeScreenshot = (ITakesScreenshot)driver;
             Screenshot screenshot = takeScreenshot.GetScreenshot();
-            string screenShotLocation = Path.Combine(resultPath, scenarioContext.ScenarioInfo.Title + DateTime.Now.ToString("_h_mm_ss") + ".png");
+            string screenShotLocation = Path.Combine(screenshotPath, scenarioContext.ScenarioInfo.Title + DateTime.Now.ToString("_h_mm_ss") + ".png");
             screenshot.SaveAsFile(screenShotLocation);
             return screenShotLocation;
         }
