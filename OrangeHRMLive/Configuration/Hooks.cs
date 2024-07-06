@@ -32,12 +32,6 @@ namespace OrangeHRMLive.Configuration
             extentReport.BeforeFeature(featureContext);
         }
 
-        //[BeforeStep]
-        //public void BeforeStep(ScenarioContext scenarioContext)
-        //{
-        //    extentReport.BeforeScenario(scenarioContext);
-        //}
-
         [BeforeScenario]
         public void BeforeScenario(ScenarioContext scenarioContext)
         {

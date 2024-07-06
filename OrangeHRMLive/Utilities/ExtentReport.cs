@@ -18,8 +18,6 @@ namespace OrangeHRMLive.Utilities
 
         public void ExtentReportInitialization()
         {
-            Console.WriteLine("Running before test run...");
-            
             var htmlReporter = new ExtentHtmlReporter(resultPath); 
             htmlReporter.Config.ReportName = "Automation Status report";
             htmlReporter.Config.DocumentTitle = "Automation Status";
@@ -43,7 +41,6 @@ namespace OrangeHRMLive.Utilities
 
         public void AfterStep(ScenarioContext scenarioContext, IWebDriver driver)
         {
-            Console.WriteLine("Running after step...");
             string stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType.ToString();
             string stepName = scenarioContext.StepContext.StepInfo.Text;
             string? failureMesage = scenarioContext.TestError?.Message;
