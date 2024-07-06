@@ -61,18 +61,15 @@ namespace OrangeHRMLive.Utilities
             }
             else if (scenarioContext.TestError != null)
             {
+                var attachScreenshotMedia = MediaEntityBuilder.CreateScreenCaptureFromPath(TakeScreenShot(driver, scenarioContext)).Build();
                 if (stepType == "Given")
-                    scenario.CreateNode<Given>(stepName).Fail(scenarioContext.TestError.Message, 
-                        MediaEntityBuilder.CreateScreenCaptureFromPath(TakeScreenShot(driver, scenarioContext)).Build());
+                    scenario.CreateNode<Given>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia);
                 else if (stepType == "When")
-                    scenario.CreateNode<When>(stepName).Fail(scenarioContext.TestError.Message, 
-                        MediaEntityBuilder.CreateScreenCaptureFromPath(TakeScreenShot(driver, scenarioContext)).Build());
+                    scenario.CreateNode<When>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia);
                 else if (stepType == "Then")
-                    scenario.CreateNode<Then>(stepName).Fail($"Message:{failureMesage}StackTrace:{stackTrace}",
-                        MediaEntityBuilder.CreateScreenCaptureFromPath(TakeScreenShot(driver, scenarioContext)).Build());
+                    scenario.CreateNode<Then>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia);
                 else if (stepType == "And")
-                    scenario.CreateNode<And>(stepName).Fail(scenarioContext.TestError.Message, 
-                        MediaEntityBuilder.CreateScreenCaptureFromPath(TakeScreenShot(driver, scenarioContext)).Build());
+                    scenario.CreateNode<And>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia);
             }
         }
 
