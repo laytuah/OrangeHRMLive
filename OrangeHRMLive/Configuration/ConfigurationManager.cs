@@ -19,5 +19,6 @@ namespace OrangeHRMLive.Configuration
         public static string TesterName => Configuration["Tester Name"];
         public static string MobileDeviceName => Configuration["Mobile Device Name"];
         public static bool Headless => bool.Parse(Configuration["Headless"]);
+        public static bool PrivateBrowser => bool.Parse(Configuration["Private Browser"]);
     }
 }

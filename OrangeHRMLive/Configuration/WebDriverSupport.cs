@@ -8,7 +8,7 @@ namespace OrangeHRMLive.Configuration
 {
     public class WebDriverSupport
     {
-        private readonly IObjectContainer objectContainer;
+        private IObjectContainer objectContainer;
         private IWebDriver driver;
         public WebDriverSupport(IObjectContainer _objectContainer)
         {
@@ -18,27 +18,33 @@ namespace OrangeHRMLive.Configuration
         public void InitializeBrowser(string browserName)
         {
             bool headless = ConfigurationManager.Headless;
+            bool incognito = ConfigurationManager.PrivateBrowser;
+
             Action setupAction = browserName.ToLower() switch
             {
                 "edge" => () => {
                                     var options = new EdgeOptions();
                                     if (headless) options.AddArgument("headless");
+                                    if (incognito) options.AddArgument("inprivate");
                                     driver = new EdgeDriver(options);
                                 },
                 "chrome" => () => {
                                     var options = new ChromeOptions();
                                     if (headless) options.AddArgument("headless");
+                                    if (incognito) options.AddArgument("incognito");
                                     driver = new ChromeDriver(options);
                                   },
                 "firefox" => () => {
                                     var options = new FirefoxOptions();
                                     if (headless) options.AddArgument("-headless");
+                                    if (incognito) options.AddArgument("-private");
                                     driver = new FirefoxDriver(options);
                                    },
                 "mobile" => () => { 
                                     var options = new ChromeOptions();
                                     options.EnableMobileEmulation(ConfigurationManager.MobileDeviceName);
                                     if (headless) options.AddArgument("headless");
+                                    if (incognito) options.AddArgument("incognito");
                                     driver = new ChromeDriver(options);
                                   },
                 _ => throw new Exception("Unknown browser selected")
