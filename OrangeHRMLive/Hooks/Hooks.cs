@@ -1,8 +1,9 @@
 ﻿using OpenQA.Selenium;
+using OrangeHRMLive.Configuration;
 using OrangeHRMLive.Utilities;
 using TechTalk.SpecFlow;
 
-namespace OrangeHRMLive.Configuration
+namespace OrangeHRMLive.Hooks
 {
     [Binding]
     internal class Hooks

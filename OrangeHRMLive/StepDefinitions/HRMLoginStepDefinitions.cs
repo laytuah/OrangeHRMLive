@@ -33,7 +33,7 @@ namespace OrangeHRMLive.StepDefinitions
         public void ThenTheUserMustLandOnTheHomepage()
         {
             homepage.GetHomePageConfirmation().Should().BeTrue();
-            homepage.IsSidePanelDisplayed().Should().BeTrue();
+            homepage.IsSidePanelDisplayed().Should().BeFalse();
         }
     }
 }

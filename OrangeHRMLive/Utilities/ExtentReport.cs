@@ -17,10 +17,11 @@ namespace OrangeHRMLive.Utilities
         public static string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
         public static string reportPath = projectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Reports");
         public static string screenshotPath = projectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Screenshots");
+        public static string networkLogPath = projectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\NetworkLogs");
 
         public void ExtentReportInitialization()
         {
-            var htmlReporter = new ExtentHtmlReporter(reportPath); 
+            var htmlReporter = new ExtentHtmlReporter(reportPath);
             htmlReporter.Config.ReportName = "Automation Status report";
             htmlReporter.Config.Theme = Theme.Dark;
 
@@ -28,7 +29,7 @@ namespace OrangeHRMLive.Utilities
             extent.AttachReporter(htmlReporter);
             extent.AddSystemInfo("Environment", ConfigurationManager.Url);
             extent.AddSystemInfo("Browser", ConfigurationManager.BrowserName);
-            extent.AddSystemInfo("Test Engineer", ConfigurationManager.TesterName); 
+            extent.AddSystemInfo("Test Engineer", ConfigurationManager.TesterName);
         }
 
         public void BeforeFeature(FeatureContext featureContext)
@@ -45,8 +46,7 @@ namespace OrangeHRMLive.Utilities
         {
             string stepType = scenarioContext.StepContext.StepInfo.StepDefinitionType.ToString();
             string stepName = scenarioContext.StepContext.StepInfo.Text;
-            string? failureMesage = scenarioContext.TestError?.Message;
-            string? stackTrace = scenarioContext.TestError?.StackTrace;
+
             if (scenarioContext.TestError == null)
             {
                 if (stepType == "Given")
@@ -60,15 +60,26 @@ namespace OrangeHRMLive.Utilities
             }
             else if (scenarioContext.TestError != null)
             {
+                string failureMesage = scenarioContext.TestError.Message;
+                string? stackTrace = scenarioContext.TestError?.StackTrace;
+                var logs = driver.Manage().Logs.GetLog(LogType.Performance);
+                string logFilePath = Path.Combine(networkLogPath, $"NetworkLog_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.log");
+                File.WriteAllLines(logFilePath, logs.Select(log => log.ToString()));
                 var attachScreenshotMedia = MediaEntityBuilder.CreateScreenCaptureFromPath(TakeScreenShot(driver, scenarioContext)).Build();
+                var attachNetworkLogMedia = MediaEntityBuilder.CreateScreenCaptureFromPath(logFilePath).Build();
+
                 if (stepType == "Given")
-                    scenario.CreateNode<Given>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia);
+                    scenario.CreateNode<Given>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia)
+                        .Fail("Network Logs", attachNetworkLogMedia);
                 else if (stepType == "When")
-                    scenario.CreateNode<When>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia);
+                    scenario.CreateNode<When>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia)
+                        .Fail("Network Logs", attachNetworkLogMedia);
                 else if (stepType == "Then")
-                    scenario.CreateNode<Then>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia);
+                    scenario.CreateNode<Then>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia)
+                        .Fail("Network Logs", attachNetworkLogMedia);
                 else if (stepType == "And")
-                    scenario.CreateNode<And>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia);
+                    scenario.CreateNode<And>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia)
+                        .Fail("Network Logs", attachNetworkLogMedia);
             }
         }
 
@@ -81,7 +92,7 @@ namespace OrangeHRMLive.Utilities
         {
             ITakesScreenshot takeScreenshot = (ITakesScreenshot)driver;
             Screenshot screenshot = takeScreenshot.GetScreenshot();
-            string screenShotLocation = Path.Combine(screenshotPath, scenarioContext.ScenarioInfo.Title + DateTime.Now.ToString("_h_mm_ss") + ".png");
+            string screenShotLocation = Path.Combine(screenshotPath, scenarioContext.ScenarioInfo.Title + DateTime.Now.ToString("_yyyy_MM_dd_HH_mm_ss") + ".png");
             screenshot.SaveAsFile(screenShotLocation);
             return screenShotLocation;
         }
