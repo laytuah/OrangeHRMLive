@@ -10,36 +10,36 @@ namespace OrangeHRMLive.Utilities
 {
     public class ExtentReport
     {
-        static ExtentReports extent;
-        static ExtentTest feature;
-        static ExtentTest scenario;
+        private static ExtentReports _extent;
+        private static ExtentTest _feature;
+        private static ExtentTest _scenario;
 
-        public static string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        public static string reportPath = projectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Reports");
-        public static string screenshotPath = projectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Screenshots");
-        public static string networkLogPath = projectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\NetworkLogs");
+        private static readonly string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        private static readonly string ReportPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Reports");
+        private static readonly string ScreenshotPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Screenshots");
+        private static readonly string NetworkLogPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\NetworkLogs");
 
         public void ExtentReportInitialization()
         {
-            var htmlReporter = new ExtentHtmlReporter(reportPath);
-            htmlReporter.Config.ReportName = "Automation Status report";
+            var htmlReporter = new ExtentHtmlReporter(ReportPath);
+            htmlReporter.Config.ReportName = "Automation Status Report";
             htmlReporter.Config.Theme = Theme.Dark;
 
-            extent = new ExtentReports();
-            extent.AttachReporter(htmlReporter);
-            extent.AddSystemInfo("Environment", ConfigurationManager.Url);
-            extent.AddSystemInfo("Browser", ConfigurationManager.BrowserName);
-            extent.AddSystemInfo("Test Engineer", ConfigurationManager.TesterName);
+            _extent = new ExtentReports();
+            _extent.AttachReporter(htmlReporter);
+            _extent.AddSystemInfo("Environment", ConfigurationManager.Url);
+            _extent.AddSystemInfo("Browser", ConfigurationManager.BrowserName);
+            _extent.AddSystemInfo("Test Engineer", ConfigurationManager.TesterName);
         }
 
         public void BeforeFeature(FeatureContext featureContext)
         {
-            feature = extent.CreateTest<Feature>(featureContext.FeatureInfo.Title);
+            _feature = _extent.CreateTest<Feature>(featureContext.FeatureInfo.Title);
         }
 
         public void BeforeScenario(ScenarioContext scenarioContext)
         {
-            scenario = feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
+            _scenario = _feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
         }
 
         public void AfterStep(ScenarioContext scenarioContext, IWebDriver driver)
@@ -49,52 +49,54 @@ namespace OrangeHRMLive.Utilities
 
             if (scenarioContext.TestError == null)
             {
-                if (stepType == "Given")
-                    scenario.CreateNode<Given>(stepName).Pass("Step Passed");
-                else if (stepType == "When")
-                    scenario.CreateNode<When>(stepName).Pass("Step Passed");
-                else if (stepType == "Then")
-                    scenario.CreateNode<Then>(stepName).Pass("Step Passed");
-                else if (stepType == "And")
-                    scenario.CreateNode<And>(stepName).Pass("Step Passed");
+                CreateStepNode(stepType, stepName).Pass("Step Passed");
             }
-            else if (scenarioContext.TestError != null)
+            else
             {
-                string failureMesage = scenarioContext.TestError.Message;
+                string failureMessage = scenarioContext.TestError.Message;
                 string? stackTrace = scenarioContext.TestError?.StackTrace;
-                var logs = driver.Manage().Logs.GetLog(LogType.Performance);
-                string logFilePath = Path.Combine(networkLogPath, $"NetworkLog_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.log");
-                File.WriteAllLines(logFilePath, logs.Select(log => log.ToString()));
-                var attachScreenshotMedia = MediaEntityBuilder.CreateScreenCaptureFromPath(TakeScreenShot(driver, scenarioContext)).Build();
-                var attachNetworkLogMedia = MediaEntityBuilder.CreateScreenCaptureFromPath(logFilePath).Build();
+                string logFilePath = SaveNetworkLogs(driver);
+                var attachScreenshot = MediaEntityBuilder.CreateScreenCaptureFromPath(TakeScreenShot(driver, scenarioContext)).Build();
+                var attachNetworkLog = MediaEntityBuilder.CreateScreenCaptureFromPath(logFilePath).Build();
 
-                if (stepType == "Given")
-                    scenario.CreateNode<Given>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia)
-                        .Fail("Network Logs", attachNetworkLogMedia);
-                else if (stepType == "When")
-                    scenario.CreateNode<When>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia)
-                        .Fail("Network Logs", attachNetworkLogMedia);
-                else if (stepType == "Then")
-                    scenario.CreateNode<Then>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia)
-                        .Fail("Network Logs", attachNetworkLogMedia);
-                else if (stepType == "And")
-                    scenario.CreateNode<And>(stepName).Fail($"Message: \n {failureMesage} \n StackTrace: \n {stackTrace}", attachScreenshotMedia)
-                        .Fail("Network Logs", attachNetworkLogMedia);
+                CreateStepNode(stepType, stepName)
+                    .Fail($"Message: {failureMessage}\nStackTrace: {stackTrace}", attachScreenshot)
+                    .Fail("Network Logs", attachNetworkLog);
             }
         }
 
         public void ExtentReportTearDown()
         {
-            extent.Flush();
+            _extent.Flush();
         }
 
-        public string TakeScreenShot(IWebDriver driver, ScenarioContext scenarioContext)
+        private ExtentTest CreateStepNode(string stepType, string stepName)
         {
-            ITakesScreenshot takeScreenshot = (ITakesScreenshot)driver;
-            Screenshot screenshot = takeScreenshot.GetScreenshot();
-            string screenShotLocation = Path.Combine(screenshotPath, scenarioContext.ScenarioInfo.Title + DateTime.Now.ToString("_yyyy_MM_dd_HH_mm_ss") + ".png");
-            screenshot.SaveAsFile(screenShotLocation);
-            return screenShotLocation;
+            return stepType switch
+            {
+                "Given" => _scenario.CreateNode<Given>(stepName),
+                "When" => _scenario.CreateNode<When>(stepName),
+                "Then" => _scenario.CreateNode<Then>(stepName),
+                "And" => _scenario.CreateNode<And>(stepName),
+                _ => _scenario.CreateNode<And>(stepName)
+            };
+        }
+
+        private string TakeScreenShot(IWebDriver driver, ScenarioContext scenarioContext)
+        {
+            ITakesScreenshot screenshotDriver = (ITakesScreenshot)driver;
+            Screenshot screenshot = screenshotDriver.GetScreenshot();
+            string screenshotLocation = Path.Combine(ScreenshotPath, $"{scenarioContext.ScenarioInfo.Title}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.png");
+            screenshot.SaveAsFile(screenshotLocation);
+            return screenshotLocation;
+        }
+
+        private string SaveNetworkLogs(IWebDriver driver)
+        {
+            var logs = driver.Manage().Logs.GetLog(LogType.Performance);
+            string logFilePath = Path.Combine(NetworkLogPath, $"NetworkLog_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.log");
+            File.WriteAllLines(logFilePath, logs.Select(log => log.ToString()));
+            return logFilePath;
         }
     }
 }

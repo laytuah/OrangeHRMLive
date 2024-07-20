@@ -1,24 +1,36 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Configuration;
 
 namespace OrangeHRMLive.Configuration
 {
     public static class ConfigurationManager
     {
-        private static IConfiguration Configuration;
+        private static readonly IConfiguration _configuration;
 
         static ConfigurationManager()
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            Configuration = builder.Build();
+            _configuration = builder.Build();
         }
 
-        public static string BrowserName => Configuration["Browser"];
-        public static string Url => Configuration["Site Url"];
-        public static string TesterName => Configuration["Tester Name"];
-        public static string MobileDeviceName => Configuration["Mobile Device Name"];
-        public static bool Headless => bool.Parse(Configuration["Headless"]);
-        public static bool PrivateBrowser => bool.Parse(Configuration["Private Browser"]);
+        public static string BrowserName => GetConfigurationValue("Browser");
+        public static string Url => GetConfigurationValue("Site Url");
+        public static string TesterName => GetConfigurationValue("Tester Name");
+        public static string MobileDeviceName => GetConfigurationValue("Mobile Device Name");
+        public static bool Headless => bool.Parse(GetConfigurationValue("Headless"));
+        public static bool PrivateBrowser => bool.Parse(GetConfigurationValue("Private Browser"));
+
+        private static string GetConfigurationValue(string key)
+        {
+            var value = _configuration[key];
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ConfigurationErrorsException($"Configuration value for '{key}' is missing or empty.");
+            }
+            return value;
+        }
     }
 }
+

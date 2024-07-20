@@ -7,33 +7,33 @@ namespace OrangeHRMLive.StepDefinitions
     [Binding]
     public class HRMLoginStepDefinitions
     {
-        LoginPage loginPage;
-        BasePage basePage;
-        HomePage homepage;
-        public HRMLoginStepDefinitions(LoginPage _loginPage, BasePage _basePage, HomePage _homepage)
+        private readonly LoginPage _loginPage;
+        private readonly BasePage _basePage;
+        private readonly HomePage _homepage;
+        public HRMLoginStepDefinitions(LoginPage loginPage, BasePage basePage, HomePage homepage)
         {
-            loginPage = _loginPage;
-            basePage = _basePage;
-            homepage = _homepage;
+            _loginPage = loginPage;
+            _basePage = basePage;
+            _homepage = homepage;
         }
 
         [StepDefinition(@"that user navigates to HRMLive page")]
         public void GivenThatUserNavigatesToHRMLivePage()
         {
-            basePage.LoadAUT();
+            _basePage.LoadAUT();
         }
 
         [StepDefinition(@"the user supplies the provided login details")]
         public void WhenTheUserSuppliesTheProvidedLoginDetails()
         {
-            loginPage.Login();
+            _loginPage.Login();
         }
 
         [StepDefinition(@"the user must land on the homepage")]
         public void ThenTheUserMustLandOnTheHomepage()
         {
-            homepage.GetHomePageConfirmation().Should().BeTrue();
-            homepage.IsSidePanelDisplayed().Should().BeFalse();
+            _homepage.IsPieChartDispalyed().Should().BeTrue();
+            _homepage.IsSidePanelDisplayed().Should().BeTrue();
         }
     }
 }

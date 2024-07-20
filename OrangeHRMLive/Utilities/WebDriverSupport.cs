@@ -9,12 +9,13 @@ namespace OrangeHRMLive.Utilities
 {
     public class WebDriverSupport
     {
-        //private IObjectContainer objectContainer;
-        private IWebDriver driver;
-        //public WebDriverSupport(IObjectContainer _objectContainer)
-        //{
-        //    objectContainer = _objectContainer;
-        //}
+        private readonly IObjectContainer _objectContainer;
+        private IWebDriver _driver;
+
+        public WebDriverSupport(IObjectContainer objectContainer)
+        {
+            _objectContainer = objectContainer;
+        }
 
         public void InitializeBrowser(string browserName)
         {
@@ -23,53 +24,58 @@ namespace OrangeHRMLive.Utilities
 
             Action setupAction = browserName.ToLower() switch
             {
-                "edge" => () =>
-                {
-                    var options = new EdgeOptions();
-                    options.SetLoggingPreference(LogType.Performance, LogLevel.All);
-                    if (headless) options.AddArgument("headless");
-                    if (incognito) options.AddArgument("inprivate");
-                    driver = new EdgeDriver();
-                }
-                ,
-                "chrome" => () =>
-                {
-                    var options = new ChromeOptions();
-                    options.SetLoggingPreference(LogType.Performance, LogLevel.All);
-                    if (headless) options.AddArgument("headless");
-                    if (incognito) options.AddArgument("incognito");
-                    driver = new ChromeDriver(options);
-                }
-                ,
-                "firefox" => () =>
-                {
-                    var options = new FirefoxOptions();
-                    if (headless) options.AddArgument("-headless");
-                    if (incognito) options.AddArgument("-private");
-                    driver = new FirefoxDriver(options);
-                }
-                ,
-                "mobile" => () =>
-                {
-                    var options = new ChromeOptions();
-                    options.EnableMobileEmulation(ConfigurationManager.MobileDeviceName);
-                    options.SetLoggingPreference(LogType.Performance, LogLevel.All);
-                    if (headless) options.AddArgument("headless");
-                    if (incognito) options.AddArgument("incognito");
-                    driver = new ChromeDriver(options);
-                }
-                ,
-                _ => throw new Exception("Unknown browser selected")
+                "edge" => () => _driver = SetupEdgeDriver(headless, incognito),
+                "chrome" => () => _driver = SetupChromeDriver(headless, incognito),
+                "firefox" => () => _driver = SetupFirefoxDriver(headless, incognito),
+                "mobile" => () => _driver = SetupMobileDriver(headless, incognito),
+                _ => throw new ArgumentException($"Unknown browser: {browserName}")
             };
-            setupAction();
-            //objectContainer.RegisterInstanceAs<IWebDriver>(driver);
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+            setupAction.Invoke();
+            _objectContainer.RegisterInstanceAs(_driver);
+            _driver.Manage().Window.Maximize();
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
         public void CloseAUT()
         {
-            driver.Quit();
+            _driver.Quit();
+        }
+
+        private IWebDriver SetupEdgeDriver(bool headless, bool incognito)
+        {
+            var options = new EdgeOptions();
+            options.SetLoggingPreference(LogType.Performance, LogLevel.All);
+            if (headless) options.AddArgument("headless");
+            if (incognito) options.AddArgument("inprivate");
+            return new EdgeDriver(options);
+        }
+
+        private IWebDriver SetupChromeDriver(bool headless, bool incognito)
+        {
+            var options = new ChromeOptions();
+            options.SetLoggingPreference(LogType.Performance, LogLevel.All);
+            if (headless) options.AddArgument("headless");
+            if (incognito) options.AddArgument("incognito");
+            return new ChromeDriver(options);
+        }
+
+        private IWebDriver SetupFirefoxDriver(bool headless, bool incognito)
+        {
+            var options = new FirefoxOptions();
+            if (headless) options.AddArgument("-headless");
+            if (incognito) options.AddArgument("-private");
+            return new FirefoxDriver(options);
+        }
+
+        private IWebDriver SetupMobileDriver(bool headless, bool incognito)
+        {
+            var options = new ChromeOptions();
+            options.EnableMobileEmulation(ConfigurationManager.MobileDeviceName);
+            options.SetLoggingPreference(LogType.Performance, LogLevel.All);
+            if (headless) options.AddArgument("headless");
+            if (incognito) options.AddArgument("incognito");
+            return new ChromeDriver(options);
         }
     }
 }

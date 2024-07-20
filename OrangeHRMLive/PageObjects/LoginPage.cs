@@ -4,30 +4,26 @@ namespace OrangeHRMLive.PageObjects
 {
     public class LoginPage : BasePage
     {
-        public LoginPage(IWebDriver _driver) : base(_driver)
-        {
-            driver = _driver;
-        }
+        public LoginPage(IWebDriver driver) : base(driver) { }
 
-        #region Locators
-        protected IWebElement UsernameText => driver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Username')]"));
-        protected IWebElement UsernameField => driver.FindElement(By.XPath("//input[@name='username' and @placeholder='Username']"));
-        protected IWebElement PasswordText => driver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Password')]"));
-        protected IWebElement PasswordField => driver.FindElement(By.XPath("//input[@name='password' and @placeholder='Password']"));
-        protected IWebElement LoginButton => driver.FindElement(By.XPath("//button[contains(@class,'login-button')]"));
+        private IWebElement UsernameText => Driver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Username')]"));
+        private IWebElement UsernameField => Driver.FindElement(By.XPath("//input[@name='username' and @placeholder='Username']"));
+        private IWebElement PasswordText => Driver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Password')]"));
+        private IWebElement PasswordField => Driver.FindElement(By.XPath("//input[@name='password' and @placeholder='Password']"));
+        private IWebElement LoginButton => Driver.FindElement(By.XPath("//button[contains(@class,'login-button')]"));
 
-        #endregion
-
-        #region Actions
         public void Login()
         {
             UsernameField.Clear();
-            UsernameField.SendKeys((UsernameText.Text.Split(':'))[1].Trim());
+            UsernameField.SendKeys(ExtractText(UsernameText));
             PasswordField.Clear();
-            PasswordField.SendKeys((PasswordText.Text.Split(':'))[1].Trim());
+            PasswordField.SendKeys(ExtractText(PasswordText));
             LoginButton.Click();
         }
 
-        #endregion
+        private static string ExtractText(IWebElement element)
+        {
+            return element.Text.Split(':')[1].Trim();
+        }
     }
 }

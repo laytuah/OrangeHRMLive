@@ -5,20 +5,22 @@ namespace OrangeHRMLive.PageObjects
 {
     public class BasePage
     {
-        protected IWebDriver driver;
-        public BasePage(IWebDriver _driver)
+        protected IWebDriver Driver { get; }
+
+        public BasePage(IWebDriver driver)
         {
-            driver = _driver;
-        }
-        public void LoadAUT()
-        {
-            driver.Navigate().GoToUrl(ConfigurationManager.Url);
+            Driver = driver;
         }
 
-        public void ScrollToElement(IWebElement locator)
+        public void LoadAUT()
         {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
-            js.ExecuteScript("arguments[0].scrollIntoView(true);", locator);
+            Driver.Navigate().GoToUrl(ConfigurationManager.Url);
+        }
+
+        public void ScrollToElement(IWebElement element)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
+            js.ExecuteScript("arguments[0].scrollIntoView(true);", element);
         }
     }
 }
