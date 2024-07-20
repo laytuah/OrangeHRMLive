@@ -1,4 +1,5 @@
 ﻿using BoDi;
+using MongoDB.Driver;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
@@ -40,6 +41,11 @@ namespace OrangeHRMLive.Utilities
         public void CloseAUT()
         {
             _driver.Quit();
+        }
+
+        public IWebDriver GetDriver()
+        {
+            return _driver;
         }
 
         private IWebDriver SetupEdgeDriver(bool headless, bool incognito)
