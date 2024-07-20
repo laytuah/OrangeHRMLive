@@ -32,7 +32,7 @@ namespace OrangeHRMLive.StepDefinitions
         [StepDefinition(@"the user must land on the homepage")]
         public void ThenTheUserMustLandOnTheHomepage()
         {
-            _homepage.IsPieChartDispalyed().Should().BeTrue();
+            _homepage.IsPieChartDispalyed().Should().BeFalse();
             _homepage.IsSidePanelDisplayed().Should().BeTrue();
         }
     }

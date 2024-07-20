@@ -7,54 +7,54 @@ namespace OrangeHRMLive.Hooks
     [Binding]
     internal class Hooks
     {
-        private readonly WebDriverSupport webDriverSupport;
-        private static ExtentReport extentReport;
-        public Hooks(WebDriverSupport _webDriverSupport, ExtentReport _extentReport)
+        private readonly WebDriverSupport _webDriverSupport;
+        private static ExtentReport _extentReport;
+        public Hooks(WebDriverSupport webDriverSupport, ExtentReport extentReport)
         {
-            webDriverSupport = _webDriverSupport;
-            extentReport = _extentReport;
+            _webDriverSupport = webDriverSupport;
+            _extentReport = extentReport;
         }
 
         static Hooks()
         {
-            extentReport = new ExtentReport();
+            _extentReport = new ExtentReport();
         }
 
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-            extentReport.ExtentReportInitialization();
+            _extentReport.ExtentReportInitialization();
         }
 
         [BeforeFeature]
         public static void BeforeFeature(FeatureContext featureContext)
         {
-            extentReport.BeforeFeature(featureContext);
+            _extentReport.BeforeFeature(featureContext);
         }
 
         [BeforeScenario]
         public void BeforeScenario(ScenarioContext scenarioContext)
         {
-            webDriverSupport.InitializeBrowser(ConfigurationManager.BrowserName);
-            extentReport.BeforeScenario(scenarioContext);
+            _webDriverSupport.InitializeBrowser(ConfigurationManager.BrowserName);
+            _extentReport.BeforeScenario(scenarioContext);
         }
 
         [AfterStep]
         public void AfterStep(ScenarioContext scenarioContext)
         {
-            extentReport.AfterStep(scenarioContext, webDriverSupport.GetDriver());
+            _extentReport.AfterStep(scenarioContext, _webDriverSupport.GetDriver());
         }
 
         [AfterScenario]
         public void CloseBrowser()
         {
-            webDriverSupport.CloseAUT();
+            _webDriverSupport.CloseAUT();
         }
 
         [AfterTestRun]
         public static void AfterTest()
         {
-            extentReport.ExtentReportTearDown();
+            _extentReport.ExtentReportTearDown();
         }
     }
 }
