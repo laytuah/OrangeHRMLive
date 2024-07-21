@@ -8,24 +8,26 @@ namespace OrangeHRMLive.Hooks
     internal class Hooks
     {
         private readonly WebDriverSupport _webDriverSupport;
-        private static TestReport _testReport;
+        private readonly TestReport _testReport;
+        private static TestReport _staticTestReport;
 
-        public Hooks(WebDriverSupport webDriverSupport)
+        public Hooks(WebDriverSupport webDriverSupport, TestReport testReport)
         {
             _webDriverSupport = webDriverSupport;
+            _testReport = testReport;
         }
 
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-            _testReport = new TestReport();
-            _testReport.ExtentReportInitialization();
+            _staticTestReport = new TestReport();
+            _staticTestReport.ExtentReportInitialization();
         }
 
         [BeforeFeature]
         public static void BeforeFeature(FeatureContext featureContext)
         {
-            _testReport.BeforeFeature(featureContext);
+            _staticTestReport.BeforeFeature(featureContext);
         }
 
         [BeforeScenario]
@@ -50,133 +52,7 @@ namespace OrangeHRMLive.Hooks
         [AfterTestRun]
         public static void AfterTestRun()
         {
-            _testReport.ExtentReportTearDown();
+            _staticTestReport.ExtentReportTearDown();
         }
     }
 }
-//using OrangeHRMLive.Configuration;
-//using OrangeHRMLive.Utilities;
-//using TechTalk.SpecFlow;
-
-//namespace OrangeHRMLive.Hooks
-//{
-//    [Binding]
-//    internal class Hooks
-//    {
-//        private readonly WebDriverSupport _webDriverSupport;
-//        private static ExtentReport _extentReport;
-//        public Hooks(WebDriverSupport webDriverSupport, ExtentReport extentReport)
-//        {
-//            _webDriverSupport = webDriverSupport;
-//            _extentReport = extentReport;
-//        }
-
-//        static Hooks()
-//        {
-//            _extentReport = new ExtentReport();
-//        }
-
-//        [BeforeTestRun]
-//        public static void BeforeTestRun()
-//        {
-//            _extentReport.ExtentReportInitialization();
-//        }
-
-//        [BeforeFeature]
-//        public static void BeforeFeature(FeatureContext featureContext)
-//        {
-//            _extentReport.BeforeFeature(featureContext);
-//        }
-
-//        [BeforeScenario]
-//        public void BeforeScenario(ScenarioContext scenarioContext)
-//        {
-//            _webDriverSupport.InitializeBrowser(ConfigurationManager.BrowserName);
-//            _extentReport.BeforeScenario(scenarioContext);
-//        }
-
-//        [AfterStep]
-//        public void AfterStep(ScenarioContext scenarioContext)
-//        {
-//            _extentReport.AfterStep(scenarioContext, _webDriverSupport.GetDriver());
-//        }
-
-//        [AfterScenario]
-//        public void CloseBrowser()
-//        {
-//            _webDriverSupport.CloseAUT();
-//        }
-
-//        [AfterTestRun]
-//        public static void AfterTest()
-//        {
-//            _extentReport.ExtentReportTearDown();
-//        }
-//    }
-//}
-
-//using OrangeHRMLive.Configuration;
-//using OrangeHRMLive.Utilities;
-//using TechTalk.SpecFlow;
-
-//namespace OrangeHRMLive.Hooks
-//{
-//    [Binding]
-//    internal class Hooks
-//    {
-//        private readonly WebDriverSupport _webDriverSupport;
-//        private readonly ExtentReport _extentReport;
-
-//        public Hooks(WebDriverSupport webDriverSupport, ExtentReport extentReport)
-//        {
-//            _webDriverSupport = webDriverSupport;
-//            _extentReport = extentReport;
-//        }
-
-//        // Static methods for BeforeTestRun, AfterTestRun, BeforeFeature, AfterFeature
-//        [BeforeTestRun]
-//        public static void BeforeTestRun()
-//        {
-//            // Static instance of ExtentReport to be used in static context
-//            var extentReport = new ExtentReport();
-//            extentReport.ExtentReportInitialization();
-//        }
-
-//        [BeforeFeature]
-//        public static void BeforeFeature(FeatureContext featureContext)
-//        {
-//            // Static instance of ExtentReport to be used in static context
-//            var extentReport = new ExtentReport();
-//            extentReport.BeforeFeature(featureContext);
-//        }
-
-//        [AfterTestRun]
-//        public static void AfterTestRun()
-//        {
-//            // Static instance of ExtentReport to be used in static context
-//            var extentReport = new ExtentReport();
-//            extentReport.ExtentReportTearDown();
-//        }
-
-//        // Instance methods for BeforeScenario, AfterScenario, and AfterStep
-//        [BeforeScenario]
-//        public void BeforeScenario(ScenarioContext scenarioContext)
-//        {
-//            _webDriverSupport.InitializeBrowser(ConfigurationManager.BrowserName);
-//            _extentReport.BeforeScenario(scenarioContext);
-//        }
-
-//        [AfterStep]
-//        public void AfterStep(ScenarioContext scenarioContext)
-//        {
-//            _extentReport.AfterStep(scenarioContext, _webDriverSupport.GetDriver());
-//        }
-
-//        [AfterScenario]
-//        public void AfterScenario()
-//        {
-//            _webDriverSupport.CloseAUT();
-//        }
-//    }
-//}
-
