@@ -8,38 +8,37 @@ namespace OrangeHRMLive.Hooks
     internal class Hooks
     {
         private readonly WebDriverSupport _webDriverSupport;
-        private static ExtentReport _extentReport;
+        private static TestReport _testReport;
 
-        public Hooks(WebDriverSupport webDriverSupport, ExtentReport extentReport)
+        public Hooks(WebDriverSupport webDriverSupport)
         {
             _webDriverSupport = webDriverSupport;
-            _extentReport = extentReport;
         }
 
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-            _extentReport = new ExtentReport();
-            _extentReport.ExtentReportInitialization();
+            _testReport = new TestReport();
+            _testReport.ExtentReportInitialization();
         }
 
         [BeforeFeature]
         public static void BeforeFeature(FeatureContext featureContext)
         {
-            _extentReport.BeforeFeature(featureContext);
+            _testReport.BeforeFeature(featureContext);
         }
 
         [BeforeScenario]
         public void BeforeScenario(ScenarioContext scenarioContext)
         {
             _webDriverSupport.InitializeBrowser(ConfigurationManager.BrowserName);
-            _extentReport.BeforeScenario(scenarioContext);
+            _testReport.BeforeScenario(scenarioContext);
         }
 
         [AfterStep]
         public void AfterStep(ScenarioContext scenarioContext)
         {
-            _extentReport.AfterStep(scenarioContext, _webDriverSupport.GetDriver());
+            _testReport.AfterStep(scenarioContext, _webDriverSupport.GetDriver());
         }
 
         [AfterScenario]
@@ -51,7 +50,7 @@ namespace OrangeHRMLive.Hooks
         [AfterTestRun]
         public static void AfterTestRun()
         {
-            _extentReport.ExtentReportTearDown();
+            _testReport.ExtentReportTearDown();
         }
     }
 }

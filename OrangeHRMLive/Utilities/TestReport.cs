@@ -8,7 +8,7 @@ using TechTalk.SpecFlow;
 
 namespace OrangeHRMLive.Utilities
 {
-    public class ExtentReport
+    public class TestReport
     {
         private static ExtentReports _extent;
         private static ExtentTest _feature;
