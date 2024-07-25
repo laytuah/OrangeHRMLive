@@ -1,5 +1,4 @@
 ﻿using BoDi;
-using MongoDB.Driver;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;

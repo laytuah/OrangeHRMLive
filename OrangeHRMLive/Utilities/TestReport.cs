@@ -11,7 +11,9 @@ namespace OrangeHRMLive.Utilities
     public class TestReport
     {
         private static ExtentReports _extent;
+        [ThreadStatic]
         private static ExtentTest _feature;
+        [ThreadStatic]
         private static ExtentTest _scenario;
 
         private static readonly string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory;
