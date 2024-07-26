@@ -4,7 +4,6 @@ using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
 using OpenQA.Selenium;
 using OrangeHRMLive.Configuration;
-using System.Diagnostics;
 using TechTalk.SpecFlow;
 
 namespace OrangeHRMLive.Utilities
@@ -58,7 +57,7 @@ namespace OrangeHRMLive.Utilities
             {
                 string failureMessage = scenarioContext.TestError.Message;
                 string? stackTrace = scenarioContext.TestError?.StackTrace;
-                string logFilePath = SaveNetworkLogs(driver);
+                string logFilePath = SaveNetworkLogs(driver, scenarioContext);
                 var attachScreenshot = MediaEntityBuilder.CreateScreenCaptureFromPath(TakeScreenShot(driver, scenarioContext)).Build();
                 var attachNetworkLog = MediaEntityBuilder.CreateScreenCaptureFromPath(logFilePath).Build();
 
@@ -95,11 +94,11 @@ namespace OrangeHRMLive.Utilities
             return screenshotLocation;
         }
 
-        string SaveNetworkLogs(IWebDriver driver)
+        string SaveNetworkLogs(IWebDriver driver, ScenarioContext scenarioContext)
         {
             var logs = driver.Manage().Logs.GetLog(LogType.Performance);
             string threadId = Thread.CurrentThread.ManagedThreadId.ToString();
-            string logFilePath = Path.Combine(NetworkLogPath, $"NetworkLog_{threadId}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.log");
+            string logFilePath = Path.Combine(NetworkLogPath, $"{scenarioContext.ScenarioInfo.Title}_{threadId}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.log");
             File.WriteAllLines(logFilePath, logs.Select(log => log.ToString()));
             return logFilePath;
         }
