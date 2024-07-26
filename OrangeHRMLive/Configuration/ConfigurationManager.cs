@@ -5,7 +5,7 @@ namespace OrangeHRMLive.Configuration
 {
     public static class ConfigurationManager
     {
-        private static readonly IConfiguration _configuration;
+        static readonly IConfiguration _configuration;
 
         static ConfigurationManager()
         {
@@ -22,7 +22,7 @@ namespace OrangeHRMLive.Configuration
         public static bool Headless => bool.Parse(GetConfigurationValue("Headless"));
         public static bool PrivateBrowser => bool.Parse(GetConfigurationValue("Private Browser"));
 
-        private static string GetConfigurationValue(string key)
+        static string GetConfigurationValue(string key)
         {
             var value = _configuration[key];
             if (string.IsNullOrWhiteSpace(value))

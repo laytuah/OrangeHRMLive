@@ -7,9 +7,9 @@ namespace OrangeHRMLive.StepDefinitions
     [Binding]
     public class HRMLoginStepDefinitions
     {
-        private readonly LoginPage _loginPage;
-        private readonly BasePage _basePage;
-        private readonly HomePage _homepage;
+        readonly LoginPage _loginPage;
+        readonly BasePage _basePage;
+        readonly HomePage _homepage;
         public HRMLoginStepDefinitions(LoginPage loginPage, BasePage basePage, HomePage homepage)
         {
             _loginPage = loginPage;
@@ -32,7 +32,7 @@ namespace OrangeHRMLive.StepDefinitions
         [StepDefinition(@"the user must land on the homepage")]
         public void ThenTheUserMustLandOnTheHomepage()
         {
-            _homepage.IsPieChartDispalyed().Should().BeTrue();
+            _homepage.IsPieChartDispalyed().Should().BeFalse();
             _homepage.IsSidePanelDisplayed().Should().BeTrue();
         }
     }

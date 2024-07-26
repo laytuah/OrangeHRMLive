@@ -9,8 +9,8 @@ namespace OrangeHRMLive.Utilities
 {
     public class WebDriverSupport
     {
-        private readonly IObjectContainer _objectContainer;
-        private IWebDriver _driver;
+        readonly IObjectContainer _objectContainer;
+        IWebDriver _driver;
 
         public WebDriverSupport(IObjectContainer objectContainer)
         {
@@ -47,7 +47,7 @@ namespace OrangeHRMLive.Utilities
             return _driver;
         }
 
-        private IWebDriver SetupEdgeDriver(bool headless, bool incognito)
+        IWebDriver SetupEdgeDriver(bool headless, bool incognito)
         {
             var options = new EdgeOptions();
             options.SetLoggingPreference(LogType.Performance, LogLevel.All);
@@ -56,7 +56,7 @@ namespace OrangeHRMLive.Utilities
             return new EdgeDriver(options);
         }
 
-        private IWebDriver SetupChromeDriver(bool headless, bool incognito)
+        IWebDriver SetupChromeDriver(bool headless, bool incognito)
         {
             var options = new ChromeOptions();
             options.SetLoggingPreference(LogType.Performance, LogLevel.All);
@@ -65,7 +65,7 @@ namespace OrangeHRMLive.Utilities
             return new ChromeDriver(options);
         }
 
-        private IWebDriver SetupFirefoxDriver(bool headless, bool incognito)
+        IWebDriver SetupFirefoxDriver(bool headless, bool incognito)
         {
             var options = new FirefoxOptions();
             if (headless) options.AddArgument("-headless");
@@ -73,7 +73,7 @@ namespace OrangeHRMLive.Utilities
             return new FirefoxDriver(options);
         }
 
-        private IWebDriver SetupMobileDriver(bool headless, bool incognito)
+        IWebDriver SetupMobileDriver(bool headless, bool incognito)
         {
             var options = new ChromeOptions();
             options.EnableMobileEmulation(ConfigurationManager.MobileDeviceName);

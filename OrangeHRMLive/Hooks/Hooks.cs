@@ -2,14 +2,15 @@
 using OrangeHRMLive.Utilities;
 using TechTalk.SpecFlow;
 
+[assembly: Parallelizable(ParallelScope.Fixtures)]
 namespace OrangeHRMLive.Hooks
 {
     [Binding]
     internal class Hooks
     {
-        private readonly WebDriverSupport _webDriverSupport;
-        private readonly TestReport _testReport;
-        private static TestReport _staticTestReport;
+        readonly WebDriverSupport _webDriverSupport;
+        readonly TestReport _testReport;
+        static TestReport _staticTestReport;
 
         public Hooks(WebDriverSupport webDriverSupport, TestReport testReport)
         {

@@ -1,5 +1,5 @@
 ﻿Feature: HRMLogin
-
+	Add a new employee, delete employee, update record
 Background:
 	Given that user navigates to HRMLive page
 	When the user supplies the provided login details

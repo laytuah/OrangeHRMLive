@@ -4,22 +4,23 @@ using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
 using OpenQA.Selenium;
 using OrangeHRMLive.Configuration;
+using System.Diagnostics;
 using TechTalk.SpecFlow;
 
 namespace OrangeHRMLive.Utilities
 {
     public class TestReport
     {
-        private static ExtentReports _extent;
+        static ExtentReports _extent;
         [ThreadStatic]
-        private static ExtentTest _feature;
+        static ExtentTest _feature;
         [ThreadStatic]
-        private static ExtentTest _scenario;
+        static ExtentTest _scenario;
 
-        private static readonly string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        private static readonly string ReportPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Reports");
-        private static readonly string ScreenshotPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Screenshots");
-        private static readonly string NetworkLogPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\NetworkLogs");
+        static readonly string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        static readonly string ReportPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Reports");
+        static readonly string ScreenshotPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Screenshots");
+        static readonly string NetworkLogPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\NetworkLogs");
 
         public void ExtentReportInitialization()
         {
@@ -72,7 +73,7 @@ namespace OrangeHRMLive.Utilities
             _extent.Flush();
         }
 
-        private ExtentTest CreateStepNode(string stepType, string stepName)
+        ExtentTest CreateStepNode(string stepType, string stepName)
         {
             return stepType switch
             {
@@ -84,19 +85,21 @@ namespace OrangeHRMLive.Utilities
             };
         }
 
-        private string TakeScreenShot(IWebDriver driver, ScenarioContext scenarioContext)
+        string TakeScreenShot(IWebDriver driver, ScenarioContext scenarioContext)
         {
             ITakesScreenshot screenshotDriver = (ITakesScreenshot)driver;
             Screenshot screenshot = screenshotDriver.GetScreenshot();
-            string screenshotLocation = Path.Combine(ScreenshotPath, $"{scenarioContext.ScenarioInfo.Title}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.png");
+            string threadId = Thread.CurrentThread.ManagedThreadId.ToString();
+            string screenshotLocation = Path.Combine(ScreenshotPath, $"{scenarioContext.ScenarioInfo.Title}_{threadId}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.png");
             screenshot.SaveAsFile(screenshotLocation);
             return screenshotLocation;
         }
 
-        private string SaveNetworkLogs(IWebDriver driver)
+        string SaveNetworkLogs(IWebDriver driver)
         {
             var logs = driver.Manage().Logs.GetLog(LogType.Performance);
-            string logFilePath = Path.Combine(NetworkLogPath, $"NetworkLog_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.log");
+            string threadId = Thread.CurrentThread.ManagedThreadId.ToString();
+            string logFilePath = Path.Combine(NetworkLogPath, $"NetworkLog_{threadId}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.log");
             File.WriteAllLines(logFilePath, logs.Select(log => log.ToString()));
             return logFilePath;
         }
