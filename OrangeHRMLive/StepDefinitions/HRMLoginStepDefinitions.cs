@@ -1,3 +1,4 @@
+using BoDi;
 using FluentAssertions;
 using OrangeHRMLive.PageObjects;
 using TechTalk.SpecFlow;
@@ -9,12 +10,13 @@ namespace OrangeHRMLive.StepDefinitions
     {
         readonly LoginPage _loginPage;
         readonly BasePage _basePage;
-        readonly HomePage _homepage;
-        public HRMLoginStepDefinitions(LoginPage loginPage, BasePage basePage, HomePage homepage)
+        readonly HomePage _homePage;
+
+        public HRMLoginStepDefinitions(IObjectContainer objectContainer)
         {
-            _loginPage = loginPage;
-            _basePage = basePage;
-            _homepage = homepage;
+            _basePage = objectContainer.Resolve<BasePage>();
+            _loginPage = objectContainer.Resolve<LoginPage>();
+            _homePage = objectContainer.Resolve<HomePage>();
         }
 
         [StepDefinition(@"that user navigates to HRMLive page")]
@@ -32,8 +34,8 @@ namespace OrangeHRMLive.StepDefinitions
         [StepDefinition(@"the user must land on the homepage")]
         public void ThenTheUserMustLandOnTheHomepage()
         {
-            _homepage.IsPieChartDispalyed().Should().BeFalse();
-            _homepage.IsSidePanelDisplayed().Should().BeTrue();
+            _homePage.IsPieChartDispalyed().Should().BeFalse();
+            _homePage.IsSidePanelDisplayed().Should().BeTrue();
         }
     }
 }
