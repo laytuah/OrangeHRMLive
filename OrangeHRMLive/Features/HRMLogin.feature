@@ -6,3 +6,5 @@ Background:
 
 Scenario: User can login with details provided on page for login
 	Then the user must land on the homepage
+
+Scenario: User can login with details provided on page for logi
