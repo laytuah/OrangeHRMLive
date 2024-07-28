@@ -12,6 +12,11 @@ namespace OrangeHRMLive.PageObjects
             Driver = driver;
         }
 
+        protected IWebElement Mainmenu_item(string itemName) => Driver.FindElement(By.XPath($"//span[@class='oxd-text oxd-text--span oxd-main-menu-item--name' and text()='{itemName}']"));
+        protected IWebElement Button(string buttonText) => Driver.FindElement(By.XPath($"//button[@type='button' and normalize-space(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))='{buttonText}']"));
+        
+
+
         public void LoadAUT()
         {
             Driver.Navigate().GoToUrl(ConfigurationManager.Url);

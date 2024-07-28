@@ -37,5 +37,18 @@ namespace OrangeHRMLive.StepDefinitions
             _homePage.IsPieChartDispalyed().Should().BeTrue();
             _homePage.IsSidePanelDisplayed().Should().BeTrue();
         }
+
+        [StepDefinition(@"the user adds a new employee record")]
+        public void WhenTheUserAddsANewEmployeeRecord()
+        {
+            throw new PendingStepException();
+        }
+
+        [StepDefinition(@"newly created record must be found on employee list")]
+        public void ThenNewlyCreatedRecordMustBeFoundOnEmployeeList()
+        {
+            throw new PendingStepException();
+        }
+
     }
 }

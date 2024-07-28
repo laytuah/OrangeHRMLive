@@ -7,4 +7,6 @@ Background:
 Scenario: User can login with details provided on page for login
 	Then the user must land on the homepage
 
-Scenario: User can login with details provided on page for logi
+Scenario: User can add a new employee record
+	When the user adds a new employee record
+	Then newly created record must be found on employee list
