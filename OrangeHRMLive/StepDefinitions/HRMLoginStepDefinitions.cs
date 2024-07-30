@@ -11,12 +11,14 @@ namespace OrangeHRMLive.StepDefinitions
         readonly LoginPage _loginPage;
         readonly BasePage _basePage;
         readonly HomePage _homePage;
+        readonly PIMPage _pimPage;
 
         public HRMLoginStepDefinitions(IObjectContainer objectContainer)
         {
             _basePage = objectContainer.Resolve<BasePage>();
             _loginPage = objectContainer.Resolve<LoginPage>();
             _homePage = objectContainer.Resolve<HomePage>();
+            _pimPage = objectContainer.Resolve<PIMPage>();
         }
 
         [StepDefinition(@"that user navigates to HRMLive page")]
@@ -41,7 +43,7 @@ namespace OrangeHRMLive.StepDefinitions
         [StepDefinition(@"the user adds a new employee record")]
         public void WhenTheUserAddsANewEmployeeRecord()
         {
-            throw new PendingStepException();
+            _pimPage.RegisterNewEmployee();
         }
 
         [StepDefinition(@"newly created record must be found on employee list")]

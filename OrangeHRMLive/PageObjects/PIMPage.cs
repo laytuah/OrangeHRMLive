@@ -7,7 +7,7 @@ namespace OrangeHRMLive.PageObjects
     {
         public PIMPage(IWebDriver driver): base(driver) { }
 
-        protected IWebElement TextField(string placeholder) => Driver.FindElement(By.XPath($"//input[normalize-space(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))='first name']"));
+        protected IWebElement TextField(string placeholder) => Driver.FindElement(By.XPath($"//input[normalize-space(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))='{placeholder}']"));
 
         public void RegisterNewEmployee()
         {
@@ -16,7 +16,7 @@ namespace OrangeHRMLive.PageObjects
             TextField("first name").SendKeys(DataGenerator.GenerateRandomString());
             TextField("middle name").SendKeys(DataGenerator.GenerateRandomString());
             TextField("last name").SendKeys(DataGenerator.GenerateRandomString());
-            Button("save");
+            Button("save").Click();
         }
     }
 }

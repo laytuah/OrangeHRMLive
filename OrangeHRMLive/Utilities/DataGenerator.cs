@@ -27,5 +27,14 @@ namespace OrangeHRMLive.Utilities
             }
             return result.ToString();
         }
+
+        public static string GenerateRandomDate(int desiredMinAge = -18, int desiredMaxAge = -100)
+        {
+            DateTime today = DateTime.Today;
+            DateTime minAge = today.AddDays(desiredMinAge);
+            int range = (desiredMaxAge - desiredMinAge);
+            DateTime randomDate = minAge.AddDays(random.Next(range + 1));
+            return randomDate.ToString("yyyy-MM-dd");
+        }
     }
 }
