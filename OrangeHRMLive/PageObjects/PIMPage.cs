@@ -12,11 +12,11 @@ namespace OrangeHRMLive.PageObjects
         public void RegisterNewEmployee()
         {
             Mainmenu_item("PIM").Click();
-            Button("add").Click();
+            Button_button("add").Click();
             TextField("first name").SendKeys(DataGenerator.GenerateRandomString());
             TextField("middle name").SendKeys(DataGenerator.GenerateRandomString());
             TextField("last name").SendKeys(DataGenerator.GenerateRandomString());
-            Button("save").Click();
+            Button_button("save").Click();
         }
     }
 }
