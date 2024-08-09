@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.Text;
 
 namespace OrangeHRMLive.Utilities
 {
@@ -7,7 +6,7 @@ namespace OrangeHRMLive.Utilities
     {
         static char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".ToCharArray();
         static char[] digits = "0123456789".ToCharArray();
-        static char[] alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".ToCharArray();
+        static char[] alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".ToCharArray();
         static Random random = new Random();
 
         public static string GenerateRandomString(int length = 10) => BuildString(length, letters);
