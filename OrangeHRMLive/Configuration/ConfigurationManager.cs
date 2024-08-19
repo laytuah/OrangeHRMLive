@@ -21,6 +21,7 @@ namespace OrangeHRMLive.Configuration
         public static string MobileDeviceName => GetConfigurationValue("Mobile Device Name");
         public static bool Headless => bool.Parse(GetConfigurationValue("Headless"));
         public static bool PrivateBrowser => bool.Parse(GetConfigurationValue("Private Browser"));
+        public static string LoadingIconXpath => (GetConfigurationValue("Loading Icon Xpath"));
 
         static string GetConfigurationValue(string key)
         {
