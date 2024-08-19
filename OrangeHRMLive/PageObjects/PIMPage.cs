@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OrangeHRMLive.Utilities;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace OrangeHRMLive.PageObjects
 {
@@ -10,7 +11,9 @@ namespace OrangeHRMLive.PageObjects
         protected IWebElement TextField(string text) => Driver.FindElement(By.XPath($"//input[normalize-space(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))=\"{text}\"] | //div[label[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=\"{text}\"]]/following-sibling::div//input"));
 
         protected IWebElement SelectField(int index = 1) => Driver.FindElement(By.XPath($"(//div[@class='oxd-select-text--after'])[{index}]"));
-        
+
+        protected IWebElement SelectGender(string gender) => Driver.FindElement(By.XPath($"//div[@class='--gender-grouped-field']//label[contains(.,\"{gender}\")]"));
+
 
         public void RegisterNewEmployee()
         {
@@ -27,6 +30,9 @@ namespace OrangeHRMLive.PageObjects
             Select_dropdown("single").Click();
             SelectField(3).Click();
             Select_dropdown("o+").Click();
+            SelectGender("Male").Click();
+            Button_button("save").Click();
+            Button_button("save", 2).Click();
         }
     }
 }
