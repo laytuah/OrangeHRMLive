@@ -18,6 +18,8 @@ public class CustomWebDriver : IWebDriver
     public void Quit() => Driver.Quit();
     public string CurrentWindowHandle => Driver.CurrentWindowHandle;
     public ReadOnlyCollection<string> WindowHandles => Driver.WindowHandles;
+    public ReadOnlyCollection<IWebElement> FindElements(By by) => Driver.FindElements(by);
+    public IWebElement FindElement(By by) => Driver.FindElement(by);
     public IWindow Window => Driver.Manage().Window;
     public IOptions Manage() => Driver.Manage();
     public ITargetLocator SwitchTo() => Driver.SwitchTo();
@@ -31,26 +33,14 @@ public class CustomWebDriver : IWebDriver
         get => Driver.Url;
         set => Driver.Url = value;
     }
-    public IWebElement FindElement(By by)
-    {
-        WaitForLoadingIconToDisappear();
-        return Driver.FindElement(by);
-    }
-    public ReadOnlyCollection<IWebElement> FindElements(By by)
-    {
-        WaitForLoadingIconToDisappear();
-        return Driver.FindElements(by);
-    }
     public void Click(By by)
     {
-        WaitForLoadingIconToDisappear();
         IWebElement element = Driver.FindElement(by);
         element.Click();
         WaitForLoadingIconToDisappear();
     }
     public void SendKeys(By by, string text)
     {
-        WaitForLoadingIconToDisappear();
         IWebElement element = Driver.FindElement(by);
         element.SendKeys(text);
         WaitForLoadingIconToDisappear();
