@@ -18,6 +18,7 @@ public class CustomWebDriver : IWebDriver
     public void Quit() => Driver.Quit();
     public string CurrentWindowHandle => Driver.CurrentWindowHandle;
     public ReadOnlyCollection<string> WindowHandles => Driver.WindowHandles;
+    public IWindow Window => Driver.Manage().Window;
     public IOptions Manage() => Driver.Manage();
     public ITargetLocator SwitchTo() => Driver.SwitchTo();
     public IJavaScriptExecutor JavaScriptExecutor => (IJavaScriptExecutor)Driver;
@@ -30,8 +31,6 @@ public class CustomWebDriver : IWebDriver
         get => Driver.Url;
         set => Driver.Url = value;
     }
-
-    public IWindow Window => Driver.Manage().Window;
     public IWebElement FindElement(By by)
     {
         WaitForLoadingIconToDisappear();
@@ -60,8 +59,12 @@ public class CustomWebDriver : IWebDriver
     {
         if (!string.IsNullOrEmpty(ConfigurationManager.LoadingIconXpath))
         {
-            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30));
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(ConfigurationManager.LoadingIconXpath)));
+            var loadingElements = Driver.FindElements(By.XPath(ConfigurationManager.LoadingIconXpath));
+            if (loadingElements.Count > 0 && loadingElements[0].Displayed)
+            {
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30));
+                wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(ConfigurationManager.LoadingIconXpath)));
+            }
         }
     }
 }
