@@ -51,6 +51,5 @@ namespace OrangeHRMLive.StepDefinitions
         {
             throw new PendingStepException();
         }
-
     }
 }
