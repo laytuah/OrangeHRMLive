@@ -26,7 +26,7 @@ namespace OrangeHRMLive.PageObjects
             SelectField(2).Click();
             Select_dropdown("single").Click();
             SelectField(3).Click();
-            Select_dropdown("B+").Click();
+            Select_dropdown("o+").Click();
         }
     }
 }
