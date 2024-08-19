@@ -5,7 +5,7 @@ namespace OrangeHRMLive.PageObjects
 {
     public class PIMPage : BasePage
     {
-        public PIMPage(IWebDriver driver): base(driver) { }
+        public PIMPage(CustomWebDriver driver): base(driver) { }
 
         protected IWebElement TextField(string text) => Driver.FindElement(By.XPath($"//input[normalize-space(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))=\"{text}\"] | //div[label[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=\"{text}\"]]/following-sibling::div//input"));
 
