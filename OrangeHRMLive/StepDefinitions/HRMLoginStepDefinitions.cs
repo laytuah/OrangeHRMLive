@@ -1,5 +1,6 @@
 using BoDi;
 using FluentAssertions;
+using OrangeHRMLive.Model;
 using OrangeHRMLive.PageObjects;
 using TechTalk.SpecFlow;
 
@@ -12,19 +13,23 @@ namespace OrangeHRMLive.StepDefinitions
         readonly BasePage _basePage;
         readonly HomePage _homePage;
         readonly PIMPage _pimPage;
+        readonly ScenarioContext _scenarioContext;
 
-        public HRMLoginStepDefinitions(IObjectContainer objectContainer)
+        public HRMLoginStepDefinitions(ScenarioContext scenarioContext)
         {
-            _basePage = objectContainer.Resolve<BasePage>();
-            _loginPage = objectContainer.Resolve<LoginPage>();
-            _homePage = objectContainer.Resolve<HomePage>();
-            _pimPage = objectContainer.Resolve<PIMPage>();
+            _basePage = scenarioContext.ScenarioContainer.Resolve<BasePage>();
+            _loginPage = scenarioContext.ScenarioContainer.Resolve<LoginPage>();
+            _homePage = scenarioContext.ScenarioContainer.Resolve<HomePage>();
+            _pimPage = scenarioContext.ScenarioContainer.Resolve<PIMPage>();
+            _scenarioContext = scenarioContext.ScenarioContainer.Resolve<ScenarioContext>();
         }
 
         [StepDefinition(@"that user navigates to HRMLive page")]
         public void GivenThatUserNavigatesToHRMLivePage()
         {
             _basePage.LoadAUT();
+            var employee = new EmployeeProfile();
+            _scenarioContext.Set<EmployeeProfile>(employee, "employee");
         }
 
         [StepDefinition(@"the user supplies the provided login details")]
@@ -43,13 +48,15 @@ namespace OrangeHRMLive.StepDefinitions
         [StepDefinition(@"the user adds a new employee record")]
         public void WhenTheUserAddsANewEmployeeRecord()
         {
-            _pimPage.RegisterNewEmployee();
+            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            _pimPage.RegisterNewEmployee(employee);
         }
 
         [StepDefinition(@"newly created record must be found on employee list")]
         public void ThenNewlyCreatedRecordMustBeFoundOnEmployeeList()
         {
-            throw new PendingStepException();
+            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            _pimPage.IsNewlyRegisteredEmployeeDisplayed(employee).Should().BeTrue();
         }
     }
 }
