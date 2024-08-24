@@ -16,7 +16,9 @@ namespace OrangeHRMLive.PageObjects
         protected IWebElement SelectGender(string gender) => Driver.FindElement(By.XPath($"//div[@class='--gender-grouped-field']//label[contains(.,\"{gender}\")]"));
 
         protected IWebElement NewlyRegisteredEmployee(string? ID, string? firstName, string? lastName) => Driver.FindElement(By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\") and contains(.,\"{firstName}\") and contains(.,\"{lastName}\")]"));
-        
+
+        protected IWebElement Pagination_Next => Driver.FindElement(By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
+
 
 
         public void RegisterNewEmployee(EmployeeProfile employee)
@@ -43,7 +45,27 @@ namespace OrangeHRMLive.PageObjects
         public bool IsNewlyRegisteredEmployeeDisplayed(EmployeeProfile employee)
         {
             Mainmenu_item("pim").Click();
-            return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Displayed;
+            if(IsEmployeeDisplayedOnPage(employee))
+                return true;
+            while(Pagination_Next.Displayed)
+            {
+                Pagination_Next.Click();
+                if (IsEmployeeDisplayedOnPage(employee))
+                    return true;
+            }
+            return false;
+        }
+
+        bool IsEmployeeDisplayedOnPage(EmployeeProfile employee)
+        {
+            try
+            {
+                return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Displayed;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
         }
     }
 }
