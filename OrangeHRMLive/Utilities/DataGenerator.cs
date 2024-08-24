@@ -6,12 +6,12 @@ namespace OrangeHRMLive.Utilities
     {
         static char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".ToCharArray();
         static char[] digits = "0123456789".ToCharArray();
-        static char[] alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".ToCharArray();
+        static char[] alphanumerics = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".ToCharArray();
         static Random random = new Random();
 
         public static string GenerateRandomString(int length = 10) => BuildString(length, letters);
         public static string GenerateRandomIntegerString(int length = 6) => BuildString(length, digits);
-        public static string GenerateRandomAlphanumerics(int length = 12) => BuildString(length, alphanumeric);
+        public static string GenerateRandomAlphanumerics(int length = 12) => BuildString(length, alphanumerics);
 
 
         public static string GenerateRandomDate(int desiredMinAge = -18, int desiredMaxAge = -100)

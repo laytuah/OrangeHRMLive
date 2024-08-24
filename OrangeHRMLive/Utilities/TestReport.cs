@@ -23,7 +23,14 @@ namespace OrangeHRMLive.Utilities
 
         public void ExtentReportInitialization()
         {
-            var htmlReporter = new ExtentHtmlReporter(ReportPath);
+            Directory.CreateDirectory(ReportPath);
+            Directory.CreateDirectory(ScreenshotPath);
+            Directory.CreateDirectory(NetworkLogPath);
+
+            string reportFileName = $"AutomationStatusReport_{ConfigurationManager.BrowserName}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.html";
+            string fullReportPath = Path.Combine(ReportPath, reportFileName);
+
+            var htmlReporter = new ExtentHtmlReporter(fullReportPath);
             htmlReporter.Config.ReportName = "Automation Status Report";
             htmlReporter.Config.Theme = Theme.Dark;
 
