@@ -1,13 +1,11 @@
 ﻿using OpenQA.Selenium;
 using OrangeHRMLive.Model;
-using OrangeHRMLive.Utilities;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace OrangeHRMLive.PageObjects
 {
     public class PIMPage : BasePage
     {
-        public PIMPage(CustomWebDriver driver): base(driver) { }
+        public PIMPage(IWebDriver driver) : base(driver) { }
 
         protected IWebElement TextField(string text) => Driver.FindElement(By.XPath($"//input[normalize-space(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))=\"{text}\"] | //div[label[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=\"{text}\"]]/following-sibling::div//input"));
 
@@ -45,18 +43,18 @@ namespace OrangeHRMLive.PageObjects
         public bool IsNewlyRegisteredEmployeeDisplayed(EmployeeProfile employee)
         {
             Mainmenu_item("pim").Click();
-            if(IsEmployeeDisplayedOnCurrentPage(employee))
+            if (IsEmployeeDisplayedOnPage(employee))
                 return true;
-            while(Pagination_Next.Displayed)
+            while (Pagination_Next.Displayed)
             {
                 Pagination_Next.Click();
-                if (IsEmployeeDisplayedOnCurrentPage(employee))
+                if (IsEmployeeDisplayedOnPage(employee))
                     return true;
             }
             return false;
         }
 
-        bool IsEmployeeDisplayedOnCurrentPage(EmployeeProfile employee)
+        bool IsEmployeeDisplayedOnPage(EmployeeProfile employee)
         {
             try
             {
