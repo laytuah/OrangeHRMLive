@@ -21,7 +21,7 @@ namespace OrangeHRMLive.PageObjects
             LoginButton.Click();
         }
 
-        static string ExtractText(IWebElement element)
+        string ExtractText(IWebElement element)
         {
             return element.Text.Split(':')[1].Trim();
         }

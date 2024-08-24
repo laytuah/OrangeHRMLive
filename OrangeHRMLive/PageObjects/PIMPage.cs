@@ -45,18 +45,18 @@ namespace OrangeHRMLive.PageObjects
         public bool IsNewlyRegisteredEmployeeDisplayed(EmployeeProfile employee)
         {
             Mainmenu_item("pim").Click();
-            if(IsEmployeeDisplayedOnPage(employee))
+            if(IsEmployeeDisplayedOnCurrentPage(employee))
                 return true;
             while(Pagination_Next.Displayed)
             {
                 Pagination_Next.Click();
-                if (IsEmployeeDisplayedOnPage(employee))
+                if (IsEmployeeDisplayedOnCurrentPage(employee))
                     return true;
             }
             return false;
         }
 
-        bool IsEmployeeDisplayedOnPage(EmployeeProfile employee)
+        bool IsEmployeeDisplayedOnCurrentPage(EmployeeProfile employee)
         {
             try
             {

@@ -23,9 +23,16 @@ namespace OrangeHRMLive.PageObjects
             Driver.Navigate().GoToUrl(ConfigurationManager.Url);
         }
 
-        public void ElementExits(By locator)
+        public bool ElementExits(By locator)
         {
-            bool elementExists = Driver.FindElements(locator).Count() > 0;
+            try
+            {
+                return Driver.FindElements(locator).Count() > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public void ScrollToElement(IWebElement element)
