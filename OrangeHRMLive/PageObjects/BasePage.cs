@@ -5,9 +5,9 @@ namespace OrangeHRMLive.PageObjects
 {
     public class BasePage
     {
-        protected CustomWebDriver Driver { get; }
+        protected IWebDriver Driver { get; }
 
-        public BasePage(CustomWebDriver driver)
+        public BasePage(IWebDriver driver)
         {
             Driver = driver;
         }

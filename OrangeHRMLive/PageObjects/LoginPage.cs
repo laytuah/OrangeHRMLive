@@ -4,7 +4,7 @@ namespace OrangeHRMLive.PageObjects
 {
     public class LoginPage : BasePage
     {
-        public LoginPage(CustomWebDriver driver) : base(driver) { }
+        public LoginPage(IWebDriver driver) : base(driver) { }
 
         IWebElement UsernameText => Driver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Username')]"));
         IWebElement UsernameField => Driver.FindElement(By.XPath("//input[@name='username' and @placeholder='Username']"));

@@ -5,7 +5,7 @@ namespace OrangeHRMLive.PageObjects
 {
     public class PIMPage : BasePage
     {
-        public PIMPage(CustomWebDriver driver) : base(driver) { }
+        public PIMPage(IWebDriver driver) : base(driver) { }
 
         protected IWebElement TextField(string text) => Driver.FindElement(By.XPath($"//input[normalize-space(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))=\"{text}\"] | //div[label[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=\"{text}\"]]/following-sibling::div//input"));
 
@@ -16,6 +16,8 @@ namespace OrangeHRMLive.PageObjects
         protected IWebElement NewlyRegisteredEmployee(string? ID, string? firstName, string? lastName) => Driver.FindElement(By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\") and contains(.,\"{firstName}\") and contains(.,\"{lastName}\")]"));
 
         protected IWebElement NewlyRegisteredEmployeeUpdateIcon(string? ID) => Driver.FindElement(By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-pencil-fill']"));
+
+        protected IWebElement NewlyRegisteredEmployeeDeleteIcon(string? ID) => Driver.FindElement(By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-trash']"));
 
         protected IWebElement Pagination_Next => Driver.FindElement(By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
 
@@ -48,7 +50,7 @@ namespace OrangeHRMLive.PageObjects
             Mainmenu_item("pim").Click();
             if (IsEmployeeDisplayedOnCurrentPage(employee))
                 return true;
-            while (Pagination_Next.Displayed)
+            while (IsNextPageChevronDisplayed())
             {
                 Pagination_Next.Click();
                 if (IsEmployeeDisplayedOnCurrentPage(employee))
@@ -69,6 +71,18 @@ namespace OrangeHRMLive.PageObjects
             }
         }
 
+        bool IsNextPageChevronDisplayed()
+        {
+            try
+            {
+                return Pagination_Next.Displayed;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
         public void UpdateExistingEmployeeRecord(EmployeeProfile employee)
         {
             Mainmenu_item("pim").Click();
@@ -78,7 +92,7 @@ namespace OrangeHRMLive.PageObjects
             }
             else
             {
-                while (Pagination_Next.Displayed)
+                while (IsNextPageChevronDisplayed())
                 {
                     Pagination_Next.Click();
                     if (IsEmployeeDisplayedOnCurrentPage(employee))
@@ -106,7 +120,7 @@ namespace OrangeHRMLive.PageObjects
             }
             else
             {
-                while (Pagination_Next.Displayed)
+                while (IsNextPageChevronDisplayed())
                 {
                     Pagination_Next.Click();
                     if (IsEmployeeDisplayedOnCurrentPage(employee))
@@ -116,6 +130,28 @@ namespace OrangeHRMLive.PageObjects
                 }
                 return "Employee not found or record not updated.";
             }
+        }
+
+        public void DeleteEmployeeRecord(EmployeeProfile employee)
+        {
+            Mainmenu_item("pim").Click();
+            if (IsEmployeeDisplayedOnCurrentPage(employee))
+            {
+                NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).Click();
+            }
+            else
+            {
+                while (IsNextPageChevronDisplayed())
+                {
+                    Pagination_Next.Click();
+                    if (IsEmployeeDisplayedOnCurrentPage(employee))
+                    {
+                        NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).Click();
+                        break;
+                    }
+                }
+            }
+            Button_button("yes, delete").Click();
         }
     }
 }

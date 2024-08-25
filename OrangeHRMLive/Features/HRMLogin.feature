@@ -15,3 +15,8 @@ Scenario: User can update existing employee record
 	When the user adds a new employee record
 	And the user updates the newly created record
 	Then the reord must be updated
+
+Scenario: User can delete existing employee record
+	When the user adds a new employee record
+	And the user deletes the created record
+	Then the record must be deleted from employee list

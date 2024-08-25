@@ -72,5 +72,19 @@ namespace OrangeHRMLive.StepDefinitions
             _pimPage.GetUpdatedEmployeeText(employee).Should().Contain(employee.JobTitle);
             _pimPage.GetUpdatedEmployeeText(employee).Should().Contain(employee.EmploymentStatus);
         }
+
+        [StepDefinition(@"the user deletes the created record")]
+        public void WhenTheUserDeletesTheCreatedRecord()
+        {
+            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            _pimPage.DeleteEmployeeRecord(employee);
+        }
+
+        [StepDefinition(@"the record must be deleted from employee list")]
+        public void ThenTheRecordMustBeDeletedFromEmployeeList()
+        {
+            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            _pimPage.IsNewlyRegisteredEmployeeDisplayed(employee).Should().BeFalse();
+        }
     }
 }
