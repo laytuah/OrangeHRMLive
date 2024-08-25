@@ -5,7 +5,7 @@ namespace OrangeHRMLive.PageObjects
 {
     public class PIMPage : BasePage
     {
-        public PIMPage(CustomWebDriver driver): base(driver) { }
+        public PIMPage(CustomWebDriver driver) : base(driver) { }
 
         protected IWebElement TextField(string text) => Driver.FindElement(By.XPath($"//input[normalize-space(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))=\"{text}\"] | //div[label[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=\"{text}\"]]/following-sibling::div//input"));
 
@@ -46,9 +46,9 @@ namespace OrangeHRMLive.PageObjects
         public bool IsNewlyRegisteredEmployeeDisplayed(EmployeeProfile employee)
         {
             Mainmenu_item("pim").Click();
-            if(IsEmployeeDisplayedOnCurrentPage(employee))
+            if (IsEmployeeDisplayedOnCurrentPage(employee))
                 return true;
-            while(Pagination_Next.Displayed)
+            while (Pagination_Next.Displayed)
             {
                 Pagination_Next.Click();
                 if (IsEmployeeDisplayedOnCurrentPage(employee))
@@ -114,7 +114,7 @@ namespace OrangeHRMLive.PageObjects
                         return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
                     }
                 }
-            return "Employee not found or record not updated.";
+                return "Employee not found or record not updated.";
             }
         }
     }

@@ -10,7 +10,7 @@ namespace OrangeHRMLive.Model
         public string? DriversLicenseNumber { get; set; } = DataGenerator.GenerateRandomAlphanumerics();
         public string? Street { get; set; } = DataGenerator.GenerateRandomString(6) + "Street";
         public string? City { get; set; } = DataGenerator.GenerateRandomString();
-        public string? Telephone { get; set; } = "07"+ DataGenerator.GenerateRandomIntegerString(8);
+        public string? Telephone { get; set; } = "07" + DataGenerator.GenerateRandomIntegerString(8);
         public string? Email { get; set; } = DataGenerator.GenerateRandomString(16) + "@yahoo.com";
         public string JobTitle { get; set; } = "automaton tester";
         public string EmploymentStatus { get; set; } = "freelance";

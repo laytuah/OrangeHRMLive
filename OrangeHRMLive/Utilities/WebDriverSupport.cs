@@ -4,7 +4,6 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OrangeHRMLive.Configuration;
-using System.Collections.ObjectModel;
 
 namespace OrangeHRMLive.Utilities
 {
