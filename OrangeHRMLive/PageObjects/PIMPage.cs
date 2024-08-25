@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OrangeHRMLive.Model;
-using OrangeHRMLive.Utilities;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace OrangeHRMLive.PageObjects
 {
@@ -17,7 +15,10 @@ namespace OrangeHRMLive.PageObjects
 
         protected IWebElement NewlyRegisteredEmployee(string? ID, string? firstName, string? lastName) => Driver.FindElement(By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\") and contains(.,\"{firstName}\") and contains(.,\"{lastName}\")]"));
 
+        protected IWebElement NewlyRegisteredEmployeeUpdateIcon(string? ID) => Driver.FindElement(By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-pencil-fill']"));
+
         protected IWebElement Pagination_Next => Driver.FindElement(By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
+
 
 
 
@@ -45,18 +46,18 @@ namespace OrangeHRMLive.PageObjects
         public bool IsNewlyRegisteredEmployeeDisplayed(EmployeeProfile employee)
         {
             Mainmenu_item("pim").Click();
-            if(IsEmployeeDisplayedOnPage(employee))
+            if(IsEmployeeDisplayedOnCurrentPage(employee))
                 return true;
             while(Pagination_Next.Displayed)
             {
                 Pagination_Next.Click();
-                if (IsEmployeeDisplayedOnPage(employee))
+                if (IsEmployeeDisplayedOnCurrentPage(employee))
                     return true;
             }
             return false;
         }
 
-        bool IsEmployeeDisplayedOnPage(EmployeeProfile employee)
+        bool IsEmployeeDisplayedOnCurrentPage(EmployeeProfile employee)
         {
             try
             {
@@ -65,6 +66,55 @@ namespace OrangeHRMLive.PageObjects
             catch (NoSuchElementException)
             {
                 return false;
+            }
+        }
+
+        public void UpdateExistingEmployeeRecord(EmployeeProfile employee)
+        {
+            Mainmenu_item("pim").Click();
+            if (IsEmployeeDisplayedOnCurrentPage(employee))
+            {
+                NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).Click();
+            }
+            else
+            {
+                while (Pagination_Next.Displayed)
+                {
+                    Pagination_Next.Click();
+                    if (IsEmployeeDisplayedOnCurrentPage(employee))
+                    {
+                        NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).Click();
+                        break;
+                    }
+                }
+            }
+
+            Link_anchor("job").Click();
+            SelectField().Click();
+            Select_dropdown(employee.JobTitle).Click();
+            SelectField(5).Click();
+            Select_dropdown(employee.EmploymentStatus).Click();
+            Button_button("save").Click();
+        }
+
+        public string GetUpdatedEmployeeText(EmployeeProfile employee)
+        {
+            Mainmenu_item("pim").Click();
+            if (IsEmployeeDisplayedOnCurrentPage(employee))
+            {
+                return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
+            }
+            else
+            {
+                while (Pagination_Next.Displayed)
+                {
+                    Pagination_Next.Click();
+                    if (IsEmployeeDisplayedOnCurrentPage(employee))
+                    {
+                        return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
+                    }
+                }
+            return "Employee not found or record not updated.";
             }
         }
     }

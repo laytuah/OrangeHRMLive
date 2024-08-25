@@ -57,5 +57,20 @@ namespace OrangeHRMLive.StepDefinitions
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
             _pimPage.IsNewlyRegisteredEmployeeDisplayed(employee).Should().BeTrue();
         }
+
+        [StepDefinition(@"the user updates the newly created record")]
+        public void WhenTheUserUpdatesTheNewlyCreatedRecord()
+        {
+            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            _pimPage.UpdateExistingEmployeeRecord(employee);
+        }
+
+        [StepDefinition(@"the reord must be updated")]
+        public void ThenTheReordMustBeUpdated()
+        {
+            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            _pimPage.GetUpdatedEmployeeText(employee).Should().Contain(employee.JobTitle);
+            _pimPage.GetUpdatedEmployeeText(employee).Should().Contain(employee.EmploymentStatus);
+        }
     }
 }
