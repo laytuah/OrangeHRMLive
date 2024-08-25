@@ -4,6 +4,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OrangeHRMLive.Configuration;
+using System.Collections.ObjectModel;
 
 namespace OrangeHRMLive.Utilities
 {
@@ -16,6 +17,7 @@ namespace OrangeHRMLive.Utilities
         {
             _objectContainer = objectContainer;
         }
+
         public void InitializeBrowser(string browserName)
         {
             bool headless = ConfigurationManager.Headless;
@@ -31,8 +33,7 @@ namespace OrangeHRMLive.Utilities
             };
 
             setupAction.Invoke();
-            CustomWebDriver customDriver = new CustomWebDriver(_driver);
-            _objectContainer.RegisterInstanceAs(customDriver);
+            _objectContainer.RegisterInstanceAs(new CustomWebDriver(_driver));
             _driver.Manage().Window.Maximize();
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }

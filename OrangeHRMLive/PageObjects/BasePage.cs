@@ -24,7 +24,7 @@ namespace OrangeHRMLive.PageObjects
             Driver.Navigate().GoToUrl(ConfigurationManager.Url);
         }
 
-        public bool ElementExits(By locator)
+        protected bool ElementExits(By locator)
         {
             try
             {
@@ -35,6 +35,7 @@ namespace OrangeHRMLive.PageObjects
                 return false;
             }
         }
+
 
         public void ScrollToElement(IWebElement element)
         {
