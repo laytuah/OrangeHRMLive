@@ -33,6 +33,7 @@ namespace OrangeHRMLive.Utilities
 
             setupAction.Invoke();
             _objectContainer.RegisterInstanceAs(_driver);
+            WebDriverExtention.InitializeDriver(_driver);
             _driver.Manage().Window.Maximize();
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
@@ -60,7 +61,7 @@ namespace OrangeHRMLive.Utilities
         {
             var options = new ChromeOptions();
             options.SetLoggingPreference(LogType.Performance, LogLevel.All);
-            if (headless) options.AddArgument("headless");
+            //if (headless) options.AddArgument("headless");
             if (incognito) options.AddArgument("incognito");
             return new ChromeDriver(options);
         }
