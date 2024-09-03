@@ -28,22 +28,22 @@ namespace OrangeHRMLive.PageObjects
         public void RegisterNewEmployee(EmployeeProfile employee)
         {
             Mainmenu_item("pim").ClickElement();
-            Button_button("add").Click();
+            Button_button("add").ClickElement();
             TextField("first name").SendKeys(employee.Firstname);
             TextField("middle name").SendKeys(employee.Middlename);
             TextField("last name").SendKeys(employee.Lastname);
             employee.EmployeeID = TextField("employee id").GetAttribute("value");
             Button_button("save").ClickElement();
             TextField("driver's license number").SendKeys(employee.DriversLicenseNumber);
-            SelectField().Click();
+            SelectField().ClickElement();
             Select_dropdown("nigerian").Click();
-            SelectField(2).Click();
+            SelectField(2).ClickElement();
             Select_dropdown("single").Click();
-            SelectField(3).Click();
-            Select_dropdown("o+").Click();
-            SelectGender("Male").Click();
-            Button_button("save").Click();
-            Button_button("save", 2).Click();
+            SelectField(3).ClickElement();
+            Select_dropdown("o+").ClickElement();
+            SelectGender("Male").ClickElement();
+            Button_button("save").ClickElement();
+            Button_button("save", 2).ClickElement();
         }
 
         public bool IsNewlyRegisteredEmployeeDisplayed(EmployeeProfile employee)

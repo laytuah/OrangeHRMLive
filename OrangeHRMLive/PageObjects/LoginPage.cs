@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OrangeHRMLive.Utilities;
 
 namespace OrangeHRMLive.PageObjects
 {
@@ -14,10 +15,8 @@ namespace OrangeHRMLive.PageObjects
 
         public void Login()
         {
-            UsernameField.Clear();
-            UsernameField.SendKeys(ExtractText(UsernameText));
-            PasswordField.Clear();
-            PasswordField.SendKeys(ExtractText(PasswordText));
+            UsernameField.EnterText(ExtractText(UsernameText));
+            PasswordField.EnterText(ExtractText(PasswordText));
             LoginButton.Click();
         }
 

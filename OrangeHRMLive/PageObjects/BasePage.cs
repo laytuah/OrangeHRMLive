@@ -17,8 +17,6 @@ namespace OrangeHRMLive.PageObjects
         protected IWebElement Select_dropdown(string selectText) => Driver.FindElement(By.XPath($"//div[contains(@class,'oxd-select-dropdown')]//span[contains(normalize-space(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')),\"{selectText}\")]"));
         protected IWebElement Link_anchor(string linkText) => Driver.FindElement(By.XPath($"//div[contains(@class,'orangehrm-tabs-wrapper')]//a[contains(normalize-space(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')),\"{linkText}\")]"));
 
-
-
         public void LoadAUT()
         {
             Driver.Navigate().GoToUrl(ConfigurationManager.Url);

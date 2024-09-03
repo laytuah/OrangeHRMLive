@@ -33,7 +33,7 @@ namespace OrangeHRMLive.Utilities
 
             setupAction.Invoke();
             _objectContainer.RegisterInstanceAs(_driver);
-            WebElementExtentions.InitializeDriver(_driver);
+            WebElementExtensions.InitializeDriver(_driver);
             _driver.Manage().Window.Maximize();
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }

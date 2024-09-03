@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OrangeHRMLive.Utilities;
 
 namespace OrangeHRMLive.PageObjects
 {
@@ -10,8 +11,8 @@ namespace OrangeHRMLive.PageObjects
         IWebElement SidePanel => Driver.FindElement(By.XPath("//div[@class='oxd-sidepanel-body']"));
 
 
-        public bool IsPieChartDispalyed() => PieChart1.Displayed;
+        public bool IsPieChartDispalyed() => PieChart1.IsDisplayed();
 
-        public bool IsSidePanelDisplayed() => SidePanel.Displayed;
+        public bool IsSidePanelDisplayed() => SidePanel.IsDisplayed();
     }
 }

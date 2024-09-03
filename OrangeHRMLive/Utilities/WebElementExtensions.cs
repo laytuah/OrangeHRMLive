@@ -6,7 +6,7 @@ using SeleniumExtras.WaitHelpers;
 
 namespace OrangeHRMLive.Utilities
 {
-    public static class WebElementExtentions
+    public static class WebElementExtensions
     {
         static IWebDriver _driver;
         public static void InitializeDriver(IWebDriver driver)
