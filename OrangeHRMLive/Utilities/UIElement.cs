@@ -3,185 +3,57 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using OrangeHRMLive.Configuration;
 using SeleniumExtras.WaitHelpers;
-using System.Collections.ObjectModel;
 
 public class UIElement
 {
     IWebDriver _driver;
+    By _locator;
+    TimeSpan _timeout = TimeSpan.FromSeconds(20);
+    WebDriverWait _wait;
 
-    public UIElement(IWebDriver driver)
+    public UIElement(IWebDriver driver, By locator)
     {
         _driver = driver;
+        _locator = locator;
+        _wait = new WebDriverWait(_driver, _timeout);
     }
 
-    public void ClickElement(IWebElement element)
+    public void ClickElement()
     {
-        if (element != null && element.Displayed && element.Enabled)
+        if (IsElementInteractable(_driver.FindElement(_locator)))
         {
-            element.Click();
+            _driver.FindElement(_locator).Click();
             WaitForLoadingIconToDisappear();
         }
         else
+        {
             throw new ElementNotInteractableException("The element is not interactable.");
+        }
     }
 
-    public void EnterText(IWebElement element, string text)
+    public void EnterText(string text)
     {
-        if (element != null && element.Displayed && element.Enabled)
+        if (IsElementInteractable(_driver.FindElement(_locator)))
         {
-            element.Clear();
-            element.SendKeys(text);
+            _driver.FindElement(_locator).Clear();
+            _driver.FindElement(_locator).SendKeys(text);
         }
         else
+        {
             throw new ElementNotInteractableException("The element is not interactable.");
+        }
     }
 
-    public string GetTrimmedText(IWebElement element)
+    public string GetTrimmedText()
     {
-        return element.Text.Trim();
+        return _driver.FindElement(_locator).Text.Trim();
     }
 
-    public bool ElementExits(By locator)
+    public bool ElementExists()
     {
         try
         {
-            return _driver.FindElements(locator).Count() > 0;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
-    }
-
-    public void ScrollAndClick(IWebElement element)
-    {
-        if (element != null && element.Displayed && element.Enabled)
-        {
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
-            element.Click();
-        }
-        else
-            throw new ElementNotInteractableException("The element is not interactable.");
-    }
-
-    public void WaitForVisibility(IWebElement element, TimeSpan timeout)
-    {
-        var wait = new WebDriverWait(_driver, timeout);
-        wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(GetXPath(element))));
-    }
-
-    public void WaitForClickability(IWebElement element, TimeSpan timeout)
-    {
-        var wait = new WebDriverWait(_driver, timeout);
-        wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(GetXPath(element))));
-    }
-
-    public string GetAttributeOrDefault(IWebElement element, string attribute, string defaultValue = "")
-    {
-        return element?.GetAttribute(attribute) ?? defaultValue;
-    }
-
-    public void Hover(IWebElement element)
-    {
-        Actions actions = new Actions(_driver);
-        actions.MoveToElement(element).Perform();
-    }
-
-    public bool ContainsText(IWebElement element, string text)
-    {
-        return element?.Text.Contains(text) ?? false;
-    }
-
-    public bool IsChecked(IWebElement element)
-    {
-        return element.Selected;
-    }
-
-    public void DoubleClick(IWebElement element)
-    {
-        Actions actions = new Actions(_driver);
-        actions.DoubleClick(element).Perform();
-    }
-
-    public void RightClick(IWebElement element)
-    {
-        Actions actions = new Actions(_driver);
-        actions.ContextClick(element).Perform();
-    }
-
-    public void DragAndDrop(this IWebElement source, IWebElement target)
-    {
-        Actions actions = new Actions(_driver);
-        actions.DragAndDrop(source, target).Perform();
-    }
-
-    public string GetInnerHtml(IWebElement element)
-    {
-        return element.GetAttribute("innerHTML");
-    }
-
-    public string GetOuterHtml(IWebElement element)
-    {
-        return element.GetAttribute("outerHTML");
-    }
-
-    public void SetCheckbox(IWebElement element, bool check)
-    {
-        if (element.Selected != check)
-            element.Click();
-        else
-            throw new Exception("Unable to click checkbox");
-    }
-
-    public void SelectByText(IWebElement element, string text)
-    {
-        var selectElement = new SelectElement(element);
-        selectElement.SelectByText(text);
-    }
-
-    public void SelectByValue(IWebElement element, string value)
-    {
-        var selectElement = new SelectElement(element);
-        selectElement.SelectByValue(value);
-    }
-
-    public void SelectByIndex(IWebElement element, int index)
-    {
-        var selectElement = new SelectElement(element);
-        selectElement.SelectByIndex(index);
-    }
-
-    public void DeselectAll(IWebElement element)
-    {
-        var selectElement = new SelectElement(element);
-        selectElement.DeselectAll();
-    }
-
-    public void EnterTextWithDelay(IWebElement element, string text, int delayInMilliseconds = 100)
-    {
-        element.Clear();
-        foreach (char c in text)
-        {
-            element.SendKeys(c.ToString());
-            Thread.Sleep(delayInMilliseconds);
-        }
-    }
-
-    public string GetCssValue(IWebElement element, string propertyName)
-    {
-        return element.GetCssValue(propertyName);
-    }
-
-    public void SubmitForm(IWebElement element)
-    {
-        element.Submit();
-    }
-
-    public bool IsDisplayed(IWebElement element)
-    {
-        try
-        {
-            return element != null && element.Displayed;
+            return _driver.FindElements(_locator).Count > 0;
         }
         catch (NoSuchElementException)
         {
@@ -193,37 +65,178 @@ public class UIElement
         }
     }
 
-    public IWebElement? FindElementWithRetry(IWebElement locator, int retryCount = 3, int delayInSeconds = 1)
+    public void ScrollAndClick()
     {
-        IWebElement? element = null;
+        if (IsElementInteractable(_driver.FindElement(_locator)))
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView(true);", _driver.FindElement(_locator));
+            WaitForClickability();
+            _driver.FindElement(_locator).Click();
+        }
+        else
+        {
+            throw new ElementNotInteractableException("The element is not interactable.");
+        }
+    }
+
+    public void WaitForVisibility()
+    {
+        _wait.Until(ExpectedConditions.ElementIsVisible(_locator));
+    }
+
+    public void WaitForClickability()
+    {
+        _wait.Until(ExpectedConditions.ElementToBeClickable(_locator));
+    }
+
+    public string GetAttributeOrDefault(string attribute, string defaultValue = "")
+    {
+        try
+        {
+            return _driver.FindElement(_locator).GetAttribute(attribute) ?? defaultValue;
+        }
+        catch (NoSuchElementException)
+        {
+            return defaultValue;
+        }
+    }
+
+    public void Hover()
+    {
+        new Actions(_driver).MoveToElement(_driver.FindElement(_locator)).Perform();
+    }
+
+    public bool Contains(string text)
+    {
+        return _driver.FindElement(_locator).Text.Contains(text);
+    }
+
+    public bool IsChecked()
+    {
+        return _driver.FindElement(_locator).Selected;
+    }
+
+    public void DoubleClick()
+    {
+        new Actions(_driver).DoubleClick(_driver.FindElement(_locator)).Perform();
+    }
+
+    public void RightClick()
+    {
+        new Actions(_driver).ContextClick(_driver.FindElement(_locator)).Perform();
+    }
+
+    public void DragAndDrop(IWebElement source, IWebElement target)
+    {
+        new Actions(_driver).DragAndDrop(source, target).Perform();
+    }
+
+    public string GetInnerHtml()
+    {
+        return _driver.FindElement(_locator).GetAttribute("innerHTML");
+    }
+
+    public string GetOuterHtml()
+    {
+        return _driver.FindElement(_locator).GetAttribute("outerHTML");
+    }
+
+    public void SetCheckbox(bool check)
+    {
+        if (_driver.FindElement(_locator).Selected != check)
+        {
+            _driver.FindElement(_locator).Click();
+        }
+    }
+
+    public void SelectByText(string text)
+    {
+        new SelectElement(_driver.FindElement(_locator)).SelectByText(text);
+    }
+
+    public void SelectByValue(string value)
+    {
+        new SelectElement(_driver.FindElement(_locator)).SelectByValue(value);
+    }
+
+    public void SelectByIndex(int index)
+    {
+        new SelectElement(_driver.FindElement(_locator)).SelectByIndex(index);
+    }
+
+    public void DeselectAll()
+    {
+        new SelectElement(_driver.FindElement(_locator)).DeselectAll();
+    }
+
+    public void EnterTextWithDelay(string text, int delayInMilliseconds = 100)
+    {
+        _driver.FindElement(_locator).Clear();
+        foreach (char c in text)
+        {
+            _driver.FindElement(_locator).SendKeys(c.ToString());
+            Thread.Sleep(delayInMilliseconds);
+        }
+    }
+
+    public string GetCssValue(string propertyName)
+    {
+        return _driver.FindElement(_locator).GetCssValue(propertyName);
+    }
+
+    public void SubmitForm()
+    {
+        _driver.FindElement(_locator).Submit();
+    }
+
+    public bool IsDisplayed()
+    {
+        try
+        {
+            return _driver.FindElement(_locator) != null && _driver.FindElement(_locator).Displayed;
+        }
+        catch (NoSuchElementException)
+        {
+            return false;
+        }
+        catch (StaleElementReferenceException)
+        {
+            return false;
+        }
+    }
+
+    public IWebElement FindElementWithRetry(int retryCount = 3, int delayInSeconds = 1)
+    {
+        IWebElement element = null;
         for (int i = 0; i < retryCount; i++)
         {
             try
             {
-                element = locator;
+                element = _driver.FindElement(_locator);
                 break;
             }
             catch (NoSuchElementException)
             {
                 if (i == retryCount - 1)
                     throw;
-                Thread.Sleep(TimeSpan.FromSeconds(delayInSeconds));
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(delayInSeconds));
             }
         }
         return element;
     }
 
-    void WaitForLoadingIconToDisappear()
+    private void WaitForLoadingIconToDisappear()
     {
-        var loadingElements = _driver.FindElements(By.XPath(ConfigurationManager.LoadingIconXpath));
-        if (loadingElements.Count > 0 && loadingElements[0].Displayed)
-        {
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath(ConfigurationManager.LoadingIconXpath)));
-        }
+        var loadingLocator = By.XPath(ConfigurationManager.LoadingIconXpath);
+        _wait.Until(ExpectedConditions.InvisibilityOfElementLocated(loadingLocator));
     }
 
-    string GetXPath(IWebElement element)
+    private bool IsElementInteractable(IWebElement element)
+    {
+        return element != null && element.Displayed && element.Enabled;
+    }
+
+    private string GetXPath(IWebElement element)
     {
         return (string)((IJavaScriptExecutor)_driver).ExecuteScript(
             "function getXPath(node) {" +

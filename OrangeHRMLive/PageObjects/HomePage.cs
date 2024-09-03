@@ -7,8 +7,8 @@ namespace OrangeHRMLive.PageObjects
     {
         public HomePage(IWebDriver driver) : base(driver) { }
 
-        IWebElement PieChart1 => Driver.FindElement(By.XPath("(//div[@class='oxd-pie-chart'])[1]"));
-        IWebElement SidePanel => Driver.FindElement(By.XPath("//div[@class='oxd-sidepanel-body']"));
+        UIElement PieChart1 => new UIElement(Driver, By.XPath("(//div[@class='oxd-pie-chart'])[1]"));
+        UIElement SidePanel => new UIElement(Driver, By.XPath("//div[@class='oxd-sidepanel-body']"));
 
 
         public bool IsPieChartDispalyed() => PieChart1.IsDisplayed();

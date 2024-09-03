@@ -7,22 +7,24 @@ namespace OrangeHRMLive.PageObjects
     {
         public LoginPage(IWebDriver driver) : base(driver) { }
 
-        IWebElement UsernameText => Driver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Username')]"));
-        IWebElement UsernameField => Driver.FindElement(By.XPath("//input[@name='username' and @placeholder='Username']"));
-        IWebElement PasswordText => Driver.FindElement(By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Password')]"));
-        IWebElement PasswordField => Driver.FindElement(By.XPath("//input[@name='password' and @placeholder='Password']"));
-        IWebElement LoginButton => Driver.FindElement(By.XPath("//button[contains(@class,'login-button')]"));
+        UIElement UsernameText => new UIElement(Driver, By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Username')]"));
+        UIElement UsernameField => new UIElement(Driver, By.XPath("//input[@name='username' and @placeholder='Username']"));
+        UIElement PasswordText => new UIElement(Driver, By.XPath("//p[@class='oxd-text oxd-text--p' and contains(.,'Password')]"));
+        UIElement PasswordField => new UIElement(Driver, By.XPath("//input[@name='password' and @placeholder='Password']"));
+        UIElement LoginButton => new UIElement(Driver, By.XPath("//button[contains(@class,'login-button')]"));
+
+        UIElement Loginutton => new UIElement(Driver, By.XPath("//button[contains(@class,'login-button')]"));
 
         public void Login()
         {
             UsernameField.EnterText(ExtractText(UsernameText));
             PasswordField.EnterText(ExtractText(PasswordText));
-            LoginButton.Click();
+            LoginButton.ClickElement();
         }
 
-        string ExtractText(IWebElement element)
+        string ExtractText(UIElement element)
         {
-            return element.Text.Split(':')[1].Trim();
+            return element.GetTrimmedText().Split(':')[1].Trim();
         }
     }
 }
