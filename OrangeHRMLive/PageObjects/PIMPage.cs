@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OrangeHRMLive.Model;
+using OrangeHRMLive.Utilities;
 
 namespace OrangeHRMLive.PageObjects
 {
@@ -26,13 +27,13 @@ namespace OrangeHRMLive.PageObjects
 
         public void RegisterNewEmployee(EmployeeProfile employee)
         {
-            Mainmenu_item("pim").Click();
+            Mainmenu_item("pim").ClickElement();
             Button_button("add").Click();
             TextField("first name").SendKeys(employee.Firstname);
             TextField("middle name").SendKeys(employee.Middlename);
             TextField("last name").SendKeys(employee.Lastname);
             employee.EmployeeID = TextField("employee id").GetAttribute("value");
-            Button_button("save").Click();
+            Button_button("save").ClickElement();
             TextField("driver's license number").SendKeys(employee.DriversLicenseNumber);
             SelectField().Click();
             Select_dropdown("nigerian").Click();
@@ -47,12 +48,12 @@ namespace OrangeHRMLive.PageObjects
 
         public bool IsNewlyRegisteredEmployeeDisplayed(EmployeeProfile employee)
         {
-            Mainmenu_item("pim").Click();
+            Mainmenu_item("pim").ClickElement();
             if (IsEmployeeDisplayedOnCurrentPage(employee))
                 return true;
             while (IsNextPageChevronDisplayed())
             {
-                Pagination_Next.Click();
+                Pagination_Next.ClickElement();
                 if (IsEmployeeDisplayedOnCurrentPage(employee))
                     return true;
             }
@@ -85,7 +86,7 @@ namespace OrangeHRMLive.PageObjects
 
         public void UpdateExistingEmployeeRecord(EmployeeProfile employee)
         {
-            Mainmenu_item("pim").Click();
+            Mainmenu_item("pim").ClickElement();
             if (IsEmployeeDisplayedOnCurrentPage(employee))
             {
                 NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).Click();
@@ -94,7 +95,7 @@ namespace OrangeHRMLive.PageObjects
             {
                 while (IsNextPageChevronDisplayed())
                 {
-                    Pagination_Next.Click();
+                    Pagination_Next.ClickElement();
                     if (IsEmployeeDisplayedOnCurrentPage(employee))
                     {
                         NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).Click();
@@ -103,7 +104,7 @@ namespace OrangeHRMLive.PageObjects
                 }
             }
 
-            Link_anchor("job").Click();
+            Link_anchor("job").ClickElement();
             SelectField().Click();
             Select_dropdown(employee.JobTitle).Click();
             SelectField(5).Click();
@@ -113,7 +114,7 @@ namespace OrangeHRMLive.PageObjects
 
         public string GetUpdatedEmployeeText(EmployeeProfile employee)
         {
-            Mainmenu_item("pim").Click();
+            Mainmenu_item("pim").ClickElement();
             if (IsEmployeeDisplayedOnCurrentPage(employee))
             {
                 return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
@@ -122,7 +123,7 @@ namespace OrangeHRMLive.PageObjects
             {
                 while (IsNextPageChevronDisplayed())
                 {
-                    Pagination_Next.Click();
+                    Pagination_Next.ClickElement();
                     if (IsEmployeeDisplayedOnCurrentPage(employee))
                     {
                         return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
@@ -134,7 +135,7 @@ namespace OrangeHRMLive.PageObjects
 
         public void DeleteEmployeeRecord(EmployeeProfile employee)
         {
-            Mainmenu_item("pim").Click();
+            Mainmenu_item("pim").ClickElement();
             if (IsEmployeeDisplayedOnCurrentPage(employee))
             {
                 NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).Click();
@@ -143,7 +144,7 @@ namespace OrangeHRMLive.PageObjects
             {
                 while (IsNextPageChevronDisplayed())
                 {
-                    Pagination_Next.Click();
+                    Pagination_Next.ClickElement();
                     if (IsEmployeeDisplayedOnCurrentPage(employee))
                     {
                         NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).Click();
@@ -151,7 +152,7 @@ namespace OrangeHRMLive.PageObjects
                     }
                 }
             }
-            Button_button("yes, delete").Click();
+            Button_button("yes, delete").ClickElement();
         }
     }
 }

@@ -23,25 +23,6 @@ namespace OrangeHRMLive.PageObjects
         {
             Driver.Navigate().GoToUrl(ConfigurationManager.Url);
         }
-
-        protected bool ElementExits(By locator)
-        {
-            try
-            {
-                return Driver.FindElements(locator).Count() > 0;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-
-        public void ScrollToElement(IWebElement element)
-        {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
-            js.ExecuteScript("arguments[0].scrollIntoView(true);", element);
-        }
     }
 }
 
