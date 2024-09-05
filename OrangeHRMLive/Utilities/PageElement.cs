@@ -10,9 +10,9 @@ public class PageElement : IWebElement
 {
     IWebDriver _driver;
     By _locator;
+    WebDriverWait _wait;
     IWebElement _element => _driver.FindElement(_locator);
     TimeSpan _timeout = TimeSpan.FromSeconds(20);
-    WebDriverWait _wait;
 
     public PageElement(IWebDriver driver, By locator)
     {
@@ -28,6 +28,7 @@ public class PageElement : IWebElement
     public Point Location => _element.Location;
     public Size Size => _element.Size;
     public bool Displayed => _element.Displayed;
+
     public void Clear() => _element.Clear();
     public IWebElement FindElement(By by) => _element.FindElement(by);
     public ReadOnlyCollection<IWebElement> FindElements(By by) => _element.FindElements(by);
@@ -38,11 +39,23 @@ public class PageElement : IWebElement
     public void SendKeys(string text) => _element.SendKeys(text);
     public void Submit() => _element.Submit();
     public ISearchContext GetShadowRoot() => _element.GetShadowRoot();
-    bool IsElementInteractable(IWebElement element) => element != null && element.Displayed && element.Enabled;
+    public void WaitForClickability() => _wait.Until(ExpectedConditions.ElementToBeClickable(_locator));
+    public void WaitForVisibility() => _wait.Until(ExpectedConditions.ElementIsVisible(_locator));
+    public void SelectByText(string text) => new SelectElement(_element).SelectByText(text);
+    public void SelectByValue(string value) => new SelectElement(_element).SelectByValue(value);
+    public void SelectByIndex(int index) => new SelectElement(_element).SelectByIndex(index);
+    public void DeselectAll() => new SelectElement(_element).DeselectAll();
+    public void DoubleClick() => new Actions(_driver).DoubleClick(_element).Perform();
+    public void Hover() => new Actions(_driver).MoveToElement(_element).Perform();
+    public void RightClick() => new Actions(_driver).ContextClick(_element).Perform();
+    public void DragAndDrop(PageElement source, PageElement target) => new Actions(_driver).DragAndDrop(source._element, target._element).Perform();
+    private bool IsElementInteractable(IWebElement element) => element != null && element.Displayed && element.Enabled;
+
     public void Click()
     {
         if (IsElementInteractable(_element))
         {
+            //ScrollIntoView();
             _element.Click();
             WaitForLoadingIconToDisappear();
         }
@@ -77,26 +90,12 @@ public class PageElement : IWebElement
         }
     }
 
-    public void ScrollIntoViewAndClick()
+    public void ScrollIntoView()
     {
         if (IsElementInteractable(_element))
-        {
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView(true);", _driver.FindElement(_locator));
-            WaitForClickability();
-            _element.Click();
-        }
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView(true);", _element);
         else
             throw new ElementNotInteractableException("The element is not interactable.");
-    }
-
-    public void WaitForClickability()
-    {
-        _wait.Until(ExpectedConditions.ElementToBeClickable(_locator));
-    }
-
-    public void WaitForVisibility()
-    {
-        _wait.Until(ExpectedConditions.ElementIsVisible(_locator));
     }
 
     void WaitForLoadingIconToDisappear()
@@ -105,60 +104,27 @@ public class PageElement : IWebElement
         _wait.Until(ExpectedConditions.InvisibilityOfElementLocated(loadingLocator));
     }
 
-    public void DoubleClick()
-    {
-        new Actions(_driver).DoubleClick(_element).Perform();
-    }
-
-    public void Hover()
-    {
-        new Actions(_driver).MoveToElement(_element).Perform();
-    }
-
-    public void RightClick()
-    {
-        new Actions(_driver).ContextClick(_element).Perform();
-    }
-
-    public void DragAndDrop(PageElement source, PageElement target)
-    {
-        new Actions(_driver).DragAndDrop(source, target).Perform();
-    }
-
     public void SetCheckbox(bool check)
     {
         if (_element.Selected != check)
-            _element.Click();
-    }
-
-    public void SelectByText(string text)
-    {
-        new SelectElement(_element).SelectByText(text);
-    }
-
-    public void SelectByValue(string value)
-    {
-        new SelectElement(_element).SelectByValue(value);
-    }
-
-    public void SelectByIndex(int index)
-    {
-        new SelectElement(_element).SelectByIndex(index);
-    }
-
-    public void DeselectAll()
-    {
-        new SelectElement(_element).DeselectAll();
-    }
-
-    public void EnterTextWithDelay(string text, int delayInMilliseconds = 100)
-    {
-        _element.Clear();
-        foreach (char c in text)
         {
-            _element.SendKeys(c.ToString());
-            Thread.Sleep(delayInMilliseconds);
+            _element.Click();
         }
+    }
+
+    public async Task EnterTextWithDelayAsync(string text, int delayInMilliseconds = 100)
+    {
+        if (IsElementInteractable(_element))
+        {
+            _element.Clear();
+            foreach (char c in text)
+            {
+                _element.SendKeys(c.ToString());
+                await Task.Delay(delayInMilliseconds);
+            }
+        }
+        else
+            throw new ElementNotInteractableException($"Cannot enter text on the element located by '{_locator}' on page '{_driver.Url}'.");
     }
 
     public bool IsDisplayed()
@@ -177,7 +143,7 @@ public class PageElement : IWebElement
         }
     }
 
-    public IWebElement FindElementWithRetry(int retryCount = 3, int delayInSeconds = 1)
+    public async Task<IWebElement> FindElementWithRetryAsync(int retryCount = 3, int delayInSeconds = 1)
     {
         IWebElement element = null;
         for (int i = 0; i < retryCount; i++)
@@ -189,9 +155,8 @@ public class PageElement : IWebElement
             }
             catch (NoSuchElementException)
             {
-                if (i == retryCount - 1)
-                    throw;
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(delayInSeconds));
+                if (i == retryCount - 1) throw;
+                await Task.Delay(TimeSpan.FromSeconds(delayInSeconds));
             }
         }
         return element;

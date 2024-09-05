@@ -8,19 +8,19 @@ namespace OrangeHRMLive.PageObjects
     {
         public PIMPage(IWebDriver driver) : base(driver) { }
 
-        protected UIElement TextField(string text) => new UIElement(Driver, By.XPath($"//input[normalize-space(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))=\"{text}\"] | //div[label[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=\"{text}\"]]/following-sibling::div//input"));
+        protected PageElement TextField(string text) => new PageElement(Driver, By.XPath($"//input[normalize-space(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))=\"{text}\"] | //div[label[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=\"{text}\"]]/following-sibling::div//input"));
 
-        protected UIElement SelectField(int index = 1) => new UIElement(Driver, By.XPath($"(//div[@class='oxd-select-text--after'])[{index}]"));
+        protected PageElement SelectField(int index = 1) => new PageElement(Driver, By.XPath($"(//div[@class='oxd-select-text--after'])[{index}]"));
 
-        protected UIElement SelectGender(string gender) => new UIElement(Driver, By.XPath($"//div[@class='--gender-grouped-field']//label[contains(.,\"{gender}\")]"));
+        protected PageElement SelectGender(string gender) => new PageElement(Driver, By.XPath($"//div[@class='--gender-grouped-field']//label[contains(.,\"{gender}\")]"));
 
-        protected UIElement NewlyRegisteredEmployee(string? ID, string? firstName, string? lastName) => new UIElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\") and contains(.,\"{firstName}\") and contains(.,\"{lastName}\")]"));
+        protected PageElement NewlyRegisteredEmployee(string? ID, string? firstName, string? lastName) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\") and contains(.,\"{firstName}\") and contains(.,\"{lastName}\")]"));
 
-        protected UIElement NewlyRegisteredEmployeeUpdateIcon(string? ID) => new UIElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-pencil-fill']"));
+        protected PageElement NewlyRegisteredEmployeeUpdateIcon(string? ID) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-pencil-fill']"));
 
-        protected UIElement NewlyRegisteredEmployeeDeleteIcon(string? ID) => new UIElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-trash']"));
+        protected PageElement NewlyRegisteredEmployeeDeleteIcon(string? ID) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-trash']"));
 
-        protected UIElement Pagination_Next => new UIElement(Driver, By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
+        protected PageElement Pagination_Next => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
 
 
 
@@ -29,12 +29,12 @@ namespace OrangeHRMLive.PageObjects
         {
             Mainmenu_item("pim").Click();
             Button_button("add").Click();
-            TextField("first name").EnterText(employee.Firstname);
-            TextField("middle name").EnterText(employee.Middlename);
-            TextField("last name").EnterText(employee.Lastname);
-            employee.EmployeeID = TextField("employee id").GetAttributeOrDefault("value");
+            TextField("first name").ClearAndSendKeys(employee.Firstname);
+            TextField("middle name").ClearAndSendKeys(employee.Middlename);
+            TextField("last name").ClearAndSendKeys(employee.Lastname);
+            employee.EmployeeID = TextField("employee id").GetAttribute("value");
             Button_button("save").Click();
-            TextField("driver's license number").EnterText(employee.DriversLicenseNumber);
+            TextField("driver's license number").ClearAndSendKeys(employee.DriversLicenseNumber);
             SelectField().Click();
             Select_dropdown("nigerian").Click();
             SelectField(2).Click();
@@ -117,7 +117,7 @@ namespace OrangeHRMLive.PageObjects
             Mainmenu_item("pim").Click();
             if (IsEmployeeDisplayedOnCurrentPage(employee))
             {
-                return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).GetTrimmedText().ToLower();
+                return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
             }
             else
             {
@@ -126,7 +126,7 @@ namespace OrangeHRMLive.PageObjects
                     Pagination_Next.Click();
                     if (IsEmployeeDisplayedOnCurrentPage(employee))
                     {
-                        return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).GetTrimmedText().ToLower();
+                        return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
                     }
                 }
                 return "Employee not found or record not updated.";
