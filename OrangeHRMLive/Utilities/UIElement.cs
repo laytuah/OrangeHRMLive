@@ -18,7 +18,7 @@ public class UIElement
         _wait = new WebDriverWait(_driver, _timeout);
     }
 
-    public void ClickElement()
+    public void Click()
     {
         if (IsElementInteractable(_driver.FindElement(_locator)))
         {
@@ -65,7 +65,7 @@ public class UIElement
         }
     }
 
-    public void ScrollAndClick()
+    public void ScrollIntoViewAndClick()
     {
         if (IsElementInteractable(_driver.FindElement(_locator)))
         {

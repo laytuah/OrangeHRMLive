@@ -13,13 +13,11 @@ namespace OrangeHRMLive.PageObjects
         UIElement PasswordField => new UIElement(Driver, By.XPath("//input[@name='password' and @placeholder='Password']"));
         UIElement LoginButton => new UIElement(Driver, By.XPath("//button[contains(@class,'login-button')]"));
 
-        UIElement Loginutton => new UIElement(Driver, By.XPath("//button[contains(@class,'login-button')]"));
-
         public void Login()
         {
             UsernameField.EnterText(ExtractText(UsernameText));
             PasswordField.EnterText(ExtractText(PasswordText));
-            LoginButton.ClickElement();
+            LoginButton.Click();
         }
 
         string ExtractText(UIElement element)
