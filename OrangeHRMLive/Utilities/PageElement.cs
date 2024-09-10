@@ -49,15 +49,26 @@ public class PageElement : IWebElement
     public void Hover() => new Actions(_driver).MoveToElement(_element).Perform();
     public void RightClick() => new Actions(_driver).ContextClick(_element).Perform();
     public void DragAndDrop(PageElement source, PageElement target) => new Actions(_driver).DragAndDrop(source._element, target._element).Perform();
+    public void ActionClick() => new Actions(_driver).MoveToElement(_element).Click().Perform();
     private bool IsElementInteractable(IWebElement element) => element != null && element.Displayed && element.Enabled;
 
     public void Click()
     {
         if (IsElementInteractable(_element))
         {
-            //ScrollIntoView();
+            WaitForClickability();
             _element.Click();
-            WaitForLoadingIconToDisappear();
+        }
+        else
+            throw new ElementNotInteractableException("The element is not interactable.");
+    }
+
+    public void JSClick()
+    {
+        if (IsElementInteractable(_element))
+        {
+            WaitForClickability();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", _element);
         }
         else
             throw new ElementNotInteractableException("The element is not interactable.");
@@ -98,10 +109,18 @@ public class PageElement : IWebElement
             throw new ElementNotInteractableException("The element is not interactable.");
     }
 
+    public void FocusOnElement()
+    {
+        if (IsElementInteractable(_element))
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].focus();", _element);
+        else
+            throw new ElementNotInteractableException("The element is not interactable.");
+    }
+
     void WaitForLoadingIconToDisappear()
     {
-        var loadingLocator = By.XPath(ConfigurationManager.LoadingIconXpath);
-        _wait.Until(ExpectedConditions.InvisibilityOfElementLocated(loadingLocator));
+        var loadingIconLocator = By.XPath(ConfigurationManager.LoadingIconXpath);
+            _wait.Until(ExpectedConditions.InvisibilityOfElementLocated(loadingIconLocator));
     }
 
     public void SetCheckbox(bool check)

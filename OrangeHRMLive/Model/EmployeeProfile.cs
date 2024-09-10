@@ -12,8 +12,12 @@ namespace OrangeHRMLive.Model
         public string? City { get; set; } = DataGenerator.GenerateRandomString();
         public string? Telephone { get; set; } = "07" + DataGenerator.GenerateRandomIntegerString(8);
         public string? Email { get; set; } = DataGenerator.GenerateRandomString(16) + "@yahoo.com";
+        public string? EmployeeID { get; set; } = DataGenerator.GenerateRandomIntegerString(5);
         public string JobTitle { get; set; } = "automaton tester";
         public string EmploymentStatus { get; set; } = "freelance";
-        public string? EmployeeID { get; set; }
+        public string MaritalStatus { get; set; } = "single";
+        public string Nationality { get; set; } = "nigerian";
+        public string BloodGroup { get; set; } = "o+";
+        public string Gender { get; set; } = "Male";
     }
 }

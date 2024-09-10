@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OrangeHRMLive.Model;
-using OrangeHRMLive.Utilities;
 
 namespace OrangeHRMLive.PageObjects
 {
@@ -32,23 +31,24 @@ namespace OrangeHRMLive.PageObjects
             TextField("first name").ClearAndSendKeys(employee.Firstname);
             TextField("middle name").ClearAndSendKeys(employee.Middlename);
             TextField("last name").ClearAndSendKeys(employee.Lastname);
-            employee.EmployeeID = TextField("employee id").GetAttribute("value");
+            TextField("employee id").ClearAndSendKeys(employee.EmployeeID);
             Button_button("save").Click();
             TextField("driver's license number").ClearAndSendKeys(employee.DriversLicenseNumber);
             SelectField().Click();
-            Select_dropdown("nigerian").Click();
+            Select_dropdown(employee.Nationality).Click();
+
             SelectField(2).Click();
-            Select_dropdown("single").Click();
+            Select_dropdown(employee.MaritalStatus).Click();
             SelectField(3).Click();
-            Select_dropdown("o+").Click();
-            SelectGender("Male").Click();
+            Select_dropdown(employee.BloodGroup).Click();
+            SelectGender(employee.Gender).Click();
             Button_button("save").Click();
             Button_button("save", 2).Click();
         }
 
         public bool IsNewlyRegisteredEmployeeDisplayed(EmployeeProfile employee)
         {
-            Mainmenu_item("pim").Click();
+            Mainmenu_item("pim").ActionClick();
             if (IsEmployeeDisplayedOnCurrentPage(employee))
                 return true;
             while (IsNextPageChevronDisplayed())
@@ -86,10 +86,10 @@ namespace OrangeHRMLive.PageObjects
 
         public void UpdateExistingEmployeeRecord(EmployeeProfile employee)
         {
-            Mainmenu_item("pim").Click();
+            Mainmenu_item("pim").ActionClick();
             if (IsEmployeeDisplayedOnCurrentPage(employee))
             {
-                NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).Click();
+                NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).ActionClick();
             }
             else
             {
@@ -98,7 +98,7 @@ namespace OrangeHRMLive.PageObjects
                     Pagination_Next.Click();
                     if (IsEmployeeDisplayedOnCurrentPage(employee))
                     {
-                        NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).Click();
+                        NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).ActionClick();
                         break;
                     }
                 }
@@ -114,7 +114,7 @@ namespace OrangeHRMLive.PageObjects
 
         public string GetUpdatedEmployeeText(EmployeeProfile employee)
         {
-            Mainmenu_item("pim").Click();
+            Mainmenu_item("pim").ActionClick();
             if (IsEmployeeDisplayedOnCurrentPage(employee))
             {
                 return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
@@ -135,10 +135,10 @@ namespace OrangeHRMLive.PageObjects
 
         public void DeleteEmployeeRecord(EmployeeProfile employee)
         {
-            Mainmenu_item("pim").Click();
+            Mainmenu_item("pim").ActionClick();
             if (IsEmployeeDisplayedOnCurrentPage(employee))
             {
-                NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).Click();
+                NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).ActionClick();
             }
             else
             {
@@ -147,12 +147,13 @@ namespace OrangeHRMLive.PageObjects
                     Pagination_Next.Click();
                     if (IsEmployeeDisplayedOnCurrentPage(employee))
                     {
-                        NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).Click();
+                        NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).ActionClick();
                         break;
                     }
                 }
             }
-            Button_button("yes, delete").Click();
+            if (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
+                Button_button("yes, delete").ActionClick();
         }
     }
 }
