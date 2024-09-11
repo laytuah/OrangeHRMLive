@@ -50,17 +50,21 @@ public class PageElement : IWebElement
     public void RightClick() => new Actions(_driver).ContextClick(_element).Perform();
     public void DragAndDrop(PageElement source, PageElement target) => new Actions(_driver).DragAndDrop(source._element, target._element).Perform();
     public void ActionClick() => new Actions(_driver).MoveToElement(_element).Click().Perform();
-    private bool IsElementInteractable(IWebElement element) => element != null && element.Displayed && element.Enabled;
+    bool IsElementInteractable(IWebElement element) => element != null && element.Displayed && element.Enabled;
 
     public void Click()
     {
         if (IsElementInteractable(_element))
         {
-            WaitForClickability();
             _element.Click();
+            WaitForLoadingIconToDisappear();
         }
         else
-            throw new ElementNotInteractableException("The element is not interactable.");
+        {
+            WaitForClickability();
+            _element.Click();
+            WaitForLoadingIconToDisappear();
+        }
     }
 
     public void JSClick()
@@ -119,8 +123,11 @@ public class PageElement : IWebElement
 
     void WaitForLoadingIconToDisappear()
     {
-        var loadingIconLocator = By.XPath(ConfigurationManager.LoadingIconXpath);
+        By loadingIconLocator = By.XPath(ConfigurationManager.LoadingIconXpath);
+        if (_driver.FindElements(loadingIconLocator).FirstOrDefault(e => e.Displayed) != null)
+        {
             _wait.Until(ExpectedConditions.InvisibilityOfElementLocated(loadingIconLocator));
+        }
     }
 
     public void SetCheckbox(bool check)
