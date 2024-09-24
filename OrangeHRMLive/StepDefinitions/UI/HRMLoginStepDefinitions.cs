@@ -3,7 +3,7 @@ using OrangeHRMLive.Model;
 using OrangeHRMLive.PageObjects;
 using TechTalk.SpecFlow;
 
-namespace OrangeHRMLive.StepDefinitions
+namespace OrangeHRMLive.StepDefinitions.UI
 {
     [Binding]
     public class HRMLoginStepDefinitions
@@ -28,7 +28,7 @@ namespace OrangeHRMLive.StepDefinitions
         {
             _basePage.LoadAUT();
             var employee = new EmployeeProfile();
-            _scenarioContext.Set<EmployeeProfile>(employee, "employee");
+            _scenarioContext.Set(employee, "employee");
         }
 
         [StepDefinition(@"the user supplies the provided login details")]
