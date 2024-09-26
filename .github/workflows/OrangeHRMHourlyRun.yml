@@ -45,4 +45,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: test-results-html
-        path: ../TestResults/test_results.html  # Correct path
+        path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults/test_results.html  # Correct path
