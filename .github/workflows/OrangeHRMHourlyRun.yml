@@ -32,17 +32,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: test-results
-        path: ../TestResults/test_results.trx  # Path corrected to go up one level
-
-    - name: Convert .trx to HTML (Optional step to make results more readable)
-      if: always()
-      run: |
-        dotnet tool install --global trx2html
-        trx2html ../TestResults/test_results.trx -o ../TestResults/test_results.html
-
-    - name: Upload HTML Report (Optional)
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-results-html
-        path: ../TestResults/test_results.html
+        path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
