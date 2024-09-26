@@ -28,6 +28,7 @@ jobs:
       run: dotnet test --logger "trx;LogFileName=test_results.trx"
 
     - name: Publish test results
+      if: always()
       uses: actions/upload-artifact@v3
       with:
         name: test-results
