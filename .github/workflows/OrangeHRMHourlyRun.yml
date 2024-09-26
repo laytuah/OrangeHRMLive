@@ -25,7 +25,10 @@ jobs:
 
       - name: Run the tests
         run: dotnet test --logger:trx --results-directory /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
-
+        
+      - name: List Test Results
+        run: ls -R ./TestResults
+      
       - name: Upload test artifacts
         if: always()  # Ensure the artifacts are uploaded whether the test passes or fails
         uses: actions/upload-artifact@v3
