@@ -4,45 +4,46 @@ on:
   schedule:
     - cron: '0 */1 * * *'
   workflow_dispatch:  
-
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
-
+    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout the repository
+        uses: actions/checkout@v3
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.x'
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'  # Ensure this matches your project’s .NET version
 
-    - name: Install dependencies
-      run: dotnet restore
+      - name: Restore dependencies
+        run: dotnet restore
 
-    - name: Build the project
-      run: dotnet build --configuration Release
+      - name: Build the project
+        run: dotnet build --configuration Release
 
-    - name: Run Selenium Tests
-      run: dotnet test --logger "trx;LogFileName=test_results.trx"
+      - name: Run the tests
+        run: dotnet test --logger:trx --results-directory /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
 
-    - name: Publish test results
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-results
-        path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults/test_results.trx
-        
-    - name: Convert .trx to HTML (Optional step to make results more readable)
-      if: always()
-      run: |
-        dotnet tool install --global trx2html
-        trx2html /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults/test_results.trx -o /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults/test_results.html
+      - name: Archive test results
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Test-Results
+          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults  # This folder contains the reports, screenshots, etc.
 
-    - name: Upload HTML Report
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-results-html
-        path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults/test_results.html  # Correct path
+  upload-artifacts:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Upload all test output as an artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-output
+          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults/Reports   # Replace with the correct path to your output folder
+          retention-days: 5  # Optionally set how many days the artifact is stored
