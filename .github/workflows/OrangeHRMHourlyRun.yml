@@ -31,5 +31,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Test-Results
-          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults  # Replace with the correct folder path for your test results
+          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults/**  # Replace with the correct folder path for your test results
           retention-days: 5
