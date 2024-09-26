@@ -26,24 +26,10 @@ jobs:
       - name: Run the tests
         run: dotnet test --logger:trx --results-directory /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
 
-      - name: Archive test results
-        if: failure()
+      - name: Upload test artifacts
+        if: always()  # Ensure the artifacts are uploaded whether the test passes or fails
         uses: actions/upload-artifact@v3
         with:
           name: Test-Results
-          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults  # This folder contains the reports, screenshots, etc.
-
-  upload-artifacts:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v3
-
-      - name: Upload all test output as an artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-output
-          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults/Reports   # Replace with the correct path to your output folder
-          retention-days: 5  # Optionally set how many days the artifact is stored
+          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults  # Replace with the correct folder path for your test results
+          retention-days: 5
