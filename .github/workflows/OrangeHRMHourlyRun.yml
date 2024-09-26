@@ -32,4 +32,17 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: test-results
-        path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
+        path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults/test_results.trx
+        
+    - name: Convert .trx to HTML (Optional step to make results more readable)
+      if: always()
+      run: |
+        dotnet tool install --global trx2html
+        trx2html /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults/test_results.trx -o /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults/test_results.html
+
+    - name: Upload HTML Report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results-html
+        path: ../TestResults/test_results.html  # Correct path
