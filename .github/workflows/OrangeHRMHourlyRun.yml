@@ -2,7 +2,7 @@ name: Hourly Run For OrangeHRM
 
 on:
   schedule:
-    - cron: '0 */5 * * *'
+    - cron: '0 2 * * *'
   workflow_dispatch:  
 jobs:
   build-and-test:
@@ -10,12 +10,12 @@ jobs:
     
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'  # Ensure this matches your project’s .NET version
+          dotnet-version: '8.0.x'
 
       - name: Restore dependencies
         run: dotnet restore
@@ -32,4 +32,3 @@ jobs:
         with:
           name: Test-Results
           path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
-          retention-days: 5
