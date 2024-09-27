@@ -27,12 +27,12 @@ jobs:
         run: dotnet test --logger:trx --results-directory /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
         
       - name: List Test Results
-        run: ls -R ./TestResults
+        run: ls -R /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
       
       - name: Upload test artifacts
-        if: always()  # Ensure the artifacts are uploaded whether the test passes or fails
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: Test-Results
-          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults/**  # Replace with the correct folder path for your test results
+          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
           retention-days: 5
