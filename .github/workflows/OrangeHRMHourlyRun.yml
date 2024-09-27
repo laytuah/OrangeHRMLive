@@ -24,10 +24,7 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Run the tests
-        run: dotnet test --logger:trx --results-directory /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
-        
-      - name: List Test Results
-        run: ls -R /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
+        run: dotnet test 
       
       - name: Upload test artifacts
         if: always()
