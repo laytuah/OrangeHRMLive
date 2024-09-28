@@ -57,13 +57,12 @@ public class PageElement : IWebElement
         if (IsElementInteractable(_element))
         {
             _element.Click();
-            WaitForLoadingIconToDisappear();
         }
         else
         {
+            WaitForLoadingIconToDisappear();
             WaitForClickability();
             _element.Click();
-            WaitForLoadingIconToDisappear();
         }
     }
 
