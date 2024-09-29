@@ -16,14 +16,14 @@ namespace OrangeHRMLive.Utilities
         [ThreadStatic]
         static ExtentTest _scenario;
 
-        //static readonly string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        //static readonly string ReportPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Reports");
-        //static readonly string ScreenshotPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Screenshots");
-        //static readonly string NetworkLogPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\NetworkLogs");
+        static readonly string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        static readonly string ReportPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Reports");
+        static readonly string ScreenshotPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Screenshots");
+        static readonly string NetworkLogPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\NetworkLogs");
 
-        static readonly string ReportPath = @"TestResults\Reports";
-        static readonly string ScreenshotPath = @"TestResults\Screenshots";
-        static readonly string NetworkLogPath = @"TestResults\NetworkLogs";
+        //static readonly string ReportPath = @"TestResults\Reports";
+        //static readonly string ScreenshotPath = @"TestResults\Screenshots";
+        //static readonly string NetworkLogPath = @"TestResults\NetworkLogs";
 
         public void ExtentReportInitialization()
         {
