@@ -21,10 +21,10 @@ jobs:
         run: dotnet restore
 
       - name: Build the project
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Debug
 
       - name: Run the tests
-        run: dotnet test --no-build --verbosity normal --configuration Release
+        run: dotnet test --no-build --verbosity normal --configuration Debug
       
       - name: Upload test artifacts
         if: always()
