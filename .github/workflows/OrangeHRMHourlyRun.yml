@@ -20,15 +20,15 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name: Build
-        run: dotnet build
+      - name: Build the project
+        run: dotnet build --configuration Debug
 
       - name: Run the tests
-        run: dotnet test --no-build --verbosity normal --configuration Release
+        run: dotnet test --no-build --verbosity normal --configuration Debug
       
       - name: Upload test artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Test-Results
-          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/bin/Release/net8.0/TestResults/**
+          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/bin/Debug/net8.0/TestResults/**
