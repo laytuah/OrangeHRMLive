@@ -1,4 +1,4 @@
-name: Hourly Run For OrangeHRM
+name: Daily Run For OrangeHRM
 
 on:
   schedule:
