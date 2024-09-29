@@ -18,13 +18,13 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore "{{ github.workspace }}/OrangeHRMLive/OrangeHRMLive.csproj"
 
-      - name: Build the project
-        run: dotnet build --configuration Release
+      - name: Build
+        run: dotnet build "{{ github.workspace }}/OrangeHRMLive/OrangeHRMLive.csproj" --configuration Release --no-restore
 
       - name: Run the tests
-        run: dotnet test --no-build --verbosity normal --configuration Release
+        run: dotnet test "{{ github.workspace }}/OrangeHRMLive/OrangeHRMLive.csproj" --no-build --verbosity normal
       
       - name: Upload test artifacts
         if: always()
