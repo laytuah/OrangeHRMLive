@@ -54,14 +54,21 @@ public class PageElement : IWebElement
 
     public void Click()
     {
-        if (IsElementInteractable(_element))
+        try
         {
-            _element.Click();
+            if (IsElementInteractable(_element))
+            {
+                _element.Click();
+            }
+            else
+            {
+                WaitForClickability();
+                _element.Click();
+            }
         }
-        else
+        catch (ElementClickInterceptedException)
         {
             WaitForLoadingIconToDisappear();
-            WaitForClickability();
             _element.Click();
         }
     }

@@ -138,7 +138,7 @@ namespace OrangeHRMLive.PageObjects
             Mainmenu_item("pim").ActionClick();
             if (IsEmployeeDisplayedOnCurrentPage(employee))
             {
-                NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).ActionClick();
+                ClickDeleteButton(employee);
             }
             else
             {
@@ -147,13 +147,21 @@ namespace OrangeHRMLive.PageObjects
                     Pagination_Next.Click();
                     if (IsEmployeeDisplayedOnCurrentPage(employee))
                     {
-                        NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).ActionClick();
+                        ClickDeleteButton(employee);
                         break;
                     }
                 }
             }
-            if (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
-                Button_button("yes, delete").ActionClick();
+        }
+
+        public void ClickDeleteButton(EmployeeProfile employee)
+        {
+            while (IsEmployeeDisplayedOnCurrentPage(employee))
+            {
+                NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).ActionClick();
+                if (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
+                    Button_button("yes, delete").ActionClick();
+            }
         }
     }
 }
