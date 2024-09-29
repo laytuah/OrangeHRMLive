@@ -25,10 +25,13 @@ jobs:
 
       - name: Run the tests
         run: dotnet test --no-build --verbosity normal --configuration Debug
-      
+        
+      - name: List files and directories
+        run: ls -R /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/
+
       - name: Upload test artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Test-Results
-          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/bin/Debug/net8.0/TestResults/**
+          path: OrangeHRMLive/bin/Debug/net8.0/TestResults/**
