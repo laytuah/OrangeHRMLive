@@ -43,11 +43,11 @@ jobs:
       
       - name: Ensure report directory exists
         if: always()
-        run: mkdir -p /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/bin/Release/net8.0/TestResults/Reports
+        run: mkdir -p /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
 
       - name: Upload test artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Test-Results
-          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/bin/Release/net8.0/TestResults/Reports
+          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
