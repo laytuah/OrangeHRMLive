@@ -1,0 +1,48 @@
+name: OrangeHRM
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:  
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build the project
+        run: dotnet build --configuration Release
+
+      - name: Run the tests
+        run: dotnet test --no-build --verbosity normal --configuration Release
+      
+      - name: Print working directory
+        run: pwd
+
+      - name: List files and directories
+        run: |
+          set -x
+          ls -R /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/
+      
+      - name: Find all files
+        run: find /home/runner/work/OrangeHRMLive/ -type f
+      
+      - name: Ensure report directory exists
+        run: mkdir -p /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/bin/Release/net8.0/TestResults/Reports
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test-Results
+          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/bin/Release/net8.0/TestResults/Reports
