@@ -1,4 +1,4 @@
-name: OrangeHRM
+name: Daily-Run
 
 on:
   schedule:
@@ -25,25 +25,6 @@ jobs:
 
       - name: Run the tests
         run: dotnet test --no-build --verbosity normal --configuration Release
-      
-      # Ensure that these steps run regardless of the result of the previous steps
-      - name: Print working directory
-        if: always()
-        run: pwd
-
-      - name: List files and directories
-        if: always()
-        run: |
-          set -x
-          ls -R /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/
-      
-      - name: Find all files
-        if: always()
-        run: find /home/runner/work/OrangeHRMLive/ -type f
-      
-      - name: Ensure report directory exists
-        if: always()
-        run: mkdir -p /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
 
       - name: Upload test artifacts
         if: always()
