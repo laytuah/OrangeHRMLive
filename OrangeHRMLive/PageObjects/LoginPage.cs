@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OrangeHRMLive.Utilities;
 
 namespace OrangeHRMLive.PageObjects
 {
