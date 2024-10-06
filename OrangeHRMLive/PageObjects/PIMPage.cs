@@ -33,7 +33,7 @@ namespace OrangeHRMLive.PageObjects
             TextField("last name").ClearAndSendKeys(employee.Lastname);
             TextField("employee id").ClearAndSendKeys(employee.EmployeeID);
             Button_button("save").Click();
-            TextField("driver's license number").ClearAndSendKeys(employee.DriversLicenseNumber);
+            TextField("driver license number").ClearAndSendKeys(employee.DriversLicenseNumber);
             SelectField().Click();
             Select_dropdown(employee.Nationality).Click();
 
