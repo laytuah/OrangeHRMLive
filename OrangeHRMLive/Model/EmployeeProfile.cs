@@ -7,7 +7,6 @@ namespace OrangeHRMLive.Model
         public string? Firstname { get; set; } = DataGenerator.GenerateRandomString();
         public string? Middlename { get; set; } = DataGenerator.GenerateRandomString();
         public string? Lastname { get; set; } = DataGenerator.GenerateRandomString();
-        public string? DriversLicenseNumber { get; set; } = DataGenerator.GenerateRandomAlphanumerics();
         public string? Street { get; set; } = DataGenerator.GenerateRandomString(6) + "Street";
         public string? City { get; set; } = DataGenerator.GenerateRandomString();
         public string? Telephone { get; set; } = "07" + DataGenerator.GenerateRandomIntegerString(8);
