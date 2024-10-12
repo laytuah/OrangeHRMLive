@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignore TestResults folder and its contents
+/TestResults/
+
+# Except for GitHub Actions where we want to track the folder structure
+!/TestResults/.gitkeep
