@@ -26,15 +26,9 @@ jobs:
       - name: Run the tests
         run: dotnet test --no-build --verbosity normal --configuration Release
 
-      - name: List all files for debugging
-        run: ls -al $(pwd)  # List files in the current working directory
-
-      - name: List files in TestResults
-        run: ls -al $(pwd)/TestResults
-
       - name: Upload test artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Test-Results
-          path: $(pwd)/TestResults
+          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
