@@ -10,6 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TestResults\**" />
+    <EmbeddedResource Remove="TestResults\**" />
+    <None Remove="TestResults\**" />
+    <SpecFlowFeatureFiles Remove="TestResults\**" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="TestResults\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -44,7 +52,6 @@
   <ItemGroup>
     <Folder Include="Features\API\" />
     <Folder Include="StepDefinitions\API\" />
-    <Folder Include="TestResults\" />
   </ItemGroup>
  
 </Project>

@@ -21,11 +21,6 @@ namespace OrangeHRMLive.Utilities
         static readonly string ReportPath = Path.Combine(ProjectDirectory,"TestResults", "Reports");
         static readonly string ScreenshotPath = Path.Combine(ProjectDirectory,"TestResults", "Screenshots");
         static readonly string NetworkLogPath = Path.Combine(ProjectDirectory,"TestResults", "NetworkLogs");
-        //static readonly string testResultsDirectory = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults");
-        //static readonly string ReportPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Reports");
-        //static readonly string ScreenshotPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Screenshots");
-        //static readonly string NetworkLogPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\NetworkLogs");
-
 
         public void ExtentReportInitialization()
         {

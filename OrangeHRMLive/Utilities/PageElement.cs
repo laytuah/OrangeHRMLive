@@ -28,7 +28,6 @@ public class PageElement : IWebElement
     public Point Location => _element.Location;
     public Size Size => _element.Size;
     public bool Displayed => _element.Displayed;
-
     public void Clear() => _element.Clear();
     public IWebElement FindElement(By by) => _element.FindElement(by);
     public ReadOnlyCollection<IWebElement> FindElements(By by) => _element.FindElements(by);
