@@ -32,12 +32,7 @@ bld/
 [Oo]ut/
 [Ll]og/
 [Ll]ogs/
-
-# Ignore TestResults folder and its contents
-TestResults/
-
-# Except for GitHub Actions where we want to track the folder structure
-!TestResults/.gitkeep
+[Tt]est[Rr]esults/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
