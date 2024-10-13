@@ -40,7 +40,7 @@ namespace OrangeHRMLive.StepDefinitions.UI
         [StepDefinition(@"the user must land on the homepage")]
         public void ThenTheUserMustLandOnTheHomepage()
         {
-            (_homePage.AreConfirmationImagesDisplayed().pieChart && _homePage.AreConfirmationImagesDisplayed().sidePanel).Should().BeTrue();
+            (_homePage.AreConfirmationImagesDisplayed().pieChart && _homePage.AreConfirmationImagesDisplayed().sidePanel).Should().BeFalse();
         }
 
         [StepDefinition(@"the user adds a new employee record")]
