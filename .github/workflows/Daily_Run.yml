@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
+      - name: Checkout the repository
         uses: actions/checkout@v4
 
       - name: Set up .NET
@@ -20,20 +20,15 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name: Build
+      - name: Build the project
         run: dotnet build --configuration Release
 
-      - name: Run tests
-        run: |
-          mkdir -p TestResults  # Ensure TestResults folder exists
-          dotnet test --no-build --verbosity normal --configuration Release
+      - name: Run the tests
+        run: dotnet test --no-build --verbosity normal --configuration Release
 
-      - name: List files in TestResults (for debugging)
-        run: ls -al TestResults  # Check if files are present
-
-      - name: Upload Reports
+      - name: Upload test artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Test-Results
-          path: TestResults
+          path: /home/runner/work/OrangeHRMLive/OrangeHRMLive/OrangeHRMLive/TestResults
