@@ -26,6 +26,7 @@ namespace OrangeHRMLive.Utilities
         //static readonly string ScreenshotPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\Screenshots");
         //static readonly string NetworkLogPath = ProjectDirectory.Replace("bin\\Debug\\net8.0", "TestResults\\NetworkLogs");
 
+
         public void ExtentReportInitialization()
         {
             if (!Directory.Exists(testResultsDirectory))
