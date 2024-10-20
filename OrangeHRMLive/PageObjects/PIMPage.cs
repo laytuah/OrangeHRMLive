@@ -89,7 +89,7 @@ namespace OrangeHRMLive.PageObjects
         public void UpdateExistingEmployeeRecord(EmployeeProfile employee)
         {
             Mainmenu_item("pim").ActionClick();
-            FirstUserOnPimTable.Click();
+            FirstUserOnPimTable.ActionClick();
             //if (IsEmployeeDisplayedOnCurrentPage(employee))
             //{
             //    NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).ActionClick();
