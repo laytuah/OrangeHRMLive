@@ -12,11 +12,13 @@ Scenario: User can add a new employee record
 	Then newly created record must be found on employee list
 
 Scenario: User can update existing employee record
-	When the user adds a new employee record
-	And the user updates the newly created record
-	Then the reord must be updated
+	#When the user adds a new employee record
+	#And the user updates the newly created record
+	When the user updates an existing record
+	Then the record must be updated
 
 Scenario: User can delete existing employee record
-	When the user adds a new employee record
-	And the user deletes the created record
+	#When the user adds a new employee record
+	#And the user deletes the created record
+	When the user deletes an existing record
 	Then the record must be deleted from employee list

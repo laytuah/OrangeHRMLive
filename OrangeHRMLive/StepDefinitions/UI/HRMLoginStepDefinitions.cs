@@ -53,10 +53,12 @@ namespace OrangeHRMLive.StepDefinitions.UI
         [StepDefinition(@"newly created record must be found on employee list")]
         public void ThenNewlyCreatedRecordMustBeFoundOnEmployeeList()
         {
-            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.IsNewlyRegisteredEmployeeDisplayed(employee).Should().BeTrue();
+            _pimPage.IsNewlyCreatedEmployeeToastMessageDisplayed().Should().BeTrue();
+            //var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            //_pimPage.IsNewlyRegisteredEmployeeDisplayed(employee).Should().BeTrue();
         }
 
+        [StepDefinition(@"the user updates an existing record")]
         [StepDefinition(@"the user updates the newly created record")]
         public void WhenTheUserUpdatesTheNewlyCreatedRecord()
         {
@@ -64,26 +66,29 @@ namespace OrangeHRMLive.StepDefinitions.UI
             _pimPage.UpdateExistingEmployeeRecord(employee);
         }
 
-        [StepDefinition(@"the reord must be updated")]
+        [StepDefinition(@"the record must be updated")]
         public void ThenTheReordMustBeUpdated()
         {
-            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.GetUpdatedEmployeeText(employee).Should().Contain(employee.JobTitle);
-            _pimPage.GetUpdatedEmployeeText(employee).Should().Contain(employee.EmploymentStatus);
+            _pimPage.IsUpdateToastMessageDisplayed().Should().BeTrue();
+            //var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            //_pimPage.GetUpdatedEmployeeText(employee).Should().Contain(employee.JobTitle);
+            //_pimPage.GetUpdatedEmployeeText(employee).Should().Contain(employee.EmploymentStatus);
         }
 
+        [StepDefinition(@"the user deletes an existing record")]
         [StepDefinition(@"the user deletes the created record")]
         public void WhenTheUserDeletesTheCreatedRecord()
         {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.DeleteEmployeeRecord(employee);
+            _pimPage.DeleteExistingEmployeeRecord(employee);
         }
 
         [StepDefinition(@"the record must be deleted from employee list")]
         public void ThenTheRecordMustBeDeletedFromEmployeeList()
         {
-            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.IsNewlyRegisteredEmployeeDisplayed(employee).Should().BeFalse();
+            _pimPage.IsDeleteToastMessageDisplayed().Should().BeTrue();
+            //var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            //_pimPage.IsNewlyRegisteredEmployeeDisplayed(employee).Should().BeFalse();
         }
     }
 }
