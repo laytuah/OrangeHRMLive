@@ -21,12 +21,6 @@ namespace OrangeHRMLive.PageObjects
 
         protected PageElement Pagination_Next => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
 
-        protected PageElement ConfirmationToastMessages(string confirmationText) => new PageElement(Driver, By.XPath($"//div[@class='oxd-toast-container oxd-toast-container--bottom']//p[text()='{confirmationText}']"));
-
-        protected PageElement FirstUserOnPimTable => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[1]"));
-
-        protected PageElement DeleteFirstUserOnPimTable => new PageElement(Driver, By.XPath("(//i[@class='oxd-icon bi-trash'])[1]"));
-
         public void RegisterNewEmployee(EmployeeProfile employee)
         {
             Mainmenu_item("pim").Click();
@@ -36,16 +30,16 @@ namespace OrangeHRMLive.PageObjects
             TextField("last name").ClearAndSendKeys(employee.Lastname);
             TextField("employee id").ClearAndSendKeys(employee.EmployeeID);
             Button_button("save").Click();
-            //SelectField().Click();
-            //Select_dropdown(employee.Nationality).Click();
+            SelectField().Click();
+            Select_dropdown(employee.Nationality).Click();
 
-            //SelectField(2).Click();
-            //Select_dropdown(employee.MaritalStatus).Click();
-            //SelectField(3).Click();
-            //Select_dropdown(employee.BloodGroup).Click();
-            //SelectGender(employee.Gender).Click();
-            //Button_button("save").Click();
-            //Button_button("save", 2).Click();
+            SelectField(2).Click();
+            Select_dropdown(employee.MaritalStatus).Click();
+            SelectField(3).Click();
+            Select_dropdown(employee.BloodGroup).Click();
+            SelectGender(employee.Gender).Click();
+            Button_button("save").Click();
+            Button_button("save", 2).Click();
         }
 
         public bool IsNewlyRegisteredEmployeeDisplayed(EmployeeProfile employee)
@@ -89,23 +83,22 @@ namespace OrangeHRMLive.PageObjects
         public void UpdateExistingEmployeeRecord(EmployeeProfile employee)
         {
             Mainmenu_item("pim").ActionClick();
-            FirstUserOnPimTable.ActionClick();
-            //if (IsEmployeeDisplayedOnCurrentPage(employee))
-            //{
-            //    NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).ActionClick();
-            //}
-            //else
-            //{
-            //    while (IsNextPageChevronDisplayed())
-            //    {
-            //        Pagination_Next.Click();
-            //        if (IsEmployeeDisplayedOnCurrentPage(employee))
-            //        {
-            //            NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).ActionClick();
-            //            break;
-            //        }
-            //    }
-            //}
+            if (IsEmployeeDisplayedOnCurrentPage(employee))
+            {
+                NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).ActionClick();
+            }
+            else
+            {
+                while (IsNextPageChevronDisplayed())
+                {
+                    Pagination_Next.Click();
+                    if (IsEmployeeDisplayedOnCurrentPage(employee))
+                    {
+                        NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).ActionClick();
+                        break;
+                    }
+                }
+            }
 
             Link_anchor("job").Click();
             SelectField().Click();
@@ -113,21 +106,6 @@ namespace OrangeHRMLive.PageObjects
             SelectField(5).Click();
             Select_dropdown(employee.EmploymentStatus).Click();
             Button_button("save").Click();
-        }
-
-        public bool IsUpdateToastMessageDisplayed()
-        {
-            return ConfirmationToastMessages("Successfully Updated").IsDisplayed();
-        }
-
-        public bool IsNewlyCreatedEmployeeToastMessageDisplayed()
-        {
-            return ConfirmationToastMessages("Successfully Saved").IsDisplayed();
-        }
-
-        public bool IsDeleteToastMessageDisplayed()
-        {
-            return ConfirmationToastMessages("Successfully Deleted").IsDisplayed();
         }
 
         public string GetUpdatedEmployeeText(EmployeeProfile employee)
@@ -151,28 +129,25 @@ namespace OrangeHRMLive.PageObjects
             }
         }
 
-        public void DeleteExistingEmployeeRecord(EmployeeProfile employee)
+        public void DeleteEmployeeRecord(EmployeeProfile employee)
         {
             Mainmenu_item("pim").ActionClick();
-            DeleteFirstUserOnPimTable.ActionClick();
-            if (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
-                Button_button("yes, delete").ActionClick();
-            //    if (IsEmployeeDisplayedOnCurrentPage(employee))
-            //    {
-            //        ClickDeleteButton(employee);
-            //    }
-            //    else
-            //    {
-            //        while (IsNextPageChevronDisplayed())
-            //        {
-            //            Pagination_Next.Click();
-            //            if (IsEmployeeDisplayedOnCurrentPage(employee))
-            //            {
-            //                ClickDeleteButton(employee);
-            //                break;
-            //            }
-            //        }
-            //    }
+            if (IsEmployeeDisplayedOnCurrentPage(employee))
+            {
+                ClickDeleteButton(employee);
+            }
+            else
+            {
+                while (IsNextPageChevronDisplayed())
+                {
+                    Pagination_Next.Click();
+                    if (IsEmployeeDisplayedOnCurrentPage(employee))
+                    {
+                        ClickDeleteButton(employee);
+                        break;
+                    }
+                }
+            }
         }
 
         public void ClickDeleteButton(EmployeeProfile employee)
