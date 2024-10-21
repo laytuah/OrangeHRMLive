@@ -64,11 +64,18 @@ namespace OrangeHRMLive.StepDefinitions.UI
             _pimPage.UpdateExistingEmployeeRecord(employee);
         }
 
-        [StepDefinition(@"a user updates the last employee on employee list")]
+        [StepDefinition(@"the user updates the last employee on employee list")]
         public void WhenAUserUpdatesTheLastEmployeeOnEmployeeList()
         {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.UpdateExistingEmployeeRecord(employee);
+            _pimPage.UpdateLastEmployeeRecord(employee);
+        }
+
+        [StepDefinition(@"the last employee record must be updated")]
+        public void ThenTheLastEmployeeRecordMustBeUpdated()
+        {
+            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            _pimPage.GetLastEmployeeText(employee).Should().Contain(employee.JobTitle);
         }
 
 
@@ -87,11 +94,26 @@ namespace OrangeHRMLive.StepDefinitions.UI
             _pimPage.DeleteEmployeeRecord(employee);
         }
 
+        [StepDefinition(@"the user deletes the last employee on employee list")]
+        public void WhenTheUserDeletesTheLastEmployeeOnEmployeeList()
+        {
+            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            _pimPage.DeleteLastEmployeeRecord(employee);
+        }
+
         [StepDefinition(@"the record must be deleted from employee list")]
         public void ThenTheRecordMustBeDeletedFromEmployeeList()
         {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
             _pimPage.IsNewlyRegisteredEmployeeDisplayed(employee).Should().BeFalse();
         }
+
+        [StepDefinition(@"the last record must be deleted from employee list")]
+        public void ThenTheLastRecordMustBeDeletedFromEmployeeList()
+        {
+            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            _pimPage.IsLastEmployeeDisplayed().Should().NotBe(employee.EmployeeID);
+        }
+
     }
 }

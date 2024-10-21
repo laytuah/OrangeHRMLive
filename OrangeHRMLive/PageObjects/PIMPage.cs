@@ -16,6 +16,8 @@ namespace OrangeHRMLive.PageObjects
         protected PageElement Pagination_Next => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
         protected PageElement LastEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=last()]"));
         protected PageElement IDOfLastEmployeeOnList => new PageElement(Driver, By.XPath("((//div[@class='oxd-table-card'])[position()=last()]//div[text()])[3]"));
+        protected PageElement DeleteLastEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=last()]//i[@class='oxd-icon bi-trash']"));
+
 
         public void RegisterNewEmployee(EmployeeProfile employee)
         {
@@ -153,6 +155,36 @@ namespace OrangeHRMLive.PageObjects
                 if (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
                     Button_button("yes, delete").ActionClick();
             }
+        }
+
+        public void UpdateLastEmployeeRecord(EmployeeProfile employee)
+        {
+            Mainmenu_item("pim").ActionClick();
+            LastEmployeeOnList.ActionClick();
+            Link_anchor("job").Click();
+            SelectField().Click();
+            Select_dropdown(employee.JobTitle).Click();
+            Button_button("save").Click();
+        }
+
+        public string GetLastEmployeeText(EmployeeProfile employee)
+        {
+            Mainmenu_item("pim").ActionClick();
+            return LastEmployeeOnList.Text.ToLower();
+        }
+
+        public void DeleteLastEmployeeRecord(EmployeeProfile employee)
+        {
+            Mainmenu_item("pim").ActionClick();
+            employee.EmployeeID = IDOfLastEmployeeOnList.Text.Trim();
+            DeleteLastEmployeeOnList.ActionClick();
+            if (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
+                Button_button("yes, delete").ActionClick();
+        }
+
+        public string IsLastEmployeeDisplayed()
+        {
+            return IDOfLastEmployeeOnList.Text.Trim();
         }
     }
 }
