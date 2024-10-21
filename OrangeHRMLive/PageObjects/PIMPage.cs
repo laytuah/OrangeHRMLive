@@ -17,8 +17,8 @@ namespace OrangeHRMLive.PageObjects
         protected PageElement LastEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=last()]"));
         protected PageElement IDOfLastEmployeeOnList => new PageElement(Driver, By.XPath("((//div[@class='oxd-table-card'])[position()=last()]//div[text()])[3]"));
         protected PageElement DeleteLastEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=1]//i[@class='oxd-icon bi-trash']"));
-
-
+        protected PageElement Delete_button => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-trash oxd-button-icon']"));
+        
         public void RegisterNewEmployee(EmployeeProfile employee)
         {
             Mainmenu_item("pim").Click();
@@ -178,10 +178,11 @@ namespace OrangeHRMLive.PageObjects
             Mainmenu_item("pim").ActionClick();
             employee.EmployeeID = IDOfLastEmployeeOnList.Text.Trim();
             DeleteLastEmployeeOnList.ActionClick();
-            while (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
-            {
-                Button_button("yes, delete").Click();
-            }
+            Delete_button.Click();
+            //while (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
+            //{
+            //    Button_button("yes, delete").Click();
+            //}
         }
 
         public string IsLastEmployeeDisplayed()
