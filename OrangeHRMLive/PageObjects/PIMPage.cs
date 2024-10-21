@@ -178,7 +178,7 @@ namespace OrangeHRMLive.PageObjects
             Mainmenu_item("pim").ActionClick();
             employee.EmployeeID = IDOfLastEmployeeOnList.Text.Trim();
             DeleteLastEmployeeOnList.ActionClick();
-            if (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
+            while (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
                 Button_button("yes, delete").ActionClick();
         }
 
