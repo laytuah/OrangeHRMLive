@@ -14,9 +14,9 @@ namespace OrangeHRMLive.PageObjects
         protected PageElement NewlyRegisteredEmployeeUpdateIcon(string? ID) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-pencil-fill']"));
         protected PageElement NewlyRegisteredEmployeeDeleteIcon(string? ID) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-trash']"));
         protected PageElement Pagination_Next => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
-        protected PageElement LastEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=last()]"));
-        protected PageElement IDOfLastEmployeeOnList => new PageElement(Driver, By.XPath("((//div[@class='oxd-table-card'])[position()=last()]//div[text()])[3]"));
-        protected PageElement DeleteLastEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=1]//i[@class='oxd-icon bi-trash']"));
+        protected PageElement FirstEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=last()]"));
+        protected PageElement IDOfFirstEmployeeOnList => new PageElement(Driver, By.XPath("((//div[@class='oxd-table-card'])[position()=last()]//div[text()])[3]"));
+        protected PageElement DeleteIconForFirstEmployee => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=1]//i[@class='oxd-icon bi-trash']"));
         protected PageElement Delete_button => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-trash oxd-button-icon']"));
         
         public void RegisterNewEmployee(EmployeeProfile employee)
@@ -157,37 +157,33 @@ namespace OrangeHRMLive.PageObjects
             }
         }
 
-        public void UpdateLastEmployeeRecord(EmployeeProfile employee)
+        public void UpdateFirstEmployeeRecord(EmployeeProfile employee)
         {
             Mainmenu_item("pim").ActionClick();
-            LastEmployeeOnList.ActionClick();
+            FirstEmployeeOnList.ActionClick();
             Link_anchor("job").Click();
             SelectField().Click();
             Select_dropdown(employee.JobTitle).Click();
             Button_button("save").Click();
         }
 
-        public string GetLastEmployeeText(EmployeeProfile employee)
+        public string GetFirstEmployeeText(EmployeeProfile employee)
         {
             Mainmenu_item("pim").ActionClick();
-            return LastEmployeeOnList.Text.ToLower();
+            return FirstEmployeeOnList.Text.ToLower();
         }
 
-        public void DeleteLastEmployeeRecord(EmployeeProfile employee)
+        public void DeleteFirstEmployeeRecord(EmployeeProfile employee)
         {
             Mainmenu_item("pim").ActionClick();
-            employee.EmployeeID = IDOfLastEmployeeOnList.Text.Trim();
-            DeleteLastEmployeeOnList.ActionClick();
+            employee.EmployeeID = IDOfFirstEmployeeOnList.Text.Trim();
+            DeleteIconForFirstEmployee.ActionClick();
             Delete_button.Click();
-            //while (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
-            //{
-            //    Button_button("yes, delete").Click();
-            //}
         }
 
-        public string IsLastEmployeeDisplayed()
+        public string IsFirstEmployeeDisplayed()
         {
-            return IDOfLastEmployeeOnList.Text.Trim();
+            return IDOfFirstEmployeeOnList.Text.Trim();
         }
     }
 }
