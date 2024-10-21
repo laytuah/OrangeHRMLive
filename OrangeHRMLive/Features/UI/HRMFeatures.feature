@@ -1,4 +1,4 @@
-﻿Feature: HRMLogin
+﻿Feature: HRMFeatures
 	
 Background:
 	Given that user navigates to HRMLive page
@@ -12,11 +12,8 @@ Scenario: User can add a new employee record
 	Then newly created record must be found on employee list
 
 Scenario: User can update existing employee record
-	When the user adds a new employee record
-	And the user updates the newly created record
+	When a user updates the last employee on employee list
 	Then the record must be updated
 
 Scenario: User can delete existing employee record
-	When the user adds a new employee record
-	And the user deletes the created record
 	Then the record must be deleted from employee list
