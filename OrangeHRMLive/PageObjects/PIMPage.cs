@@ -16,7 +16,7 @@ namespace OrangeHRMLive.PageObjects
         protected PageElement Pagination_Next => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
         protected PageElement LastEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=last()]"));
         protected PageElement IDOfLastEmployeeOnList => new PageElement(Driver, By.XPath("((//div[@class='oxd-table-card'])[position()=last()]//div[text()])[3]"));
-        protected PageElement DeleteLastEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=last()]//i[@class='oxd-icon bi-trash']"));
+        protected PageElement DeleteLastEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=1]//i[@class='oxd-icon bi-trash']"));
 
 
         public void RegisterNewEmployee(EmployeeProfile employee)
