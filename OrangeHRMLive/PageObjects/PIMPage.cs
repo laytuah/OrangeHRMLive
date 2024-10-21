@@ -28,16 +28,16 @@ namespace OrangeHRMLive.PageObjects
             TextField("last name").ClearAndSendKeys(employee.Lastname);
             TextField("employee id").ClearAndSendKeys(employee.EmployeeID);
             Button_button("save").Click();
-            //SelectField().Click();
-            //Select_dropdown(employee.Nationality).Click();
+            SelectField().Click();
+            Select_dropdown(employee.Nationality).Click();
 
-            //SelectField(2).Click();
-            //Select_dropdown(employee.MaritalStatus).Click();
-            //SelectField(3).Click();
-            //Select_dropdown(employee.BloodGroup).Click();
-            //SelectGender(employee.Gender).Click();
-            //Button_button("save").Click();
-            //Button_button("save", 2).Click();
+            SelectField(2).Click();
+            Select_dropdown(employee.MaritalStatus).Click();
+            SelectField(3).Click();
+            Select_dropdown(employee.BloodGroup).Click();
+            SelectGender(employee.Gender).Click();
+            Button_button("save").Click();
+            Button_button("save", 2).Click();
         }
 
         public bool IsNewlyRegisteredEmployeeDisplayed(EmployeeProfile employee)
