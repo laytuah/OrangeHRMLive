@@ -64,7 +64,15 @@ namespace OrangeHRMLive.StepDefinitions.UI
             _pimPage.UpdateExistingEmployeeRecord(employee);
         }
 
-        [StepDefinition(@"the reord must be updated")]
+        [StepDefinition(@"a user updates the last employee on employee list")]
+        public void WhenAUserUpdatesTheLastEmployeeOnEmployeeList()
+        {
+            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            _pimPage.UpdateExistingEmployeeRecord(employee);
+        }
+
+
+        [StepDefinition(@"the record must be updated")]
         public void ThenTheReordMustBeUpdated()
         {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");

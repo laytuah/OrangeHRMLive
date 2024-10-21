@@ -8,18 +8,14 @@ namespace OrangeHRMLive.PageObjects
         public PIMPage(IWebDriver driver) : base(driver) { }
 
         protected PageElement TextField(string text) => new PageElement(Driver, By.XPath($"//input[normalize-space(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))=\"{text}\"] | //div[label[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=\"{text}\"]]/following-sibling::div//input"));
-
         protected PageElement SelectField(int index = 1) => new PageElement(Driver, By.XPath($"(//div[@class='oxd-select-text--after'])[{index}]"));
-
         protected PageElement SelectGender(string gender) => new PageElement(Driver, By.XPath($"//div[@class='--gender-grouped-field']//label[contains(.,\"{gender}\")]"));
-
         protected PageElement NewlyRegisteredEmployee(string? ID, string? firstName, string? lastName) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\") and contains(.,\"{firstName}\") and contains(.,\"{lastName}\")]"));
-
         protected PageElement NewlyRegisteredEmployeeUpdateIcon(string? ID) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-pencil-fill']"));
-
         protected PageElement NewlyRegisteredEmployeeDeleteIcon(string? ID) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-trash']"));
-
         protected PageElement Pagination_Next => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
+        protected PageElement LastEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=last()]"));
+        protected PageElement IDOfLastEmployeeOnList => new PageElement(Driver, By.XPath("((//div[@class='oxd-table-card'])[position()=last()]//div[text()])[3]"));
 
         public void RegisterNewEmployee(EmployeeProfile employee)
         {
@@ -99,7 +95,6 @@ namespace OrangeHRMLive.PageObjects
                     }
                 }
             }
-
             Link_anchor("job").Click();
             SelectField().Click();
             Select_dropdown(employee.JobTitle).Click();
