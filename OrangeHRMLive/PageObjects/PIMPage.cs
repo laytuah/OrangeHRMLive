@@ -14,8 +14,8 @@ namespace OrangeHRMLive.PageObjects
         protected PageElement NewlyRegisteredEmployeeUpdateIcon(string? ID) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-pencil-fill']"));
         protected PageElement NewlyRegisteredEmployeeDeleteIcon(string? ID) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-trash']"));
         protected PageElement Pagination_Next => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
-        protected PageElement FirstEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=last()]"));
-        protected PageElement IDOfFirstEmployeeOnList => new PageElement(Driver, By.XPath("((//div[@class='oxd-table-card'])[position()=last()]//div[text()])[3]"));
+        protected PageElement FirstEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=1]"));
+        protected PageElement IDOfFirstEmployeeOnList => new PageElement(Driver, By.XPath("((//div[@class='oxd-table-card'])[position()=1]//div[text()])[3]"));
         protected PageElement DeleteIconForFirstEmployee => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'])[position()=1]//i[@class='oxd-icon bi-trash']"));
         protected PageElement Delete_button => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-trash oxd-button-icon']"));
         
