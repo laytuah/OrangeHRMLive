@@ -75,7 +75,7 @@ namespace OrangeHRMLive.StepDefinitions.UI
         public void ThenTheLastEmployeeRecordMustBeUpdated()
         {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.GetFirstEmployeeText(employee).Should().Contain(employee.JobTitle);
+            _pimPage.GetAllFirstEmployeeText(employee).Should().Contain(employee.JobTitle);
         }
 
 
@@ -112,7 +112,8 @@ namespace OrangeHRMLive.StepDefinitions.UI
         public void ThenTheLastRecordMustBeDeletedFromEmployeeList()
         {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.IsFirstEmployeeDisplayed().Should().NotBe(employee.EmployeeID);
+            _pimPage.GetFirstAndLastNameOfFirstEmployeeOnList().FirstName.Should().NotBe(employee.Firstname);
+            _pimPage.GetFirstAndLastNameOfFirstEmployeeOnList().LastName.Should().NotBe(employee.Lastname);
         }
 
     }
