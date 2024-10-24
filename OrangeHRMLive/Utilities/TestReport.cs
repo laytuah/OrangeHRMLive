@@ -17,10 +17,10 @@ namespace OrangeHRMLive.Utilities
         static ExtentTest _scenario;
 
         static readonly string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        static readonly string testResultsDirectory = Path.Combine(ProjectDirectory,"TestResults");
-        static readonly string ReportPath = Path.Combine(ProjectDirectory,"TestResults", "Reports");
-        static readonly string ScreenshotPath = Path.Combine(ProjectDirectory,"TestResults", "Screenshots");
-        static readonly string NetworkLogPath = Path.Combine(ProjectDirectory,"TestResults", "NetworkLogs");
+        static readonly string testResultsDirectory = Path.Combine(ProjectDirectory, "TestResults");
+        static readonly string ReportPath = Path.Combine(ProjectDirectory, "TestResults", "Reports");
+        static readonly string ScreenshotPath = Path.Combine(ProjectDirectory, "TestResults", "Screenshots");
+        static readonly string NetworkLogPath = Path.Combine(ProjectDirectory, "TestResults", "NetworkLogs");
 
         public void ExtentReportInitialization()
         {
