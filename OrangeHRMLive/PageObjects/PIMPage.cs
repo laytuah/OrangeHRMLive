@@ -15,10 +15,12 @@ namespace OrangeHRMLive.PageObjects
         protected PageElement NewlyRegisteredEmployeeDeleteIcon(string? ID) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\")]//i[@class='oxd-icon bi-trash']"));
         protected PageElement Pagination_Next => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
         protected PageElement FirstEmployeeOnList => new PageElement(Driver, By.XPath("//div[@class='oxd-table-card'  and not(contains(.,'Human Resources'))][position()=1]"));
-        protected PageElement IDOfFirstEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'  and not(contains(.,'Human Resources'))][position()=1]//div[text()])[3]"));
+        protected PageElement FirstnameOfFirstEmployeeOnList => new PageElement(Driver, By.XPath("(//div[@class='oxd-table-card'  and not(contains(.,'Human Resources'))][position()=1]//div[text()])[6]"));
         protected PageElement DeleteIconForFirstEmployee => new PageElement(Driver, By.XPath("//div[@class='oxd-table-card'  and not(contains(.,'Human Resources'))][position()=1]//i[@class='oxd-icon bi-trash']"));
         protected PageElement Delete_button => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-trash oxd-button-icon']"));
-        
+
+        //div[@class='oxd-table-card']//div[@data-v-6c07a142 and normalize-space(text()) != '']
+
         public void RegisterNewEmployee(EmployeeProfile employee)
         {
             Mainmenu_item("pim").Click();
@@ -176,14 +178,17 @@ namespace OrangeHRMLive.PageObjects
         public void DeleteFirstEmployeeRecord(EmployeeProfile employee)
         {
             Mainmenu_item("pim").ActionClick();
-            employee.EmployeeID = IDOfFirstEmployeeOnList.Text.Trim();
-            DeleteIconForFirstEmployee.ActionClick();
-            Delete_button.Click();
+            employee.Firstname = FirstnameOfFirstEmployeeOnList.Text.Trim();
+            while (FirstnameOfFirstEmployeeOnList.Text.Trim() == employee.Firstname)
+            {
+                DeleteIconForFirstEmployee.ActionClick();
+                Delete_button.Click();
+            }
         }
 
         public string IsFirstEmployeeDisplayed()
         {
-            return IDOfFirstEmployeeOnList.Text.Trim();
+            return FirstnameOfFirstEmployeeOnList.Text.Trim();
         }
     }
 }
