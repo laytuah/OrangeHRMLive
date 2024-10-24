@@ -57,12 +57,12 @@ namespace OrangeHRMLive.StepDefinitions.UI
             _pimPage.IsNewlyRegisteredEmployeeDisplayed(employee).Should().BeTrue();
         }
 
-        [StepDefinition(@"the user updates the newly created record")]
-        public void WhenTheUserUpdatesTheNewlyCreatedRecord()
-        {
-            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.UpdateExistingEmployeeRecord(employee);
-        }
+        //[StepDefinition(@"the user updates the newly created record")]
+        //public void WhenTheUserUpdatesTheNewlyCreatedRecord()
+        //{
+        //    var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+        //    _pimPage.UpdateExistingEmployeeRecord(employee);
+        //}
 
         [StepDefinition(@"the user updates the first employee on employee list")]
         public void WhenAUserUpdatesTheLastEmployeeOnEmployeeList()
@@ -79,20 +79,20 @@ namespace OrangeHRMLive.StepDefinitions.UI
         }
 
 
-        [StepDefinition(@"the record must be updated")]
-        public void ThenTheReordMustBeUpdated()
-        {
-            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.GetUpdatedEmployeeText(employee).Should().Contain(employee.JobTitle);
-            _pimPage.GetUpdatedEmployeeText(employee).Should().Contain(employee.EmploymentStatus);
-        }
+        //[StepDefinition(@"the record must be updated")]
+        //public void ThenTheReordMustBeUpdated()
+        //{
+        //    var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+        //    _pimPage.GetUpdatedEmployeeText(employee).Should().Contain(employee.JobTitle);
+        //    _pimPage.GetUpdatedEmployeeText(employee).Should().Contain(employee.EmploymentStatus);
+        //}
 
-        [StepDefinition(@"the user deletes the created record")]
-        public void WhenTheUserDeletesTheCreatedRecord()
-        {
-            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.DeleteEmployeeRecord(employee);
-        }
+        //[StepDefinition(@"the user deletes the created record")]
+        //public void WhenTheUserDeletesTheCreatedRecord()
+        //{
+        //    var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+        //    _pimPage.DeleteEmployeeRecord(employee);
+        //}
 
         [StepDefinition(@"the user deletes the first employee on employee list")]
         public void WhenTheUserDeletesTheLastEmployeeOnEmployeeList()

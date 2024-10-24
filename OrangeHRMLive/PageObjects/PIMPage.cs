@@ -80,84 +80,84 @@ namespace OrangeHRMLive.PageObjects
             }
         }
 
-        public void UpdateExistingEmployeeRecord(EmployeeProfile employee)
-        {
-            Mainmenu_item("pim").ActionClick();
-            if (IsEmployeeDisplayedOnCurrentPage(employee))
-            {
-                NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).ActionClick();
-            }
-            else
-            {
-                while (IsNextPageChevronDisplayed())
-                {
-                    Pagination_Next.Click();
-                    if (IsEmployeeDisplayedOnCurrentPage(employee))
-                    {
-                        NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).ActionClick();
-                        break;
-                    }
-                }
-            }
-            Link_anchor("job").Click();
-            SelectField().Click();
-            Select_dropdown(employee.JobTitle).Click();
-            SelectField(5).Click();
-            Select_dropdown(employee.EmploymentStatus).Click();
-            Button_button("save").Click();
-        }
+        //public void UpdateExistingEmployeeRecord(EmployeeProfile employee)
+        //{
+        //    Mainmenu_item("pim").ActionClick();
+        //    if (IsEmployeeDisplayedOnCurrentPage(employee))
+        //    {
+        //        NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).ActionClick();
+        //    }
+        //    else
+        //    {
+        //        while (IsNextPageChevronDisplayed())
+        //        {
+        //            Pagination_Next.Click();
+        //            if (IsEmployeeDisplayedOnCurrentPage(employee))
+        //            {
+        //                NewlyRegisteredEmployeeUpdateIcon(employee.EmployeeID).ActionClick();
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    Link_anchor("job").Click();
+        //    SelectField().Click();
+        //    Select_dropdown(employee.JobTitle).Click();
+        //    SelectField(5).Click();
+        //    Select_dropdown(employee.EmploymentStatus).Click();
+        //    Button_button("save").Click();
+        //}
 
-        public string GetUpdatedEmployeeText(EmployeeProfile employee)
-        {
-            Mainmenu_item("pim").ActionClick();
-            if (IsEmployeeDisplayedOnCurrentPage(employee))
-            {
-                return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
-            }
-            else
-            {
-                while (IsNextPageChevronDisplayed())
-                {
-                    Pagination_Next.Click();
-                    if (IsEmployeeDisplayedOnCurrentPage(employee))
-                    {
-                        return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
-                    }
-                }
-                return "Employee not found or record not updated.";
-            }
-        }
+        //public string GetUpdatedEmployeeText(EmployeeProfile employee)
+        //{
+        //    Mainmenu_item("pim").ActionClick();
+        //    if (IsEmployeeDisplayedOnCurrentPage(employee))
+        //    {
+        //        return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
+        //    }
+        //    else
+        //    {
+        //        while (IsNextPageChevronDisplayed())
+        //        {
+        //            Pagination_Next.Click();
+        //            if (IsEmployeeDisplayedOnCurrentPage(employee))
+        //            {
+        //                return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
+        //            }
+        //        }
+        //        return "Employee not found or record not updated.";
+        //    }
+        //}
 
-        public void DeleteEmployeeRecord(EmployeeProfile employee)
-        {
-            Mainmenu_item("pim").ActionClick();
-            if (IsEmployeeDisplayedOnCurrentPage(employee))
-            {
-                ClickDeleteButton(employee);
-            }
-            else
-            {
-                while (IsNextPageChevronDisplayed())
-                {
-                    Pagination_Next.Click();
-                    if (IsEmployeeDisplayedOnCurrentPage(employee))
-                    {
-                        ClickDeleteButton(employee);
-                        break;
-                    }
-                }
-            }
-        }
+        //public void DeleteEmployeeRecord(EmployeeProfile employee)
+        //{
+        //    Mainmenu_item("pim").ActionClick();
+        //    if (IsEmployeeDisplayedOnCurrentPage(employee))
+        //    {
+        //        ClickDeleteButton(employee);
+        //    }
+        //    else
+        //    {
+        //        while (IsNextPageChevronDisplayed())
+        //        {
+        //            Pagination_Next.Click();
+        //            if (IsEmployeeDisplayedOnCurrentPage(employee))
+        //            {
+        //                ClickDeleteButton(employee);
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
 
-        public void ClickDeleteButton(EmployeeProfile employee)
-        {
-            while (IsEmployeeDisplayedOnCurrentPage(employee))
-            {
-                NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).ActionClick();
-                if (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
-                    Button_button("yes, delete").ActionClick();
-            }
-        }
+        //public void ClickDeleteButton(EmployeeProfile employee)
+        //{
+        //    while (IsEmployeeDisplayedOnCurrentPage(employee))
+        //    {
+        //        NewlyRegisteredEmployeeDeleteIcon(employee.EmployeeID).ActionClick();
+        //        if (Button_button("yes, delete").ElementExists() && Button_button("yes, delete").IsDisplayed())
+        //            Button_button("yes, delete").ActionClick();
+        //    }
+        //}
 
         public void UpdateFirstEmployeeRecord(EmployeeProfile employee)
         {
@@ -186,11 +186,6 @@ namespace OrangeHRMLive.PageObjects
                 DeleteIconForFirstEmployee.ActionClick();
                 Delete_button.Click();
             }
-        }
-
-        public string GetFistnameOfFirstEmployeeOnLIst()
-        {
-            return GetCertainTextFromFirstEmployeeOnPIMList(6).Text.Trim();
         }
 
         public (string FirstName, string LastName) GetFirstAndLastNameOfFirstEmployeeOnList()
