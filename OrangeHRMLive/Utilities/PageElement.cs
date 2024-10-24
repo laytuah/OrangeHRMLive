@@ -87,6 +87,7 @@ public class PageElement : IWebElement
     {
         if (IsElementInteractable(_element))
         {
+            _element.Click();
             _element.Clear();
             _element.SendKeys(text);
         }
