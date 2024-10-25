@@ -8,7 +8,6 @@ namespace OrangeHRMLive.PageObjects
         public PIMPage(IWebDriver driver) : base(driver) { }
 
         protected PageElement TextField(string text) => new PageElement(Driver, By.XPath($"//input[normalize-space(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))=\"{text}\"] | //div[label[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=\"{text}\"]]/following-sibling::div//input"));
-        protected PageElement SelectField(int index = 1) => new PageElement(Driver, By.XPath($"(//div[@class='oxd-select-text--after'])[{index}]"));
         protected PageElement SelectGender(string gender) => new PageElement(Driver, By.XPath($"//div[@class='--gender-grouped-field']//label[contains(.,\"{gender}\")]"));
         protected PageElement NewlyRegisteredEmployee(string? ID, string? firstName, string? lastName) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\") and contains(.,\"{firstName}\") and contains(.,\"{lastName}\")]"));
         protected PageElement Pagination_Next => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
@@ -26,13 +25,13 @@ namespace OrangeHRMLive.PageObjects
             TextField("last name").ClearAndSendKeys(employee.Lastname);
             TextField("employee id").ClearAndSendKeys(employee.EmployeeID);
             Button_button("save").Click();
-            SelectField().Click();
-            Select_dropdown(employee.Nationality).Click();
+            Select_Dropdown("nationality").Click();
+            SelectFromDropdownList(employee.Nationality).Click();
 
-            SelectField(2).Click();
-            Select_dropdown(employee.MaritalStatus).Click();
-            SelectField(3).Click();
-            Select_dropdown(employee.BloodGroup).Click();
+            Select_Dropdown("marital status").Click();
+            SelectFromDropdownList(employee.MaritalStatus).Click();
+            Select_Dropdown("blood type").Click();
+            SelectFromDropdownList(employee.BloodGroup).Click();
             SelectGender(employee.Gender).Click();
             Button_button("save").Click();
             Button_button("save", 2).Click();
@@ -81,8 +80,8 @@ namespace OrangeHRMLive.PageObjects
             Mainmenu_item("pim").ActionClick();
             FirstEmployeeOnList.ActionClick();
             Link_anchor("job").Click();
-            SelectField().Click();
-            Select_dropdown(employee.JobTitle).Click();
+            Select_Dropdown("job title").Click();
+            SelectFromDropdownList(employee.JobTitle).Click();
             Button_button("save").Click();
         }
 
