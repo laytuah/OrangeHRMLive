@@ -85,7 +85,15 @@ namespace OrangeHRMLive.PageObjects
             Button_button("save").Click();
         }
 
-        public string GetAllFirstEmployeeText(EmployeeProfile employee)
+        public void UpdateMyInfo(EmployeeProfile employee)
+        {
+            Mainmenu_item("my info").ActionClick();
+            TextField("first name").ClearAndSendKeys(employee.Firstname);
+            TextField("last name").ClearAndSendKeys(employee.Lastname);
+            Button_button("save").Click();
+        }
+
+        public string GetAllFirstEmployeeText()
         {
             Mainmenu_item("pim").ActionClick();
             return FirstEmployeeOnList.Text.ToLower();
@@ -104,12 +112,17 @@ namespace OrangeHRMLive.PageObjects
             }
         }
 
+        public string GetAllFirstAdminText()
+        {
+            Mainmenu_item("admin").ActionClick();
+            return FirstEmployeeOnList.Text.ToLower();
+        }
+
         public (string FirstName, string LastName) GetFirstAndLastNameOfFirstEmployeeOnList()
         {
             string firstName = GetCertainTextFromFirstEmployeeOnPIMList(6).Text.Trim();
             string lastName = GetCertainTextFromFirstEmployeeOnPIMList(8).Text.Trim();
             return (firstName, lastName);
         }
-
     }
 }

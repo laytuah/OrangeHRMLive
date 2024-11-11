@@ -15,6 +15,10 @@ Scenario: User can update existing employee record
 	When the user updates the first employee on employee list
 	Then the first employee record must be updated
 
+Scenario: User can update their own information
+	When the user updates their information
+	Then their information must be updated
+
 Scenario: User can delete existing employee record
 	When the user deletes the first employee on employee list
 	Then the first record must be deleted from employee list

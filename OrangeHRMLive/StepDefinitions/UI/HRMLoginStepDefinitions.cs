@@ -68,8 +68,23 @@ namespace OrangeHRMLive.StepDefinitions.UI
         public void ThenTheLastEmployeeRecordMustBeUpdated()
         {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.GetAllFirstEmployeeText(employee).Should().Contain(employee.JobTitle);
+            _pimPage.GetAllFirstEmployeeText().Should().Contain(employee.JobTitle);
         }
+
+        [StepDefinition(@"the user updates their information")]
+        public void WhenTheUserUpdatesTheirInformation()
+        {
+            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            _pimPage.UpdateMyInfo(employee);
+        }
+
+        [StepDefinition(@"their information must be updated")]
+        public void ThenTheirInformationMustBeUpdated()
+        {
+            var employee = _scenarioContext.Get<EmployeeProfile>("employee");
+            _pimPage.GetAllFirstAdminText().Should().Contain(employee.Lastname.ToLower());
+        }
+
 
         [StepDefinition(@"the user deletes the first employee on employee list")]
         public void WhenTheUserDeletesTheLastEmployeeOnEmployeeList()
