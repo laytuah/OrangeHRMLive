@@ -118,6 +118,14 @@ public class PageElement : IWebElement
             throw new ElementNotInteractableException("The element is not interactable.");
     }
 
+    public void SendKeysByJavascript(string text)
+    {
+        if (IsElementInteractable(_element))
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", _element, text);
+        else
+            throw new ElementNotInteractableException("The element is not interactable.");
+    }
+
     public void FocusOnElement()
     {
         if (IsElementInteractable(_element))

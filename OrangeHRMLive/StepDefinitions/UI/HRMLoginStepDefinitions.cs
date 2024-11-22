@@ -73,7 +73,7 @@ namespace OrangeHRMLive.StepDefinitions.UI
 
         [StepDefinition(@"the user updates their information")]
         public void WhenTheUserUpdatesTheirInformation()
-        {
+            {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
             _pimPage.UpdateMyInfo(employee);
         }
