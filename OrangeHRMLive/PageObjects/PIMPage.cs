@@ -12,7 +12,7 @@ namespace OrangeHRMLive.PageObjects
         protected PageElement NewlyRegisteredEmployee(string? ID, string? firstName, string? lastName) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\") and contains(.,\"{firstName}\") and contains(.,\"{lastName}\")]"));
         protected PageElement Pagination_Next => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
         protected PageElement FirstEmployeeOnList => new PageElement(Driver, By.XPath("//div[@class='oxd-table-card'  and not(contains(.,'Human Resources'))][position()=1]"));
-        protected PageElement AdminUser => new PageElement(Driver, By.XPath("//div[@class='oxd-table-card'  and (contains(.,'Admin'))]//div[@class='oxd-table-card-cell-hidden']"));
+        protected PageElement AdminUser => new PageElement(Driver, By.XPath("//div[contains(@class, 'oxd-table-card-cell-hidden')]/ancestor::div[contains(@class, 'oxd-table-row')]"));
         protected PageElement GetCertainTextFromFirstEmployeeOnPIMList(int textIndex) => new PageElement(Driver, By.XPath($"(//div[@class='oxd-table-card'  and not(contains(.,'Human Resources'))][position()=1]//div[text()])[{textIndex}]"));
         protected PageElement DeleteIconForFirstEmployee => new PageElement(Driver, By.XPath("//div[@class='oxd-table-card'  and not(contains(.,'Human Resources'))][position()=1]//i[@class='oxd-icon bi-trash']"));
         protected PageElement Delete_button => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-trash oxd-button-icon']"));
