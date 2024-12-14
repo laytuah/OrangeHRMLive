@@ -82,7 +82,7 @@ namespace OrangeHRMLive.StepDefinitions.UI
         public void ThenTheirInformationMustBeUpdated()
         {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.GetAllFirstAdminText().Should().Contain(employee.Lastname.ToLower());
+            _pimPage.GetAllAdminUserText().Should().Contain(employee.Lastname.ToLower());
         }
 
 
