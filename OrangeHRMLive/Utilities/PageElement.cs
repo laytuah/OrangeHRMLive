@@ -182,6 +182,14 @@ public class PageElement : IWebElement
         }
     }
 
+    public void SelectAllTextBeforeSendKey(string text)
+    {
+        _element.Click();
+        _element.SendKeys(Keys.Control + "a");
+        _element.SendKeys(Keys.Backspace);
+        _element.SendKeys(text);
+    }
+
     public async Task<IWebElement> FindElementWithRetryAsync(int retryCount = 3, int delayInSeconds = 1)
     {
         IWebElement element = null;

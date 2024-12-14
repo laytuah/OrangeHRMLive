@@ -89,8 +89,7 @@ namespace OrangeHRMLive.PageObjects
         public void UpdateMyInfo(EmployeeProfile employee)
         {
             Mainmenu_item("my info").ActionClick();
-            if(!Pagination_Next.IsDisplayed())
-                TextField("last name").ClearAndSendKeys(employee.Lastname);
+            TextField("last name").SelectAllTextBeforeSendKey(employee.Lastname);
             Button_button("save").Click();
         }
 
