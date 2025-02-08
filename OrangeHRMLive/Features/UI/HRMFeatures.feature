@@ -12,8 +12,9 @@ Scenario: User can add a new employee record
 	Then newly created record must be found on employee list
 
 Scenario: User can update existing employee record
-	When the user updates the first employee on employee list
-	Then the first employee record must be updated
+	When the user adds a new employee record
+	When the user updates the new created employee
+	Then the newly created employee record must be updated
 
 Scenario: User can update their own information
 	When the user updates their information

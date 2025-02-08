@@ -76,14 +76,16 @@ namespace OrangeHRMLive.PageObjects
             }
         }
 
-        public void UpdateFirstEmployeeRecord(EmployeeProfile employee)
+        public void UpdateNewlyCreatedEmployeeRecord(EmployeeProfile employee)
         {
-            Mainmenu_item("pim").ActionClick();
-            FirstEmployeeOnList.ActionClick();
-            Link_anchor("job").Click();
-            Select_Dropdown("job title").Click();
-            SelectFromDropdownList(employee.JobTitle).Click();
-            Button_button("save").Click();
+            if(IsNewlyRegisteredEmployeeDisplayed(employee))
+            {
+                NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).ActionClick();
+                Link_anchor("job").Click();
+                Select_Dropdown("job title").Click();
+                SelectFromDropdownList(employee.JobTitle).Click();
+                Button_button("save").Click();
+            }
         }
 
         public void UpdateMyInfo(EmployeeProfile employee)
@@ -93,10 +95,11 @@ namespace OrangeHRMLive.PageObjects
             Button_button("save").Click();
         }
 
-        public string GetAllFirstEmployeeText()
+        public string GetAllTextFromNewlyCreatedEmployee(EmployeeProfile employee)
         {
-            Mainmenu_item("pim").ActionClick();
-            return FirstEmployeeOnList.Text.ToLower();
+            if (IsNewlyRegisteredEmployeeDisplayed(employee))
+                return NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).Text.ToLower();
+            return string.Empty;
         }
 
         public void DeleteFirstEmployeeRecord(EmployeeProfile employee)

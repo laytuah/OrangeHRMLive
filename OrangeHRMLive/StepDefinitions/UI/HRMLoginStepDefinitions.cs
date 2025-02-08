@@ -57,19 +57,20 @@ namespace OrangeHRMLive.StepDefinitions.UI
             _pimPage.IsNewlyRegisteredEmployeeDisplayed(employee).Should().BeTrue();
         }
 
-        [StepDefinition(@"the user updates the first employee on employee list")]
-        public void WhenAUserUpdatesTheLastEmployeeOnEmployeeList()
+        [StepDefinition(@"the user updates the new created employee")]
+        public void WhenTheUserUpdatesTheNewCreatedEmployee()
         {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.UpdateFirstEmployeeRecord(employee);
+            _pimPage.UpdateNewlyCreatedEmployeeRecord(employee);
         }
 
-        [StepDefinition(@"the first employee record must be updated")]
-        public void ThenTheLastEmployeeRecordMustBeUpdated()
+        [StepDefinition(@"the newly created employee record must be updated")]
+        public void ThenTheNewlyCreatedEmployeeRecordMustBeUpdated()
         {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.GetAllFirstEmployeeText().Should().Contain(employee.JobTitle);
+            _pimPage.GetAllTextFromNewlyCreatedEmployee(employee).Should().Contain(employee.JobTitle);
         }
+
 
         [StepDefinition(@"the user updates their information")]
         public void WhenTheUserUpdatesTheirInformation()
