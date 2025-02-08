@@ -11,7 +11,6 @@ namespace OrangeHRMLive.PageObjects
         protected PageElement SelectGender(string gender) => new PageElement(Driver, By.XPath($"//div[@class='--gender-grouped-field']//label[contains(.,\"{gender}\")]"));
         protected PageElement NewlyRegisteredEmployee(string? ID, string? firstName, string? lastName) => new PageElement(Driver, By.XPath($"//div[@class='oxd-table-card' and contains(.,\"{ID}\") and contains(.,\"{firstName}\") and contains(.,\"{lastName}\")]"));
         protected PageElement Pagination_Next => new PageElement(Driver, By.XPath("//i[@class='oxd-icon bi-chevron-right']"));
-        protected PageElement FirstEmployeeOnList => new PageElement(Driver, By.XPath("//div[@class='oxd-table-card'  and not(contains(.,'Human Resources'))][position()=1]"));
         protected PageElement AdminUser => new PageElement(Driver, By.XPath("//div[contains(@class, 'oxd-table-card-cell-hidden')]/ancestor::div[contains(@class, 'oxd-table-row')]"));
         protected PageElement GetCertainTextFromFirstEmployeeOnPIMList(int textIndex) => new PageElement(Driver, By.XPath($"(//div[@class='oxd-table-card'  and not(contains(.,'Human Resources'))][position()=1]//div[text()])[{textIndex}]"));
         protected PageElement DeleteIconForFirstEmployee => new PageElement(Driver, By.XPath("//div[@class='oxd-table-card'  and not(contains(.,'Human Resources'))][position()=1]//i[@class='oxd-icon bi-trash']"));
@@ -28,7 +27,6 @@ namespace OrangeHRMLive.PageObjects
             Button_button("save").Click();
             Select_Dropdown("nationality").Click();
             SelectFromDropdownList(employee.Nationality).Click();
-
             Select_Dropdown("marital status").Click();
             SelectFromDropdownList(employee.MaritalStatus).Click();
             Select_Dropdown("blood type").Click();
