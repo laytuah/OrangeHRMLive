@@ -68,13 +68,12 @@ namespace OrangeHRMLive.StepDefinitions.UI
         public void ThenTheNewlyCreatedEmployeeRecordMustBeUpdated()
         {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
-            _pimPage.GetAllTextFromNewlyCreatedEmployee(employee).Should().Contain(employee.JobTitle);
+            _pimPage.GetAllTextFromNewlyCreatedEmployee(employee).Should().Contain(employee.UpdatedFirstname.ToLower());
         }
 
 
         [StepDefinition(@"the user updates their information")]
-        public void WhenTheUserUpdatesTheirInformation()
-            {
+        public void WhenTheUserUpdatesTheirInformation(){
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
             _pimPage.UpdateMyInfo(employee);
         }

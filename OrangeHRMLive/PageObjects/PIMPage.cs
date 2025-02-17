@@ -79,9 +79,8 @@ namespace OrangeHRMLive.PageObjects
             if(IsNewlyRegisteredEmployeeDisplayed(employee))
             {
                 NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).ActionClick();
-                Link_anchor("job").Click();
-                Select_Dropdown("job title").Click();
-                SelectFromDropdownList(employee.JobTitle).Click();
+                employee.Firstname = employee.UpdatedFirstname;
+                TextField("first name").SelectAllTextBeforeSendKey(employee.Firstname);
                 Button_button("save").Click();
             }
         }

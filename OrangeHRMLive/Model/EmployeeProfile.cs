@@ -5,6 +5,7 @@ namespace OrangeHRMLive.Model
     public class EmployeeProfile
     {
         public string? Firstname { get; set; } = DataGenerator.GenerateRandomString();
+        public string? UpdatedFirstname { get; set; } = DataGenerator.GenerateRandomString();
         public string? Middlename { get; set; } = DataGenerator.GenerateRandomString();
         public string? Lastname { get; set; } = DataGenerator.GenerateRandomString();
         public string? Street { get; set; } = DataGenerator.GenerateRandomString(6) + "Street";
