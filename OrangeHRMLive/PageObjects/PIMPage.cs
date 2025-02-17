@@ -80,7 +80,8 @@ namespace OrangeHRMLive.PageObjects
             {
                 NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).ActionClick();
                 employee.Firstname = employee.UpdatedFirstname;
-                TextField("first name").SelectAllTextBeforeSendKey(employee.Firstname);
+                if (TextField("first name").ElementExists() && TextField("first name").IsDisplayed())
+                    TextField("first name").SelectAllTextBeforeSendKey(employee.Firstname);
                 Button_button("save").Click();
             }
         }
