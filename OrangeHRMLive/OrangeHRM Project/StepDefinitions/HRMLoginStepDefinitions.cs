@@ -2,7 +2,7 @@ using FluentAssertions;
 using OrangeHRMLive.Model;
 using OrangeHRMLive.PageObjects;
 using Reqnroll;
-namespace OrangeHRMLive.StepDefinitions.UI
+namespace OrangeHRMLive.StepDefinitions
 {
     [Binding]
     public class HRMLoginStepDefinitions
@@ -72,7 +72,8 @@ namespace OrangeHRMLive.StepDefinitions.UI
 
 
         [StepDefinition(@"the user updates their information")]
-        public void WhenTheUserUpdatesTheirInformation(){
+        public void WhenTheUserUpdatesTheirInformation()
+        {
             var employee = _scenarioContext.Get<EmployeeProfile>("employee");
             _pimPage.UpdateMyInfo(employee);
         }

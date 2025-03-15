@@ -10,9 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="OrangeHRM Project\Features\API\**" />
+    <Compile Remove="OrangeHRM Project\StepDefinitions\API\**" />
     <Compile Remove="TestResults\**" />
+    <EmbeddedResource Remove="OrangeHRM Project\Features\API\**" />
+    <EmbeddedResource Remove="OrangeHRM Project\StepDefinitions\API\**" />
     <EmbeddedResource Remove="TestResults\**" />
+    <None Remove="OrangeHRM Project\Features\API\**" />
+    <None Remove="OrangeHRM Project\StepDefinitions\API\**" />
     <None Remove="TestResults\**" />
+    <ReqnrollFeatureFiles Remove="OrangeHRM Project\Features\API\**" />
+    <ReqnrollFeatureFiles Remove="OrangeHRM Project\StepDefinitions\API\**" />
+    <ReqnrollObsoleteCodeBehindFiles Remove="OrangeHRM Project\Features\API\**" />
+    <ReqnrollObsoleteCodeBehindFiles Remove="OrangeHRM Project\StepDefinitions\API\**" />
     <SpecFlowFeatureFiles Remove="TestResults\**" />
     <SpecFlowObsoleteCodeBehindFiles Remove="TestResults\**" />
   </ItemGroup>
@@ -47,11 +57,6 @@
   
   <ItemGroup>
     <Using Include="NUnit.Framework" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\API\" />
-    <Folder Include="StepDefinitions\API\" />
   </ItemGroup>
  
 </Project>
