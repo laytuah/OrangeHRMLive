@@ -4,7 +4,7 @@ using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
 using OpenQA.Selenium;
 using OrangeHRMLive.Configuration;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace OrangeHRMLive.Utilities
 {

@@ -1,6 +1,6 @@
 ﻿using OrangeHRMLive.Configuration;
 using OrangeHRMLive.Utilities;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 [assembly: Parallelizable(ParallelScope.Fixtures)]
 namespace OrangeHRMLive.Hooks
