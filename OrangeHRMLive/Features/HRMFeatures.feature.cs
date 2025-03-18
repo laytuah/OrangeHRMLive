@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace OrangeHRMLive.OrangeHRMProject.Features
+namespace OrangeHRMLive.Features
 {
     using Reqnroll;
     using System;
@@ -29,7 +29,7 @@ namespace OrangeHRMLive.OrangeHRMProject.Features
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "OrangeHRM Project/Features", "HRMFeatures", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "HRMFeatures", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "HRMFeatures.feature"
 #line hidden

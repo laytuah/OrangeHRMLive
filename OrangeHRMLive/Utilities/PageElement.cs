@@ -12,6 +12,7 @@ public class PageElement : IWebElement
     By _locator;
     WebDriverWait _wait;
     IWebElement _element => _driver.FindElement(_locator);
+    ReadOnlyCollection<IWebElement> elements => _driver.FindElements(_locator);
     TimeSpan _timeout = TimeSpan.FromSeconds(20);
 
     public PageElement(IWebDriver driver, By locator)
@@ -31,11 +32,11 @@ public class PageElement : IWebElement
     public void Clear() => _element.Clear();
     public IWebElement FindElement(By by) => _element.FindElement(by);
     public ReadOnlyCollection<IWebElement> FindElements(By by) => _element.FindElements(by);
+    public List<PageElement> GetAllElements() => elements.Select(e => new PageElement(_driver, _locator)).ToList();
     public string GetAttribute(string attributeName) => _element.GetAttribute(attributeName);
     public string GetCssValue(string propertyName) => _element.GetCssValue(propertyName);
     public string GetDomAttribute(string attributeName) => _element.GetDomAttribute(attributeName);
     public string GetDomProperty(string propertyName) => _element.GetDomProperty(propertyName);
-    public void SendKeys(string text) => _element.SendKeys(text);
     public void Submit() => _element.Submit();
     public ISearchContext GetShadowRoot() => _element.GetShadowRoot();
     public void WaitForClickability() => _wait.Until(ExpectedConditions.ElementToBeClickable(_locator));
@@ -66,6 +67,33 @@ public class PageElement : IWebElement
             }
         }
         catch (ElementClickInterceptedException)
+        {
+            WaitForLoadingIconToDisappear();
+            _element.Click();
+        }
+        catch (ElementNotInteractableException)
+        {
+            WaitForLoadingIconToDisappear();
+            _element.Click();
+        }
+    }
+
+    public void SendKeys(string text)
+    {
+        try
+        {
+
+            if (IsElementInteractable(_element))
+            {
+                _element.SendKeys(text);
+            }
+            else
+            {
+                WaitForLoadingIconToDisappear();
+                _element.SendKeys(text);
+            }
+        }
+        catch (ElementNotInteractableException)
         {
             WaitForLoadingIconToDisappear();
             _element.Click();
@@ -209,3 +237,4 @@ public class PageElement : IWebElement
         return element;
     }
 }
+
