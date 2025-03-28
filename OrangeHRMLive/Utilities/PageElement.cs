@@ -11,9 +11,24 @@ public class PageElement : IWebElement
     IWebDriver _driver;
     By _locator;
     WebDriverWait _wait;
-    IWebElement _element => _driver.FindElement(_locator);
     ReadOnlyCollection<IWebElement> elements => _driver.FindElements(_locator);
     TimeSpan _timeout = TimeSpan.FromSeconds(20);
+
+    IWebElement _element
+    {
+        get
+        {
+            try
+            {
+                return _driver.FindElement(_locator);
+            }
+            catch (StaleElementReferenceException)
+            {
+                return _driver.FindElement(_locator);
+            }
+        }
+    }
+
 
     public PageElement(IWebDriver driver, By locator)
     {
