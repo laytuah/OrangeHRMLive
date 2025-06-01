@@ -18,14 +18,19 @@ public class PageElement : IWebElement
     {
         get
         {
-            try
+            for (int i = 0; i < 3; i++)
             {
-                return _driver.FindElement(_locator);
+                try
+                {
+                    return _driver.FindElement(_locator);
+                }
+                catch (StaleElementReferenceException) { }
+                catch (NoSuchElementException) { }
+
+                Thread.Sleep(500);
             }
-            catch (StaleElementReferenceException)
-            {
-                return _driver.FindElement(_locator);
-            }
+
+            throw new NoSuchElementException($"Element with locator '{_locator}' not found after retries.");
         }
     }
 
