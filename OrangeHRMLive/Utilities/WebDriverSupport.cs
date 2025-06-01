@@ -10,7 +10,7 @@ namespace OrangeHRMLive.Utilities
     public class WebDriverSupport
     {
         readonly IObjectContainer _objectContainer;
-        IWebDriver _driver;
+        IWebDriver? _driver;
 
         public WebDriverSupport(IObjectContainer objectContainer)
         {
@@ -32,19 +32,19 @@ namespace OrangeHRMLive.Utilities
             };
 
             setupAction.Invoke();
-            _objectContainer.RegisterInstanceAs(_driver);
-            _driver.Manage().Window.Maximize();
-            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            _objectContainer.RegisterInstanceAs(_driver!);
+            _driver!.Manage().Window.Maximize();
+            _driver!.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
         public void CloseAUT()
         {
-            _driver.Quit();
+            _driver!.Quit();
         }
 
         public IWebDriver GetDriver()
         {
-            return _driver;
+            return _driver!;
         }
 
         IWebDriver SetupEdgeDriver(bool headless, bool incognito)

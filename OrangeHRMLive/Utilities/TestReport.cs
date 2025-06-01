@@ -10,11 +10,11 @@ namespace OrangeHRMLive.Utilities
 {
     public class TestReport
     {
-        static ExtentReports _extent;
+        static ExtentReports? _extent;
         [ThreadStatic]
-        static ExtentTest _feature;
+        static ExtentTest? _feature;
         [ThreadStatic]
-        static ExtentTest _scenario;
+        static ExtentTest? _scenario;
 
         static readonly string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory;
         static readonly string testResultsDirectory = Path.Combine(ProjectDirectory, "TestResults");
@@ -47,12 +47,12 @@ namespace OrangeHRMLive.Utilities
 
         public void BeforeFeature(FeatureContext featureContext)
         {
-            _feature = _extent.CreateTest<Feature>(featureContext.FeatureInfo.Title);
+            _feature = _extent!.CreateTest<Feature>(featureContext.FeatureInfo.Title);
         }
 
         public void BeforeScenario(ScenarioContext scenarioContext)
         {
-            _scenario = _feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
+            _scenario = _feature!.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
         }
 
         public void AfterStep(ScenarioContext scenarioContext, IWebDriver driver)
@@ -80,18 +80,18 @@ namespace OrangeHRMLive.Utilities
 
         public void ExtentReportTearDown()
         {
-            _extent.Flush();
+            _extent!.Flush();
         }
 
         ExtentTest CreateStepNode(string stepType, string stepName)
         {
             return stepType switch
             {
-                "Given" => _scenario.CreateNode<Given>(stepName),
-                "When" => _scenario.CreateNode<When>(stepName),
-                "Then" => _scenario.CreateNode<Then>(stepName),
-                "And" => _scenario.CreateNode<And>(stepName),
-                _ => _scenario.CreateNode<And>(stepName)
+                "Given" => _scenario!.CreateNode<Given>(stepName),
+                "When" => _scenario!.CreateNode<When>(stepName),
+                "Then" => _scenario!.CreateNode<Then>(stepName),
+                "And" => _scenario!.CreateNode<And>(stepName),
+                _ => _scenario!.CreateNode<And>(stepName)
             };
         }
 

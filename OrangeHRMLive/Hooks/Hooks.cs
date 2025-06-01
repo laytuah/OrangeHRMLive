@@ -10,7 +10,7 @@ namespace OrangeHRMLive.Hooks
     {
         readonly WebDriverSupport _webDriverSupport;
         readonly TestReport _testReport;
-        static TestReport _staticTestReport;
+        static TestReport? _staticTestReport;
 
         public Hooks(WebDriverSupport webDriverSupport, TestReport testReport)
         {
@@ -28,7 +28,7 @@ namespace OrangeHRMLive.Hooks
         [BeforeFeature]
         public static void BeforeFeature(FeatureContext featureContext)
         {
-            _staticTestReport.BeforeFeature(featureContext);
+            _staticTestReport!.BeforeFeature(featureContext);
         }
 
         [BeforeScenario]
@@ -53,7 +53,7 @@ namespace OrangeHRMLive.Hooks
         [AfterTestRun]
         public static void AfterTestRun()
         {
-            _staticTestReport.ExtentReportTearDown();
+            _staticTestReport!.ExtentReportTearDown();
         }
     }
 }
