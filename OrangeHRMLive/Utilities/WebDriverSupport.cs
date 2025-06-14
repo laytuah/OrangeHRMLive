@@ -33,7 +33,8 @@ namespace OrangeHRMLive.Utilities
 
             setupAction.Invoke();
             _objectContainer.RegisterInstanceAs(_driver!);
-            _driver!.Manage().Window.Maximize();
+            if (!headless)
+                _driver!.Manage().Window.Maximize();
             _driver!.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
@@ -51,7 +52,11 @@ namespace OrangeHRMLive.Utilities
         {
             var options = new EdgeOptions();
             options.SetLoggingPreference(LogType.Performance, LogLevel.All);
-            if (headless) options.AddArgument("headless");
+            if (headless)
+            {
+                options.AddArgument("headless=new");
+                options.AddArgument("window-size=1920,1080");
+            }
             if (incognito) options.AddArgument("inprivate");
             return new EdgeDriver(options);
         }
@@ -60,7 +65,11 @@ namespace OrangeHRMLive.Utilities
         {
             var options = new ChromeOptions();
             options.SetLoggingPreference(LogType.Performance, LogLevel.All);
-            if (headless) options.AddArgument("headless");
+            if (headless)
+            {
+                options.AddArgument("--headless=new");
+                options.AddArgument("--window-size=1920,1080"); 
+            }
             if (incognito) options.AddArgument("incognito");
             return new ChromeDriver(options);
         }
@@ -68,7 +77,12 @@ namespace OrangeHRMLive.Utilities
         IWebDriver SetupFirefoxDriver(bool headless, bool incognito)
         {
             var options = new FirefoxOptions();
-            if (headless) options.AddArgument("-headless");
+            if (headless)
+            {
+                options.AddArgument("-headless");
+                options.AddArgument("--width=1920");
+                options.AddArgument("--height=1080");
+            }
             if (incognito) options.AddArgument("-private");
             return new FirefoxDriver(options);
         }
