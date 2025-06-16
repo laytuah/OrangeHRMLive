@@ -97,6 +97,10 @@ public class PageElement
                 GetElement().Click();
             }
         }
+        catch (StaleElementReferenceException)
+        {
+            GetElement().Click();
+        }
         catch (ElementClickInterceptedException)
         {
             try
