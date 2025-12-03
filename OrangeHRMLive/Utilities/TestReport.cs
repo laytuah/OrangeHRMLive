@@ -66,7 +66,7 @@ namespace OrangeHRMLive.Utilities
             {
                 featureNode = _extent!.CreateTest<Feature>(featureTitle);
                 _featureNodes[featureTitle] = featureNode;
-            }
+        }
 
             _scenario.Value = featureNode.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
         }
@@ -89,8 +89,8 @@ namespace OrangeHRMLive.Utilities
                 return;
             }
 
-            string failureMessage = scenarioContext.TestError.Message;
-            string? stackTrace = scenarioContext.TestError?.StackTrace;
+                string failureMessage = scenarioContext.TestError.Message;
+                string? stackTrace = scenarioContext.TestError?.StackTrace;
 
             if (driver != null)
             {
