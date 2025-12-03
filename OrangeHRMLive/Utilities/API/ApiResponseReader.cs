@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text.Json;
-using System.Text.RegularExpressions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Newtonsoft.Json;
 using OrangeHRMLive.Model.API.Response;
 using Reqnroll;
+using System.Globalization;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace OrangeHRMLive.Utilities.Api
 {

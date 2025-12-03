@@ -1,8 +1,5 @@
-﻿using System;
+﻿using OrangeHRMLive.Model.API.Response;
 using System.Diagnostics;
-using System.Net.Http;
-using System.Threading.Tasks;
-using OrangeHRMLive.Model.API.Response;
 
 namespace OrangeHRMLive.Utilities.Api
 {

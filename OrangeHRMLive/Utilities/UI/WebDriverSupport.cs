@@ -1,9 +1,9 @@
-﻿using Reqnroll.BoDi;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OrangeHRMLive.Configuration;
+using Reqnroll.BoDi;
 
 namespace OrangeHRMLive.Utilities.UI
 {
@@ -68,7 +68,7 @@ namespace OrangeHRMLive.Utilities.UI
             if (headless)
             {
                 options.AddArgument("--headless=new");
-                options.AddArgument("--window-size=1920,1080"); 
+                options.AddArgument("--window-size=1920,1080");
             }
             if (incognito) options.AddArgument("incognito");
             return new ChromeDriver(options);

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using AventStack.ExtentReports;
+﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
 using OpenQA.Selenium;
 using OrangeHRMLive.Configuration;
 using Reqnroll;
+using System.Collections.Concurrent;
 
 namespace OrangeHRMLive.Utilities
 {
@@ -66,7 +62,7 @@ namespace OrangeHRMLive.Utilities
             {
                 featureNode = _extent!.CreateTest<Feature>(featureTitle);
                 _featureNodes[featureTitle] = featureNode;
-        }
+            }
 
             _scenario.Value = featureNode.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
         }
@@ -89,8 +85,8 @@ namespace OrangeHRMLive.Utilities
                 return;
             }
 
-                string failureMessage = scenarioContext.TestError.Message;
-                string? stackTrace = scenarioContext.TestError?.StackTrace;
+            string failureMessage = scenarioContext.TestError.Message;
+            string? stackTrace = scenarioContext.TestError?.StackTrace;
 
             if (driver != null)
             {

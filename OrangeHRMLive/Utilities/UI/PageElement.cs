@@ -1,7 +1,7 @@
-﻿using OrangeHRMLive.Configuration;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using OrangeHRMLive.Configuration;
 using SeleniumExtras.WaitHelpers;
 using System.Collections.ObjectModel;
 using System.Drawing;

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Net.Http;
-using Reqnroll.BoDi;
-using OrangeHRMLive.Configuration;
+﻿using OrangeHRMLive.Configuration;
 using OrangeHRMLive.Utilities.Api;
 using Reqnroll;
+using Reqnroll.BoDi;
 
 namespace OrangeHRMLive.Hooks
 {

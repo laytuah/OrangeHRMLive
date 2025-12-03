@@ -76,7 +76,7 @@ namespace OrangeHRMLive.PageObjects
 
         public void UpdateNewlyCreatedEmployeeRecord(EmployeeProfile employee)
         {
-            if(IsNewlyRegisteredEmployeeDisplayed(employee))
+            if (IsNewlyRegisteredEmployeeDisplayed(employee))
             {
                 NewlyRegisteredEmployee(employee.EmployeeID, employee.Firstname, employee.Lastname).ActionClick();
                 employee.Firstname = employee.UpdatedFirstname;

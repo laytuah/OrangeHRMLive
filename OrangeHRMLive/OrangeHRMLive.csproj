@@ -63,6 +63,7 @@
     <Folder Include="Features\API\" />
     <Folder Include="JsonBuilder\" />
     <Folder Include="EndpointBuilder\" />
+    <Folder Include="StepDefinitions\NewFolder\" />
   </ItemGroup>
  
 </Project>

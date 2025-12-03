@@ -22,7 +22,7 @@ namespace OrangeHRMLive.Configuration
         public static bool Headless => bool.Parse(GetConfigurationValue("Headless"));
         public static bool PrivateBrowser => bool.Parse(GetConfigurationValue("Private Browser"));
         public static string LoadingIconXpath => (GetConfigurationValue("Loading Icon Xpath"));
-        public static string ApiBaseUrl   => GetConfigurationValue("Api Base Url");
+        public static string ApiBaseUrl => GetConfigurationValue("Api Base Url");
         public static int ApiTimeoutSeconds => int.TryParse(GetConfigurationValue("Api Timeout Seconds"), out var s) ? s : 30;
 
         static string GetConfigurationValue(string key)
