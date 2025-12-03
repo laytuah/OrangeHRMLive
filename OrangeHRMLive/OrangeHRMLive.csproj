@@ -11,20 +11,19 @@
 
   <ItemGroup>
     <Compile Remove="Features\API\**" />
-    <Compile Remove="StepDefinitions\API\**" />
     <Compile Remove="TestResults\**" />
     <EmbeddedResource Remove="Features\API\**" />
-    <EmbeddedResource Remove="StepDefinitions\API\**" />
     <EmbeddedResource Remove="TestResults\**" />
     <None Remove="Features\API\**" />
-    <None Remove="StepDefinitions\API\**" />
     <None Remove="TestResults\**" />
     <ReqnrollFeatureFiles Remove="Features\API\**" />
-    <ReqnrollFeatureFiles Remove="StepDefinitions\API\**" />
     <ReqnrollObsoleteCodeBehindFiles Remove="Features\API\**" />
-    <ReqnrollObsoleteCodeBehindFiles Remove="StepDefinitions\API\**" />
     <SpecFlowFeatureFiles Remove="TestResults\**" />
     <SpecFlowObsoleteCodeBehindFiles Remove="TestResults\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Features\API\BookingFeature.feature.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,10 +59,12 @@
   </ItemGroup>
  
   <ItemGroup>
-    <Folder Include="Features\API\" />
     <Folder Include="JsonBuilder\" />
     <Folder Include="EndpointBuilder\" />
-    <Folder Include="StepDefinitions\NewFolder\" />
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <ReqnrollFeatureFiles Include="Features\API\BookingFeature.feature" />
   </ItemGroup>
  
 </Project>
